@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="KabulWeb؛ معرفی کانال‌های واتساپ، تلگرام، محصولات و خدمات کسب‌وکارها.">
+
+  <meta name="description" content="KabulWeb؛ بستری برای معرفی کانال‌های واتساپ، تلگرام، محصولات، خدمات و کسب‌وکارها در افغانستان و جهان.">
   <meta name="theme-color" content="#0b1020">
-  <title>KabulWeb | تبلیغات و کسب‌وکارهای آنلاین</title>
+
+  <title>KabulWeb | بازار افغانستان و جهان</title>
 
   <style>
     :root {
@@ -101,6 +103,12 @@
       font-size: 15px;
       font-family: inherit;
       text-align: center;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      opacity: .9;
     }
 
     .button.blue {
@@ -157,6 +165,45 @@
       font-size: 34px;
     }
 
+    /* بخش کانال‌های رسمی */
+    .official-channels {
+      margin-bottom: 45px;
+      padding: 25px;
+      background: linear-gradient(145deg, #142747, #10182b);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .official-channels .grid {
+      margin-bottom: 10px;
+    }
+
+    .channel-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .whatsapp-button {
+      background: #25d366;
+      color: #07140b;
+    }
+
+    .telegram-button {
+      background: #168bd2;
+      color: #fff;
+    }
+
+    .channels-footer {
+      margin: 18px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
     .form-box {
       background: var(--card);
       padding: 24px;
@@ -171,7 +218,9 @@
       margin: 14px 0 5px;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       padding: 12px;
       border-radius: 8px;
@@ -187,7 +236,9 @@
       min-height: 100px;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       outline: 2px solid var(--blue);
       outline-offset: 1px;
     }
@@ -253,16 +304,18 @@
     }
 
     footer a {
+      display: inline-block;
       margin: 0 8px;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       header {
         justify-content: center;
       }
 
       nav {
         justify-content: center;
+        gap: 12px;
       }
 
       .hero {
@@ -271,6 +324,18 @@
 
       .form-box {
         padding: 16px;
+      }
+
+      .official-channels {
+        padding: 17px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero .button {
+        margin: 4px;
       }
     }
   </style>
@@ -281,8 +346,9 @@
 <header>
   <a href="#home" class="logo">🌐 KabulWeb</a>
 
-  <nav>
+  <nav aria-label="منوی اصلی">
     <a href="#home">خانه</a>
+    <a href="#official-channels">کانال‌های ما</a>
     <a href="#categories">دسته‌بندی‌ها</a>
     <a href="#listings">آگهی‌ها</a>
     <a href="#submit">ثبت تبلیغات</a>
@@ -295,7 +361,7 @@
 
   <p>
     کانال واتساپ، تلگرام، فروشگاه، محصولات یا خدماتت را در KabulWeb معرفی کن.
-    درخواستت ثبت می‌شود و پس از بررسی مدیر، درباره انتشار آن تصمیم گرفته می‌شود.
+    درخواستت ثبت می‌شود و پس از بررسی مدیر، دربارهٔ انتشار آن تصمیم گرفته می‌شود.
   </p>
 
   <a href="#submit" class="button">📢 ثبت درخواست تبلیغات</a>
@@ -304,8 +370,74 @@
 
 <main>
 
+  <!-- کانال‌های رسمی KabulWeb -->
+  <section
+    class="official-channels"
+    id="official-channels"
+    aria-labelledby="channels-title"
+  >
+    <h2 class="section-title" id="channels-title">
+      🌍 بازار افغانستان و جهان
+    </h2>
+
+    <p class="section-description">
+      به جامعهٔ KabulWeb بپیوندید! با کسب‌وکارها، محصولات و خدمات جدید
+      آشنا شوید، تبلیغات را دنبال کنید و فرصت‌های همکاری را پیدا کنید.
+    </p>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="icon">💬</div>
+        <h3>کانال رسمی واتساپ</h3>
+
+        <p>
+          برای دنبال‌کردن معرفی کسب‌وکارها، محصولات، خدمات و تبلیغات جدید
+          به کانال واتساپ ما بپیوندید.
+        </p>
+
+        <a
+          class="button channel-button whatsapp-button"
+          href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="عضویت در کانال رسمی واتساپ KabulWeb"
+        >
+          💚 عضویت در واتساپ
+        </a>
+      </article>
+
+      <article class="card">
+        <div class="icon">✈️</div>
+        <h3>کانال رسمی تلگرام</h3>
+
+        <p>
+          برای دریافت تازه‌ترین معرفی‌ها، تبلیغات و فرصت‌های تجاری
+          در کانال تلگرام ما عضو شوید.
+        </p>
+
+        <a
+          class="button channel-button telegram-button"
+          href="https://t.me/kabulwebs"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="عضویت در کانال رسمی تلگرام KabulWeb"
+        >
+          🔵 عضویت در تلگرام
+        </a>
+      </article>
+
+    </div>
+
+    <p class="channels-footer">
+      🤝 با هم، فرصت‌های بیشتری می‌سازیم.
+    </p>
+  </section>
+
+  <!-- دسته‌بندی‌ها -->
   <section id="categories">
     <h2 class="section-title">دسته‌بندی‌ها</h2>
+
     <p class="section-description">
       زمینهٔ فعالیت خود را انتخاب کن.
     </p>
@@ -336,7 +468,8 @@
     </div>
   </section>
 
-  <section>
+  <!-- مزایای سایت -->
+  <section id="benefits">
     <h2 class="section-title">چرا KabulWeb؟</h2>
 
     <div class="grid">
@@ -367,21 +500,31 @@
       آگهی‌هایی که مدیر تأیید کرده است در این قسمت نمایش داده می‌شوند.
     </p>
 
-    <button id="refreshListings" class="button blue" type="button">
+    <button
+      id="refreshListings"
+      class="button blue"
+      type="button"
+    >
       🔄 تازه‌سازی آگهی‌ها
     </button>
 
-    <div id="listingMessage" class="message info" role="status"></div>
+    <div
+      id="listingMessage"
+      class="message info"
+      role="status"
+      aria-live="polite"
+    ></div>
+
     <div id="listingGrid" class="grid"></div>
   </section>
 
-  <!-- فرم واقعی ثبت درخواست -->
+  <!-- فرم ثبت درخواست تبلیغات -->
   <section id="submit">
     <h2 class="section-title">📢 ثبت درخواست تبلیغات</h2>
 
     <p class="section-description">
       اطلاعات را کامل کن. درخواست در پایگاه داده ثبت می‌شود و پس از بررسی مدیر
-      درباره انتشار آن تصمیم گرفته می‌شود.
+      دربارهٔ انتشار آن تصمیم گرفته می‌شود.
     </p>
 
     <div class="form-box">
@@ -441,10 +584,14 @@
           name="description"
           required
           maxlength="300"
-          placeholder="درباره کانال، محصول یا خدماتت بنویس..."
+          placeholder="دربارهٔ کانال، محصول یا خدماتت بنویس..."
         ></textarea>
 
-        <button id="submitButton" class="button" type="submit">
+        <button
+          id="submitButton"
+          class="button"
+          type="submit"
+        >
           ثبت درخواست
         </button>
 
@@ -453,7 +600,12 @@
           برای جلوگیری از سوءاستفاده، اطلاعات پیش از انتشار بررسی می‌شوند.
         </p>
 
-        <div id="formMessage" class="message" role="status" aria-live="polite"></div>
+        <div
+          id="formMessage"
+          class="message"
+          role="status"
+          aria-live="polite"
+        ></div>
 
       </form>
     </div>
@@ -463,9 +615,24 @@
 
 <footer>
   <p>© 2026 KabulWeb — معرفی آسان، ارتباط بیشتر</p>
+
   <a href="about.html">درباره ما</a>
   <a href="privacy.html">حریم خصوصی</a>
   <a href="terms.html">شرایط استفاده</a>
+
+  <p>
+    <a
+      href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R"
+      target="_blank"
+      rel="noopener noreferrer"
+    >واتساپ</a>
+
+    <a
+      href="https://t.me/kabulwebs"
+      target="_blank"
+      rel="noopener noreferrer"
+    >تلگرام</a>
+  </p>
 </footer>
 
 <script type="module">
@@ -494,7 +661,7 @@
     element.className = "message " + type;
   }
 
-  // ثبت درخواست واقعی در جدول ad_requests
+  // ثبت درخواست در جدول ad_requests
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
 
@@ -509,11 +676,21 @@
     );
 
     try {
-      const name = document.getElementById("name").value.trim();
-      const contact = document.getElementById("contact").value.trim();
-      const category = document.getElementById("category").value;
-      const link = document.getElementById("link").value.trim();
-      const packageType = document.getElementById("package").value;
+      const name =
+        document.getElementById("name").value.trim();
+
+      const contact =
+        document.getElementById("contact").value.trim();
+
+      const category =
+        document.getElementById("category").value;
+
+      const link =
+        document.getElementById("link").value.trim();
+
+      const packageType =
+        document.getElementById("package").value;
+
       const description =
         document.getElementById("description").value.trim();
 
@@ -521,7 +698,13 @@
         throw new Error("لطفاً تمام فیلدهای ضروری را تکمیل کن.");
       }
 
-      const parsedURL = new URL(link);
+      let parsedURL;
+
+      try {
+        parsedURL = new URL(link);
+      } catch {
+        throw new Error("لطفاً یک لینک معتبر وارد کن.");
+      }
 
       if (
         parsedURL.protocol !== "https:" &&
@@ -548,6 +731,7 @@
 
       if (error) {
         console.error("Supabase submission error:", error);
+
         throw new Error(
           "درخواست ثبت نشد. اتصال اینترنت و مجوزهای Supabase باید بررسی شوند."
         );
@@ -572,7 +756,7 @@
     }
   });
 
-  // نمایش آگهی‌های تأییدشده از جدول listings
+  // دریافت آگهی‌های تأییدشده از جدول listings
   async function loadListings() {
     listingGrid.replaceChildren();
 
@@ -623,9 +807,11 @@
 
         if (item.listing_type) {
           const type = document.createElement("p");
+
           type.textContent =
             "نوع: " +
             (item.listing_type === "product" ? "محصول" : "خدمت");
+
           card.appendChild(type);
         }
 
@@ -638,8 +824,10 @@
         if (item.price !== null && item.price !== undefined) {
           const price = document.createElement("p");
           price.className = "listing-price";
+
           price.textContent =
             "قیمت: " + item.price + " " + (item.currency || "AFN");
+
           card.appendChild(price);
         }
 
@@ -655,11 +843,13 @@
 
             if (imageURL.protocol === "https:") {
               const imageLink = document.createElement("a");
+
               imageLink.className = "listing-link";
               imageLink.href = imageURL.href;
               imageLink.target = "_blank";
               imageLink.rel = "noopener noreferrer";
               imageLink.textContent = "مشاهده تصویر";
+
               card.appendChild(imageLink);
             }
           } catch {
@@ -687,4 +877,4 @@
 </script>
 
 </body>
-    </html>
+  </html>

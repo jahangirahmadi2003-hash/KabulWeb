@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KabulWeb؛ پلتفرمی برای معرفی کانال‌های واتساپ، تلگرام و کسب‌وکارهای آنلاین.">
+    <meta name="theme-color" content="#0b1020">
+    <title>KabulWeb | معرفی کانال‌ها و تبلیغات</title>
+
+    <style>
+        :root {
+            --bg: #0b1020;
+            --card: #151d31;
+            --text: #f4f7ff;
+            --muted: #aab6ce;
+            --green: #25d366;
+            --blue: #3985ff;
+            --border: #293650;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        header {
+            padding: 16px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: #10182b;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: var(--green);
+        }
+
+        nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: var(--green);
+        }
+
+        .hero {
+            padding: 65px 20px;
+            text-align: center;
+            background: linear-gradient(145deg, #142747, #0b1020);
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 6vw, 44px);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 25px;
+            color: var(--muted);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 22px;
+            border-radius: 9px;
+            background: var(--green);
+            color: #07140b;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .button.blue {
+            background: var(--blue);
+            color: white;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 18px;
+        }
+
+        .section-title {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            margin-top: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin: 25px 0 45px;
+        }
+
+        .card {
+            padding: 22px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card p {
+            color: var(--muted);
+            overflow-wrap: anywhere;
+        }
+
+        .icon {
+            font-size: 34px;
+        }
+
+        .form-box {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            max-width: 700px;
+            margin: 20px auto 45px;
+        }
+
+        label {
+            display: block;
+            margin: 14px 0 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #0b1020;
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .notice {
+            color: #ffd88a;
+            font-size: 13px;
+        }
+
+        #message {
+            margin-top: 15px;
+            color: var(--green);
+            overflow-wrap: anywhere;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px 15px;
+            background: #10182b;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            margin: 0 8px;
+        }
+
+        @media (max-width: 480px) {
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 45px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">🌐 KabulWeb</a>
+
+    <nav>
+        <a href="#home">خانه</a>
+        <a href="#channels">کانال‌ها</a>
+        <a href="#submit">معرفی کانال</a>
+        <a href="about.html">درباره ما</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>کانالت را به جهان معرفی کن! 🚀</h1>
+
+    <p>
+        در KabulWeb کانال‌های تلگرام، واتساپ و کسب‌وکار آنلاین خود را معرفی کن
+        و به کاربران بیشتری دسترسی پیدا کن.
+    </p>
+
+    <a href="#submit" class="button">معرفی رایگان کانال</a>
+    <a href="#channels" class="button blue">مشاهده دسته‌بندی‌ها</a>
+</section>
+
+<main>
+
+    <section id="channels">
+        <h2 class="section-title">دسته‌بندی‌ها</h2>
+        <p class="section-description">
+            دسته موردنظرت را انتخاب کن.
+        </p>
+
+        <div class="grid">
+
+            <article class="card">
+                <div class="icon">💬</div>
+                <h3>کانال‌های واتساپ</h3>
+                <p>کانال‌های عمومی واتساپ را معرفی و کشف کن.</p>
+                <a class="button" href="#submit">افزودن کانال</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">✈️</div>
+                <h3>کانال‌های تلگرام</h3>
+                <p>کانال تلگرام خود را برای کاربران معرفی کن.</p>
+                <a class="button blue" href="#submit">افزودن کانال</a>
+            </article>
+
+            <article class="card">
+                <div class="icon">🛍️</div>
+                <h3>کسب‌وکارها</h3>
+                <p>فروشگاه و خدمات آنلاین خود را معرفی کن.</p>
+                <a class="button" href="#submit">معرفی کسب‌وکار</a>
+            </article>
+
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">چرا KabulWeb؟</h2>
+
+        <div class="grid">
+
+            <article class="card">
+                <h3>🆓 شروع رایگان</h3>
+                <p>هدف ما فراهم‌کردن راهی ساده برای معرفی کانال‌هاست.</p>
+            </article>
+
+            <article class="card">
+                <h3>🌍 دسترسی جهانی</h3>
+                <p>کاربران می‌توانند لینک‌های عمومی را از کشورهای مختلف مشاهده کنند.</p>
+            </article>
+
+            <article class="card">
+                <h3>📢 فرصت تبلیغات</h3>
+                <p>در آینده، جایگاه‌های تبلیغاتی با شرایط و قیمت‌های شفاف ارائه می‌شوند.</p>
+            </article>
+
+        </div>
+    </section>
+
+    <section id="submit">
+        <h2 class="section-title">معرفی کانال یا کسب‌وکار</h2>
+
+        <p class="section-description">
+            اطلاعات را وارد کن تا متن معرفی آماده شود.
+        </p>
+
+        <div class="form-box">
+
+            <form id="channelForm">
+
+                <label for="name">نام کانال یا کسب‌وکار</label>
+                <input id="name" name="name" required maxlength="80"
+                       placeholder="مثلاً آموزش زبان">
+
+                <label for="category">دسته‌بندی</label>
+                <select id="category" name="category" required>
+                    <option value="">انتخاب کن</option>
+                    <option>کانال واتساپ</option>
+                    <option>کانال تلگرام</option>
+                    <option>فروشگاه آنلاین</option>
+                    <option>آموزش و یادگیری</option>
+                    <option>سرگرمی</option>
+                    <option>سایر</option>
+                </select>
+
+                <label for="link">لینک عمومی کانال یا صفحه</label>
+                <input id="link" name="link" type="url" required
+                       placeholder="https://t.me/...">
+
+                <label for="description">توضیحات کوتاه</label>
+                <textarea id="description" name="description"
+                          maxlength="300" required
+                          placeholder="درباره کانال خود بنویس..."></textarea>
+
+                <button class="button" type="submit">
+                    آماده‌کردن متن معرفی
+                </button>
+
+                <p class="notice">
+                    این نسخه اطلاعات را به سرور ارسال نمی‌کند و کانال را
+                    خودکار در سایت منتشر نمی‌کند.
+                </p>
+
+                <div id="message" role="status" aria-live="polite"></div>
+
+            </form>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 KabulWeb — معرفی آسان، ارتباط بیشتر</p>
+
+    <a href="about.html">درباره ما</a>
+    <a href="privacy.html">حریم خصوصی</a>
+    <a href="terms.html">شرایط استفاده</a>
+</footer>
+
+<script>
+    const form = document.getElementById("channelForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const category = document.getElementById("category").value;
+        const link = document.getElementById("link").value.trim();
+        const description = document.getElementById("description").value.trim();
+
+        try {
+            const url = new URL(link);
+
+            if (url.protocol !== "https:" && url.protocol !== "http:") {
+                throw new Error("invalid protocol");
+            }
+
+            const text =
+                "معرفی در KabulWeb\n\n" +
+                "نام: " + name + "\n" +
+                "دسته‌بندی: " + category + "\n" +
+                "لینک: " + url.href + "\n" +
+                "توضیحات: " + description;
+
+            message.textContent = text;
+
+            const copyButton = document.createElement("button");
+            copyButton.type = "button";
+            copyButton.className = "button";
+            copyButton.textContent = "کپی متن معرفی";
+
+            copyButton.addEventListener("click", async function() {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    copyButton.textContent = "کپی شد ✓";
+                } catch {
+                    message.textContent =
+                        text + "\n\nمتن را انتخاب کن و دستی کپی کن.";
+                }
+            });
+
+            message.appendChild(document.createElement("br"));
+            message.appendChild(copyButton);
+
+        } catch {
+            message.textContent =
+                "لطفاً یک لینک معتبر با http:// یا https:// وارد کن.";
+        }
+    });
+</script>
+
+</body>
+</html>

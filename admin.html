@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>پنل مدیریت | KabulWeb</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --card: #151d30;
+      --border: #293650;
+      --text: #f2f5ff;
+      --muted: #a8b3ca;
+      --primary: #6d8cff;
+      --green: #25c995;
+      --red: #ff647c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 15px;
+      background: #0b1020;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 10px 16px;
+      margin: 4px;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+
+    .danger {
+      background: #a82f48;
+    }
+
+    .success {
+      background: #147d61;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tabs button {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .item {
+      background: #0b1020;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .item p {
+      margin: 5px 0;
+    }
+
+    .item-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+    }
+
+    .item-actions select {
+      flex: 1;
+      min-width: 150px;
+      margin: 0;
+    }
+
+    .status {
+      color: #ffd479;
+      font-weight: bold;
+    }
+
+    #message {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    #message:empty {
+      display: none;
+    }
+
+    .error {
+      background: #48202b;
+      color: #ffbdc7;
+    }
+
+    .info {
+      background: #1c304c;
+      color: #d5e5ff;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    a {
+      color: #9db8ff;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tabs button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="topbar">
+      <h1>🌍 پنل مدیریت KabulWeb</h1>
+      <a href="./index.html">مشاهدهٔ سایت</a>
+    </div>
+
+    <p class="muted">
+      مدیریت درخواست‌های تبلیغات، محصولات، خدمات و سفارش‌های مشتریان
+    </p>
+
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <!-- فرم ورود -->
+    <section id="loginCard" class="card">
+      <h2>🔐 ورود مدیر</h2>
+
+      <form id="loginForm">
+        <label for="email">ایمیل حساب مدیر</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="username"
+          required
+          placeholder="ایمیل حساب Supabase"
+        >
+
+        <label for="password">رمز عبور</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+          placeholder="رمز عبور حساب"
+        >
+
+        <button id="loginButton" type="submit">ورود به پنل</button>
+      </form>
+
+      <p class="muted">
+        فقط حسابی که در Supabase به‌عنوان مدیر ثبت شده باشد اجازهٔ مدیریت دارد.
+      </p>
+    </section>
+
+    <!-- داشبورد -->
+    <section id="dashboard" class="hidden">
+      <div class="card">
+        <div class="topbar">
+          <div>
+            <h2>داشبورد</h2>
+            <span id="adminEmail" class="muted"></span>
+          </div>
+
+          <button id="logoutButton" class="danger">خروج امن</button>
+        </div>
+
+        <div class="tabs">
+          <button data-table="ad_requests">📢 درخواست‌های تبلیغات</button>
+          <button data-table="listings">🛍️ محصولات و خدمات</button>
+          <button data-table="customer_orders">📦 سفارش‌های مشتریان</button>
+        </div>
+
+        <button id="refreshButton" class="success">🔄 تازه‌سازی اطلاعات</button>
+
+        <p id="recordCount" class="muted"></p>
+        <div id="records"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import {
+      createClient
+    } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    // اطلاعات عمومی پروژه؛ رمز عبور یا service_role key را اینجا قرار نده.
+    const SUPABASE_URL =
+      "https://netspaxkjtoumfoobgnu.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      }
+    );
+
+    const $ = (id) => document.getElementById(id);
+
+    const loginCard = $("loginCard");
+    const dashboard = $("dashboard");
+    const records = $("records");
+    const message = $("message");
+
+    let currentTable = "ad_requests";
+    let busy = false;
+
+    const tableConfig = {
+      ad_requests: {
+        title: "درخواست تبلیغات",
+        columns: [
+          ["name", "نام"],
+          ["contact", "راه تماس"],
+          ["platform", "پلتفرم"],
+          ["link", "لینک"],
+          ["description", "توضیحات"],
+          ["package", "بستهٔ تبلیغاتی"],
+          ["status", "وضعیت"],
+          ["created_at", "تاریخ"]
+        ],
+        statuses: [
+          "pending",
+          "approved",
+          "rejected",
+          "completed"
+        ]
+      },
+
+      listings: {
+        title: "محصولات و خدمات",
+        columns: [
+          ["seller_name", "نام فروشنده"],
+          ["contact", "راه تماس"],
+          ["title", "عنوان"],
+          ["category", "دسته‌بندی"],
+          ["listing_type", "نوع"],
+          ["description", "توضیحات"],
+          ["price", "قیمت"],
+          ["currency", "واحد پول"],
+          ["image_url", "لینک تصویر"],
+          ["status", "وضعیت"],
+          ["created_at", "تاریخ"]
+        ],
+        statuses: [
+          "pending",
+          "approved",
+          "rejected"
+        ]
+      },
+
+      customer_orders: {
+        title: "سفارش مشتریان",
+        columns: [
+          ["listing_id", "شناسهٔ آگهی"],
+          ["customer_name", "نام مشتری"],
+          ["contact", "راه تماس"],
+          ["quantity", "تعداد"],
+          ["message", "پیام مشتری"],
+          ["status", "وضعیت"],
+          ["created_at", "تاریخ"]
+        ],
+        statuses: [
+          "pending",
+          "confirmed",
+          "completed",
+          "cancelled"
+        ]
+      }
+    };
+
+    function showMessage(text, isError = false) {
+      message.textContent = text;
+      message.className = isError ? "error" : "info";
+    }
+
+    function clearMessage() {
+      message.textContent = "";
+      message.className = "";
+    }
+
+    function formatValue(value) {
+      if (value === null || value === undefined || value === "") {
+        return "—";
+      }
+
+      if (typeof value === "object") {
+        return JSON.stringify(value);
+      }
+
+      return String(value);
+    }
+
+    function addText(parent, tag, text, className = "") {
+      const element = document.createElement(tag);
+      element.textContent = text;
+
+      if (className) {
+        element.className = className;
+      }
+
+      parent.appendChild(element);
+      return element;
+    }
+
+    function addSafeLink(parent, value) {
+      const text = formatValue(value);
+
+      try {
+        const url = new URL(text);
+
+        if (url.protocol !== "https:" && url.protocol !== "http:") {
+          addText(parent, "p", "لینک: " + text);
+          return;
+        }
+
+        const link = document.createElement("a");
+        link.href = url.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "بازکردن لینک";
+        parent.appendChild(link);
+      } catch {
+        addText(parent, "p", "لینک: " + text);
+      }
+    }
+
+    function createRecordCard(row, config) {
+      const card = document.createElement("article");
+      card.className = "item";
+
+      addText(
+        card,
+        "h3",
+        config.title + " #" + formatValue(row.id)
+      );
+
+      for (const [column, label] of config.columns) {
+        const value = row[column];
+
+        if (column === "link" || column === "image_url") {
+          if (value) {
+            const line = document.createElement("p");
+            addText(line, "strong", label + ": ");
+            addSafeLink(line, value);
+            card.appendChild(line);
+          }
+          continue;
+        }
+
+        const line = document.createElement("p");
+        addText(line, "strong", label + ": ");
+        line.appendChild(
+          document.createTextNode(formatValue(value))
+        );
+
+        if (column === "status") {
+          line.className = "status";
+        }
+
+        card.appendChild(line);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "item-actions";
+
+      const statusSelect = document.createElement("select");
+      statusSelect.setAttribute(
+        "aria-label",
+        "تغییر وضعیت " + formatValue(row.id)
+      );
+
+      for (const status of config.statuses) {
+        const option = document.createElement("option");
+        option.value = status;
+        option.textContent = status;
+        option.selected = status === row.status;
+        statusSelect.appendChild(option);
+      }
+
+      const saveButton = document.createElement("button");
+      saveButton.textContent = "ذخیرهٔ وضعیت";
+      saveButton.addEventListener("click", async () => {
+        await updateStatus(
+          row.id,
+          statusSelect.value,
+          saveButton
+        );
+      });
+
+      actions.append(statusSelect, saveButton);
+      card.appendChild(actions);
+
+      return card;
+    }
+
+    async function verifyAdmin() {
+      const {
+        data: { user },
+        error: userError
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        return false;
+      }
+
+      const { data, error } = await supabase.rpc(
+        "is_kabulweb_admin"
+      );
+
+      if (error) {
+        throw new Error(
+          "بررسی دسترسی مدیر ناموفق بود. تنظیمات Supabase را بررسی کن."
+        );
+      }
+
+      return data === true;
+    }
+
+    async function showDashboard() {
+      clearMessage();
+
+      const {
+        data: { session },
+        error
+      } = await supabase.auth.getSession();
+
+      if (error) {
+        showMessage("خطا در بررسی نشست ورود.", true);
+        return;
+      }
+
+      if (!session) {
+        loginCard.classList.remove("hidden");
+        dashboard.classList.add("hidden");
+        return;
+      }
+
+      let isAdmin = false;
+
+      try {
+        isAdmin = await verifyAdmin();
+      } catch (error) {
+        showMessage(error.message, true);
+        loginCard.classList.remove("hidden");
+        dashboard.classList.add("hidden");
+        return;
+      }
+
+      if (!isAdmin) {
+        await supabase.auth.signOut();
+        loginCard.classList.remove("hidden");
+        dashboard.classList.add("hidden");
+
+        showMessage(
+          "این حساب دسترسی مدیر ندارد. با حساب مدیر ثبت‌شده وارد شو.",
+          true
+        );
+        return;
+      }
+
+      loginCard.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      $("adminEmail").textContent =
+        session.user.email || "مدیر واردشده";
+
+      await loadRecords();
+    }
+
+    async function loadRecords() {
+      if (busy) return;
+
+      busy = true;
+      clearMessage();
+      records.replaceChildren();
+
+      addText(records, "p", "در حال بارگذاری اطلاعات…", "muted");
+
+      try {
+        const config = tableConfig[currentTable];
+
+        const { data, error } = await supabase
+          .from(currentTable)
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(200);
+
+        if (error) throw error;
+
+        records.replaceChildren();
+
+        $("recordCount").textContent =
+          "تعداد موارد نمایش‌داده‌شده: " + data.length;
+
+        if (!data.length) {
+          addText(
+            records,
+            "p",
+            "هنوز اطلاعاتی برای نمایش وجود ندارد.",
+            "muted"
+          );
+          return;
+        }
+
+        for (const row of data) {
+          records.appendChild(createRecordCard(row, config));
+        }
+      } catch (error) {
+        records.replaceChildren();
+
+        showMessage(
+          "دریافت اطلاعات ناموفق بود. دسترسی‌ها و اتصال Supabase را بررسی کن.",
+          true
+        );
+
+        console.error("KabulWeb load error:", error);
+      } finally {
+        busy = false;
+      }
+    }
+
+    async function updateStatus(id, status, button) {
+      const config = tableConfig[currentTable];
+
+      if (!config.statuses.includes(status)) {
+        showMessage("وضعیت انتخاب‌شده معتبر نیست.", true);
+        return;
+      }
+
+      if (
+        !confirm(
+          "آیا از تغییر وضعیت این مورد به «" + status + "» مطمئن هستی؟"
+        )
+      ) {
+        return;
+      }
+
+      button.disabled = true;
+
+      try {
+        const { error } = await supabase
+          .from(currentTable)
+          .update({ status })
+          .eq("id", id);
+
+        if (error) throw error;
+
+        showMessage("وضعیت با موفقیت به‌روزرسانی شد.");
+        await loadRecords();
+      } catch (error) {
+        showMessage(
+          "ذخیره ناموفق بود. اجازهٔ مدیر و تنظیمات پایگاه داده را بررسی کن.",
+          true
+        );
+
+        console.error("KabulWeb update error:", error);
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    $("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const button = $("loginButton");
+      button.disabled = true;
+      clearMessage();
+
+      try {
+        const email = $("email").value.trim();
+        const password = $("password").value;
+
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) {
+          throw new Error(
+            "ورود ناموفق بود. ایمیل، رمز عبور و تأیید ایمیل را بررسی کن."
+          );
+        }
+
+        $("password").value = "";
+        await showDashboard();
+      } catch (error) {
+        showMessage(error.message, true);
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    $("logoutButton").addEventListener("click", async () => {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        showMessage("خروج ناموفق بود. دوباره تلاش کن.", true);
+        return;
+      }
+
+      records.replaceChildren();
+      dashboard.classList.add("hidden");
+      loginCard.classList.remove("hidden");
+      showMessage("با موفقیت خارج شدی.");
+    });
+
+    document.querySelectorAll("[data-table]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        currentTable = button.dataset.table;
+        await loadRecords();
+      });
+    });
+
+    $("refreshButton").addEventListener("click", loadRecords);
+
+    showDashboard();
+  </script>
+</body>
+</html>

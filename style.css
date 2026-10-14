@@ -1,0 +1,198 @@
+/* تنظیمات عمومی سایت کابل‌وب */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+:root {
+--primary: #075985;
+--secondary: #0ea5e9;
+--background: #f1f5f9;
+--text: #1e293b;
+--white: #ffffff;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: Tahoma, Arial, sans-serif;
+direction: rtl;
+background: var(--background);
+color: var(--text);
+line-height: 1.9;
+}
+
+/* سربرگ */
+header {
+background: linear-gradient(135deg, #075985, #0ea5e9);
+color: var(--white);
+text-align: center;
+padding: 35px 15px;
+}
+
+header h1 {
+font-size: 2.4rem;
+margin-bottom: 8px;
+}
+
+header p {
+font-size: 1.05rem;
+}
+
+/* منوی اصلی */
+nav {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 10px;
+padding: 15px;
+background: var(--white);
+box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+nav a {
+color: var(--primary);
+text-decoration: none;
+font-weight: bold;
+padding: 8px 14px;
+border-radius: 8px;
+transition: 0.25s;
+}
+
+nav a:hover {
+background: var(--primary);
+color: var(--white);
+}
+
+/* محتوای اصلی */
+main {
+width: min(1100px, 92%);
+margin: 30px auto;
+}
+
+section {
+margin-bottom: 35px;
+}
+
+/* بخش معرفی */
+.hero {
+text-align: center;
+padding: 65px 20px;
+border-radius: 18px;
+color: var(--white);
+background: linear-gradient(135deg, #0f172a, #075985);
+box-shadow: 0 10px 25px rgba(7, 89, 133, 0.15);
+}
+
+.hero h2 {
+font-size: clamp(1.6rem, 4vw, 2.3rem);
+margin-bottom: 15px;
+}
+
+.hero p {
+margin-bottom: 25px;
+}
+
+/* دکمه‌ها */
+.button {
+display: inline-block;
+background: #fbbf24;
+color: #1e293b;
+padding: 12px 25px;
+border-radius: 10px;
+text-decoration: none;
+font-weight: bold;
+transition: 0.25s;
+}
+
+.button:hover {
+background: #f59e0b;
+transform: translateY(-2px);
+}
+
+/* خدمات */
+#services h2,
+.advertise h2 {
+text-align: center;
+margin-bottom: 22px;
+color: var(--primary);
+}
+
+.cards {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 20px;
+}
+
+.card {
+background: var(--white);
+padding: 25px;
+border-radius: 14px;
+border: 1px solid #e2e8f0;
+box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+color: var(--primary);
+margin-bottom: 10px;
+}
+
+/* ثبت تبلیغ */
+.advertise {
+text-align: center;
+background: var(--white);
+padding: 35px 20px;
+border-radius: 14px;
+border: 1px solid #e2e8f0;
+}
+
+/* پاورقی */
+footer {
+text-align: center;
+padding: 25px 15px;
+background: #0f172a;
+color: var(--white);
+}
+
+footer a {
+color: #7dd3fc;
+text-decoration: none;
+}
+
+footer a:hover {
+text-decoration: underline;
+}
+
+/* سازگاری با موبایل */
+@media (max-width: 600px) {
+header h1 {
+font-size: 1.9rem;
+}
+
+.hero {
+padding: 45px 15px;
+}
+
+nav {
+gap: 5px;
+}
+
+nav a {
+padding: 7px 9px;
+font-size: 0.9rem;
+}
+
+.cards {
+grid-template-columns: 1fr;
+}
+}

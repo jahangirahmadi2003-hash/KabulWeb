@@ -1,412 +1,690 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="KabulWeb؛ پلتفرمی برای معرفی کانال‌های واتساپ، تلگرام و کسب‌وکارهای آنلاین.">
-    <meta name="theme-color" content="#0b1020">
-    <title>KabulWeb | معرفی کانال‌ها و تبلیغات</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KabulWeb؛ معرفی کانال‌های واتساپ، تلگرام، محصولات و خدمات کسب‌وکارها.">
+  <meta name="theme-color" content="#0b1020">
+  <title>KabulWeb | تبلیغات و کسب‌وکارهای آنلاین</title>
 
-    <style>
-        :root {
-            --bg: #0b1020;
-            --card: #151d31;
-            --text: #f4f7ff;
-            --muted: #aab6ce;
-            --green: #25d366;
-            --blue: #3985ff;
-            --border: #293650;
-        }
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #151d31;
+      --text: #f4f7ff;
+      --muted: #aab6ce;
+      --green: #25d366;
+      --blue: #3985ff;
+      --border: #293650;
+      --yellow: #ffd88a;
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: Tahoma, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.9;
+    }
 
-        header {
-            padding: 16px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            background: #10182b;
-            border-bottom: 1px solid var(--border);
-        }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-        .logo {
-            font-size: 25px;
-            font-weight: bold;
-            color: var(--green);
-        }
+    header {
+      padding: 16px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: #10182b;
+      border-bottom: 1px solid var(--border);
+    }
 
-        nav {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: var(--green);
+    }
 
-        nav a {
-            color: var(--muted);
-            font-size: 14px;
-        }
+    nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-        nav a:hover {
-            color: var(--green);
-        }
+    nav a {
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-        .hero {
-            padding: 65px 20px;
-            text-align: center;
-            background: linear-gradient(145deg, #142747, #0b1020);
-        }
+    nav a:hover {
+      color: var(--green);
+    }
 
-        .hero h1 {
-            font-size: clamp(28px, 6vw, 44px);
-            margin-bottom: 12px;
-        }
+    .hero {
+      padding: 65px 20px;
+      text-align: center;
+      background: linear-gradient(145deg, #142747, #0b1020);
+    }
 
-        .hero p {
-            max-width: 650px;
-            margin: 0 auto 25px;
-            color: var(--muted);
-        }
+    .hero h1 {
+      font-size: clamp(28px, 6vw, 44px);
+      margin-bottom: 12px;
+    }
 
-        .button {
-            display: inline-block;
-            padding: 11px 22px;
-            border-radius: 9px;
-            background: var(--green);
-            color: #07140b;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-        }
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 25px;
+      color: var(--muted);
+    }
 
-        .button.blue {
-            background: var(--blue);
-            color: white;
-        }
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      border-radius: 9px;
+      background: var(--green);
+      color: #07140b;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-family: inherit;
+      text-align: center;
+    }
 
-        main {
-            max-width: 1100px;
-            margin: auto;
-            padding: 30px 18px;
-        }
+    .button.blue {
+      background: var(--blue);
+      color: white;
+    }
 
-        .section-title {
-            font-size: 25px;
-            margin-bottom: 8px;
-        }
+    .button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
 
-        .section-description {
-            color: var(--muted);
-            margin-top: 0;
-        }
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 18px;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 18px;
-            margin: 25px 0 45px;
-        }
+    .section-title {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
 
-        .card {
-            padding: 22px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-        }
+    .section-description {
+      color: var(--muted);
+      margin-top: 0;
+    }
 
-        .card h3 {
-            margin-top: 0;
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin: 25px 0 45px;
+    }
 
-        .card p {
-            color: var(--muted);
-            overflow-wrap: anywhere;
-        }
+    .card {
+      padding: 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      min-width: 0;
+    }
 
-        .icon {
-            font-size: 34px;
-        }
+    .card h3 {
+      margin-top: 0;
+    }
 
-        .form-box {
-            background: var(--card);
-            padding: 24px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            max-width: 700px;
-            margin: 20px auto 45px;
-        }
+    .card p {
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
 
-        label {
-            display: block;
-            margin: 14px 0 5px;
-        }
+    .icon {
+      font-size: 34px;
+    }
 
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: #0b1020;
-            color: white;
-            font-family: inherit;
-            font-size: 15px;
-        }
+    .form-box {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 15px;
+      border: 1px solid var(--border);
+      max-width: 700px;
+      margin: 20px auto 45px;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 90px;
-        }
+    label {
+      display: block;
+      margin: 14px 0 5px;
+    }
 
-        .notice {
-            color: #ffd88a;
-            font-size: 13px;
-        }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #0b1020;
+      color: white;
+      font-family: inherit;
+      font-size: 15px;
+    }
 
-        #message {
-            margin-top: 15px;
-            color: var(--green);
-            overflow-wrap: anywhere;
-        }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 28px 15px;
-            background: #10182b;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-        }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--blue);
+      outline-offset: 1px;
+    }
 
-        footer a {
-            margin: 0 8px;
-        }
+    .notice {
+      color: var(--yellow);
+      font-size: 13px;
+    }
 
-        @media (max-width: 480px) {
-            header {
-                justify-content: center;
-            }
+    .message {
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
 
-            nav {
-                justify-content: center;
-            }
+    .message:empty {
+      display: none;
+    }
 
-            .hero {
-                padding: 45px 18px;
-            }
-        }
-    </style>
+    .message.success {
+      color: #a8ffdb;
+      background: #123b31;
+    }
+
+    .message.error {
+      color: #ffc1ca;
+      background: #48202b;
+    }
+
+    .message.info {
+      color: #d5e5ff;
+      background: #1c304c;
+    }
+
+    .listing-price {
+      color: var(--green) !important;
+      font-weight: bold;
+    }
+
+    .listing-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: #9db8ff;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
+    .empty {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      background: var(--card);
+      border-radius: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 15px;
+      background: #10182b;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      margin: 0 8px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 45px 18px;
+      }
+
+      .form-box {
+        padding: 16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-    <a href="index.html" class="logo">🌐 KabulWeb</a>
+  <a href="#home" class="logo">🌐 KabulWeb</a>
 
-    <nav>
-        <a href="#home">خانه</a>
-        <a href="#channels">کانال‌ها</a>
-        <a href="#submit">معرفی کانال</a>
-        <a href="about.html">درباره ما</a>
-    </nav>
+  <nav>
+    <a href="#home">خانه</a>
+    <a href="#categories">دسته‌بندی‌ها</a>
+    <a href="#listings">آگهی‌ها</a>
+    <a href="#submit">ثبت تبلیغات</a>
+    <a href="about.html">درباره ما</a>
+  </nav>
 </header>
 
 <section class="hero" id="home">
-    <h1>کانالت را به جهان معرفی کن! 🚀</h1>
+  <h1>کانالت را به جهان معرفی کن! 🚀</h1>
 
-    <p>
-        در KabulWeb کانال‌های تلگرام، واتساپ و کسب‌وکار آنلاین خود را معرفی کن
-        و به کاربران بیشتری دسترسی پیدا کن.
-    </p>
+  <p>
+    کانال واتساپ، تلگرام، فروشگاه، محصولات یا خدماتت را در KabulWeb معرفی کن.
+    درخواستت ثبت می‌شود و پس از بررسی مدیر، درباره انتشار آن تصمیم گرفته می‌شود.
+  </p>
 
-    <a href="#submit" class="button">معرفی رایگان کانال</a>
-    <a href="#channels" class="button blue">مشاهده دسته‌بندی‌ها</a>
+  <a href="#submit" class="button">📢 ثبت درخواست تبلیغات</a>
+  <a href="#listings" class="button blue">🛍️ مشاهده آگهی‌ها</a>
 </section>
 
 <main>
 
-    <section id="channels">
-        <h2 class="section-title">دسته‌بندی‌ها</h2>
-        <p class="section-description">
-            دسته موردنظرت را انتخاب کن.
+  <section id="categories">
+    <h2 class="section-title">دسته‌بندی‌ها</h2>
+    <p class="section-description">
+      زمینهٔ فعالیت خود را انتخاب کن.
+    </p>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="icon">💬</div>
+        <h3>کانال‌های واتساپ</h3>
+        <p>کانال عمومی واتساپ خود را معرفی کن.</p>
+        <a class="button" href="#submit">ثبت درخواست</a>
+      </article>
+
+      <article class="card">
+        <div class="icon">✈️</div>
+        <h3>کانال‌های تلگرام</h3>
+        <p>کانال تلگرام خود را به کاربران معرفی کن.</p>
+        <a class="button blue" href="#submit">ثبت درخواست</a>
+      </article>
+
+      <article class="card">
+        <div class="icon">🛍️</div>
+        <h3>محصولات و خدمات</h3>
+        <p>کسب‌وکار و محصولات خود را برای مشتریان معرفی کن.</p>
+        <a class="button" href="#listings">مشاهده آگهی‌ها</a>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">چرا KabulWeb؟</h2>
+
+    <div class="grid">
+
+      <article class="card">
+        <h3>📝 ثبت آسان</h3>
+        <p>اطلاعات خود را آنلاین ثبت کن و منتظر بررسی مدیر باش.</p>
+      </article>
+
+      <article class="card">
+        <h3>🌍 دسترسی آنلاین</h3>
+        <p>آگهی‌های تأییدشده می‌توانند برای کاربران اینترنت نمایش داده شوند.</p>
+      </article>
+
+      <article class="card">
+        <h3>🤝 معرفی کسب‌وکار</h3>
+        <p>راهی برای معرفی محصولات، خدمات و کانال‌های عمومی.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- آگهی‌های تأییدشده -->
+  <section id="listings">
+    <h2 class="section-title">🛍️ محصولات و خدمات</h2>
+
+    <p class="section-description">
+      آگهی‌هایی که مدیر تأیید کرده است در این قسمت نمایش داده می‌شوند.
+    </p>
+
+    <button id="refreshListings" class="button blue" type="button">
+      🔄 تازه‌سازی آگهی‌ها
+    </button>
+
+    <div id="listingMessage" class="message info" role="status"></div>
+    <div id="listingGrid" class="grid"></div>
+  </section>
+
+  <!-- فرم واقعی ثبت درخواست -->
+  <section id="submit">
+    <h2 class="section-title">📢 ثبت درخواست تبلیغات</h2>
+
+    <p class="section-description">
+      اطلاعات را کامل کن. درخواست در پایگاه داده ثبت می‌شود و پس از بررسی مدیر
+      درباره انتشار آن تصمیم گرفته می‌شود.
+    </p>
+
+    <div class="form-box">
+
+      <form id="channelForm">
+
+        <label for="name">نام کانال یا کسب‌وکار</label>
+        <input
+          id="name"
+          name="name"
+          required
+          maxlength="80"
+          autocomplete="organization"
+          placeholder="مثلاً فروشگاه آنلاین"
+        >
+
+        <label for="contact">شماره تماس یا آیدی ارتباطی</label>
+        <input
+          id="contact"
+          name="contact"
+          required
+          maxlength="100"
+          autocomplete="tel"
+          placeholder="شماره تماس یا آیدی تلگرام/واتساپ"
+        >
+
+        <label for="category">دسته‌بندی</label>
+        <select id="category" name="category" required>
+          <option value="">انتخاب کن</option>
+          <option value="کانال واتساپ">کانال واتساپ</option>
+          <option value="کانال تلگرام">کانال تلگرام</option>
+          <option value="فروشگاه آنلاین">فروشگاه آنلاین</option>
+          <option value="آموزش و یادگیری">آموزش و یادگیری</option>
+          <option value="سرگرمی">سرگرمی</option>
+          <option value="سایر">سایر</option>
+        </select>
+
+        <label for="link">لینک عمومی کانال یا صفحه</label>
+        <input
+          id="link"
+          name="link"
+          type="url"
+          required
+          maxlength="1000"
+          placeholder="https://t.me/..."
+        >
+
+        <label for="package">نوع درخواست</label>
+        <select id="package" name="package" required>
+          <option value="free">معرفی رایگان</option>
+          <option value="paid">درخواست تبلیغات پولی</option>
+        </select>
+
+        <label for="description">توضیحات</label>
+        <textarea
+          id="description"
+          name="description"
+          required
+          maxlength="300"
+          placeholder="درباره کانال، محصول یا خدماتت بنویس..."
+        ></textarea>
+
+        <button id="submitButton" class="button" type="submit">
+          ثبت درخواست
+        </button>
+
+        <p class="notice">
+          ثبت درخواست رایگان است. انتخاب تبلیغات پولی به معنی پرداخت آنلاین نیست.
+          برای جلوگیری از سوءاستفاده، اطلاعات پیش از انتشار بررسی می‌شوند.
         </p>
 
-        <div class="grid">
+        <div id="formMessage" class="message" role="status" aria-live="polite"></div>
 
-            <article class="card">
-                <div class="icon">💬</div>
-                <h3>کانال‌های واتساپ</h3>
-                <p>کانال‌های عمومی واتساپ را معرفی و کشف کن.</p>
-                <a class="button" href="#submit">افزودن کانال</a>
-            </article>
-
-            <article class="card">
-                <div class="icon">✈️</div>
-                <h3>کانال‌های تلگرام</h3>
-                <p>کانال تلگرام خود را برای کاربران معرفی کن.</p>
-                <a class="button blue" href="#submit">افزودن کانال</a>
-            </article>
-
-            <article class="card">
-                <div class="icon">🛍️</div>
-                <h3>کسب‌وکارها</h3>
-                <p>فروشگاه و خدمات آنلاین خود را معرفی کن.</p>
-                <a class="button" href="#submit">معرفی کسب‌وکار</a>
-            </article>
-
-        </div>
-    </section>
-
-    <section>
-        <h2 class="section-title">چرا KabulWeb؟</h2>
-
-        <div class="grid">
-
-            <article class="card">
-                <h3>🆓 شروع رایگان</h3>
-                <p>هدف ما فراهم‌کردن راهی ساده برای معرفی کانال‌هاست.</p>
-            </article>
-
-            <article class="card">
-                <h3>🌍 دسترسی جهانی</h3>
-                <p>کاربران می‌توانند لینک‌های عمومی را از کشورهای مختلف مشاهده کنند.</p>
-            </article>
-
-            <article class="card">
-                <h3>📢 فرصت تبلیغات</h3>
-                <p>در آینده، جایگاه‌های تبلیغاتی با شرایط و قیمت‌های شفاف ارائه می‌شوند.</p>
-            </article>
-
-        </div>
-    </section>
-
-    <section id="submit">
-        <h2 class="section-title">معرفی کانال یا کسب‌وکار</h2>
-
-        <p class="section-description">
-            اطلاعات را وارد کن تا متن معرفی آماده شود.
-        </p>
-
-        <div class="form-box">
-
-            <form id="channelForm">
-
-                <label for="name">نام کانال یا کسب‌وکار</label>
-                <input id="name" name="name" required maxlength="80"
-                       placeholder="مثلاً آموزش زبان">
-
-                <label for="category">دسته‌بندی</label>
-                <select id="category" name="category" required>
-                    <option value="">انتخاب کن</option>
-                    <option>کانال واتساپ</option>
-                    <option>کانال تلگرام</option>
-                    <option>فروشگاه آنلاین</option>
-                    <option>آموزش و یادگیری</option>
-                    <option>سرگرمی</option>
-                    <option>سایر</option>
-                </select>
-
-                <label for="link">لینک عمومی کانال یا صفحه</label>
-                <input id="link" name="link" type="url" required
-                       placeholder="https://t.me/...">
-
-                <label for="description">توضیحات کوتاه</label>
-                <textarea id="description" name="description"
-                          maxlength="300" required
-                          placeholder="درباره کانال خود بنویس..."></textarea>
-
-                <button class="button" type="submit">
-                    آماده‌کردن متن معرفی
-                </button>
-
-                <p class="notice">
-                    این نسخه اطلاعات را به سرور ارسال نمی‌کند و کانال را
-                    خودکار در سایت منتشر نمی‌کند.
-                </p>
-
-                <div id="message" role="status" aria-live="polite"></div>
-
-            </form>
-        </div>
-    </section>
+      </form>
+    </div>
+  </section>
 
 </main>
 
 <footer>
-    <p>© 2026 KabulWeb — معرفی آسان، ارتباط بیشتر</p>
-
-    <a href="about.html">درباره ما</a>
-    <a href="privacy.html">حریم خصوصی</a>
-    <a href="terms.html">شرایط استفاده</a>
+  <p>© 2026 KabulWeb — معرفی آسان، ارتباط بیشتر</p>
+  <a href="about.html">درباره ما</a>
+  <a href="privacy.html">حریم خصوصی</a>
+  <a href="terms.html">شرایط استفاده</a>
 </footer>
 
-<script>
-    const form = document.getElementById("channelForm");
-    const message = document.getElementById("message");
+<script type="module">
+  import { createClient } from
+    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
+  const SUPABASE_URL =
+    "https://netspaxkjtoumfoobgnu.supabase.co";
 
-        const name = document.getElementById("name").value.trim();
-        const category = document.getElementById("category").value;
-        const link = document.getElementById("link").value.trim();
-        const description = document.getElementById("description").value.trim();
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
 
-        try {
-            const url = new URL(link);
+  const supabase = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-            if (url.protocol !== "https:" && url.protocol !== "http:") {
-                throw new Error("invalid protocol");
-            }
+  const form = document.getElementById("channelForm");
+  const submitButton = document.getElementById("submitButton");
+  const formMessage = document.getElementById("formMessage");
+  const listingMessage = document.getElementById("listingMessage");
+  const listingGrid = document.getElementById("listingGrid");
 
-            const text =
-                "معرفی در KabulWeb\n\n" +
-                "نام: " + name + "\n" +
-                "دسته‌بندی: " + category + "\n" +
-                "لینک: " + url.href + "\n" +
-                "توضیحات: " + description;
+  function showMessage(element, text, type = "info") {
+    element.textContent = text;
+    element.className = "message " + type;
+  }
 
-            message.textContent = text;
+  // ثبت درخواست واقعی در جدول ad_requests
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-            const copyButton = document.createElement("button");
-            copyButton.type = "button";
-            copyButton.className = "button";
-            copyButton.textContent = "کپی متن معرفی";
+    if (submitButton.disabled) return;
 
-            copyButton.addEventListener("click", async function() {
-                try {
-                    await navigator.clipboard.writeText(text);
-                    copyButton.textContent = "کپی شد ✓";
-                } catch {
-                    message.textContent =
-                        text + "\n\nمتن را انتخاب کن و دستی کپی کن.";
-                }
-            });
+    submitButton.disabled = true;
 
-            message.appendChild(document.createElement("br"));
-            message.appendChild(copyButton);
+    showMessage(
+      formMessage,
+      "در حال ثبت درخواست؛ لطفاً صبر کن…",
+      "info"
+    );
 
-        } catch {
-            message.textContent =
-                "لطفاً یک لینک معتبر با http:// یا https:// وارد کن.";
+    try {
+      const name = document.getElementById("name").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const category = document.getElementById("category").value;
+      const link = document.getElementById("link").value.trim();
+      const packageType = document.getElementById("package").value;
+      const description =
+        document.getElementById("description").value.trim();
+
+      if (!name || !contact || !category || !link || !description) {
+        throw new Error("لطفاً تمام فیلدهای ضروری را تکمیل کن.");
+      }
+
+      const parsedURL = new URL(link);
+
+      if (
+        parsedURL.protocol !== "https:" &&
+        parsedURL.protocol !== "http:"
+      ) {
+        throw new Error("لینک باید با https:// یا http:// شروع شود.");
+      }
+
+      if (!["free", "paid"].includes(packageType)) {
+        throw new Error("نوع درخواست معتبر نیست.");
+      }
+
+      const { error } = await supabase
+        .from("ad_requests")
+        .insert([{
+          name: name,
+          contact: contact,
+          platform: category,
+          link: parsedURL.href,
+          description: description,
+          package: packageType,
+          status: "pending"
+        }]);
+
+      if (error) {
+        console.error("Supabase submission error:", error);
+        throw new Error(
+          "درخواست ثبت نشد. اتصال اینترنت و مجوزهای Supabase باید بررسی شوند."
+        );
+      }
+
+      form.reset();
+
+      showMessage(
+        formMessage,
+        "✅ درخواست با موفقیت ثبت شد. درخواست تو با وضعیت «در انتظار بررسی» ذخیره شد.",
+        "success"
+      );
+
+    } catch (error) {
+      showMessage(
+        formMessage,
+        error.message || "خطایی رخ داد. لطفاً دوباره تلاش کن.",
+        "error"
+      );
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+
+  // نمایش آگهی‌های تأییدشده از جدول listings
+  async function loadListings() {
+    listingGrid.replaceChildren();
+
+    showMessage(
+      listingMessage,
+      "در حال دریافت آگهی‌ها…",
+      "info"
+    );
+
+    try {
+      const { data, error } = await supabase
+        .from("listings")
+        .select(
+          "id, seller_name, title, category, listing_type, description, price, currency, image_url"
+        )
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      if (error) {
+        console.error("Supabase listings error:", error);
+        throw new Error("فعلاً دریافت آگهی‌ها ممکن نیست.");
+      }
+
+      if (!data || data.length === 0) {
+        showMessage(
+          listingMessage,
+          "هنوز محصول یا خدمت تأییدشده‌ای برای نمایش وجود ندارد.",
+          "info"
+        );
+        return;
+      }
+
+      listingMessage.textContent = "";
+
+      for (const item of data) {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const title = document.createElement("h3");
+        title.textContent = item.title || "بدون عنوان";
+        card.appendChild(title);
+
+        const category = document.createElement("p");
+        category.textContent =
+          "دسته‌بندی: " + (item.category || "سایر");
+        card.appendChild(category);
+
+        if (item.listing_type) {
+          const type = document.createElement("p");
+          type.textContent =
+            "نوع: " +
+            (item.listing_type === "product" ? "محصول" : "خدمت");
+          card.appendChild(type);
         }
-    });
+
+        if (item.description) {
+          const description = document.createElement("p");
+          description.textContent = item.description;
+          card.appendChild(description);
+        }
+
+        if (item.price !== null && item.price !== undefined) {
+          const price = document.createElement("p");
+          price.className = "listing-price";
+          price.textContent =
+            "قیمت: " + item.price + " " + (item.currency || "AFN");
+          card.appendChild(price);
+        }
+
+        if (item.seller_name) {
+          const seller = document.createElement("p");
+          seller.textContent = "فروشنده: " + item.seller_name;
+          card.appendChild(seller);
+        }
+
+        if (item.image_url) {
+          try {
+            const imageURL = new URL(item.image_url);
+
+            if (imageURL.protocol === "https:") {
+              const imageLink = document.createElement("a");
+              imageLink.className = "listing-link";
+              imageLink.href = imageURL.href;
+              imageLink.target = "_blank";
+              imageLink.rel = "noopener noreferrer";
+              imageLink.textContent = "مشاهده تصویر";
+              card.appendChild(imageLink);
+            }
+          } catch {
+            // لینک تصویر نامعتبر نمایش داده نمی‌شود.
+          }
+        }
+
+        listingGrid.appendChild(card);
+      }
+
+    } catch (error) {
+      showMessage(
+        listingMessage,
+        error.message || "خطا در دریافت آگهی‌ها.",
+        "error"
+      );
+    }
+  }
+
+  document
+    .getElementById("refreshListings")
+    .addEventListener("click", loadListings);
+
+  loadListings();
 </script>
 
 </body>
-</html>
+    </html>

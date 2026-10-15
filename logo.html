@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <title>لوگوی متحرک KabulWeb</title>
+
+  <style>
+    :root {
+      --logo-primary: #16a34a;
+      --logo-secondary: #38bdf8;
+      --logo-background: #0f172a;
+      --logo-text: #ffffff;
+      --logo-speed: 1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--logo-background);
+      color: var(--logo-text);
+      font-family: Arial, Tahoma, sans-serif;
+    }
+
+    .logo-card {
+      width: min(100%, 440px);
+      text-align: center;
+    }
+
+    .logo-window {
+      width: 180px;
+      height: 150px;
+      margin: 0 auto 20px;
+      overflow: visible;
+    }
+
+    .window-frame {
+      fill: none;
+      stroke: var(--logo-primary);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 500;
+      stroke-dashoffset: 500;
+      animation: draw-frame calc(1.2s * var(--logo-speed)) ease forwards;
+    }
+
+    .globe {
+      opacity: 0;
+      transform-origin: 90px 76px;
+      animation: globe-appear calc(0.8s * var(--logo-speed))
+        ease calc(1s * var(--logo-speed)) forwards;
+    }
+
+    .globe-line {
+      fill: none;
+      stroke: var(--logo-secondary);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .connection {
+      fill: var(--logo-primary);
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .brand-name {
+      direction: ltr;
+      font-size: clamp(34px, 9vw, 48px);
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .brand-name span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: letter-in calc(0.35s * var(--logo-speed)) ease forwards;
+    }
+
+    .brand-name .green {
+      color: var(--logo-primary);
+    }
+
+    .brand-name .blue {
+      color: var(--logo-secondary);
+    }
+
+    .tagline {
+      margin: 14px 0 0;
+      font-size: 17px;
+      line-height: 1.9;
+      color: #cbd5e1;
+      opacity: 0;
+      animation: tagline-in calc(0.8s * var(--logo-speed))
+        ease calc(3.4s * var(--logo-speed)) forwards;
+    }
+
+    .replay {
+      margin-top: 28px;
+      padding: 10px 20px;
+      border: 1px solid var(--logo-primary);
+      border-radius: 10px;
+      background: transparent;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .replay:hover {
+      background: var(--logo-primary);
+    }
+
+    @keyframes draw-frame {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes globe-appear {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes letter-in {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes tagline-in {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      .window-frame {
+        stroke-dashoffset: 0;
+      }
+
+      .globe,
+      .tagline,
+      .brand-name span {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .logo-window {
+        width: 145px;
+        height: 125px;
+      }
+
+      .tagline {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="logo-card" aria-label="لوگوی KabulWeb">
+
+    <svg
+      class="logo-window"
+      viewBox="0 0 180 150"
+      role="img"
+      aria-labelledby="logo-title logo-description"
+    >
+      <title id="logo-title">KabulWeb</title>
+      <desc id="logo-description">
+        پنجره‌ای دیجیتالی با کرهٔ زمین و شبکهٔ ارتباطی
+      </desc>
+
+      <path
+        class="window-frame"
+        d="M25 130 V28 Q25 15 38 15 H142 Q155 15 155 28 V130
+           M25 45 H155"
+      />
+
+      <circle cx="39" cy="30" r="3" fill="#16a34a" />
+      <circle cx="50" cy="30" r="3" fill="#38bdf8" />
+      <circle cx="61" cy="30" r="3" fill="#16a34a" />
+
+      <g class="globe">
+        <circle
+          class="globe-line"
+          cx="90"
+          cy="86"
+          r="34"
+        />
+
+        <ellipse
+          class="globe-line"
+          cx="90"
+          cy="86"
+          rx="15"
+          ry="34"
+        />
+
+        <ellipse
+          class="globe-line"
+          cx="90"
+          cy="86"
+          rx="34"
+          ry="13"
+        />
+
+        <path
+          class="globe-line"
+          d="M59 76 Q90 91 121 76
+             M59 96 Q90 81 121 96"
+        />
+
+        <path
+          class="globe-line"
+          d="M67 62 L78 68 L75 78
+             L85 84 L78 94 L82 108
+             M106 60 L101 73 L111 81
+             L104 92 L114 103"
+        />
+
+        <circle class="connection" cx="90" cy="52" r="4" />
+        <circle class="connection" cx="122" cy="86" r="4" />
+        <circle class="connection" cx="67" cy="110" r="4" />
+      </g>
+    </svg>
+
+    <h1 class="brand-name" aria-label="KabulWeb">
+      <span style="animation-delay:1.9s">K</span><span class="green" style="animation-delay:2s">a</span><span class="green" style="animation-delay:2.1s">b</span><span class="green" style="animation-delay:2.2s">u</span><span class="green" style="animation-delay:2.3s">l</span><span class="blue" style="animation-delay:2.4s">W</span><span class="blue" style="animation-delay:2.5s">e</span><span class="blue" style="animation-delay:2.6s">b</span>
+    </h1>
+
+    <p class="tagline">بازار افغانستان و جهان</p>
+
+    <button class="replay" type="button" onclick="replayLogo()">
+      اجرای دوبارهٔ انیمیشن ↻
+    </button>
+
+  </main>
+
+  <script>
+    function replayLogo() {
+      const card = document.querySelector(".logo-card");
+      const clone = card.cloneNode(true);
+
+      card.replaceWith(clone);
+    }
+  </script>
+</body>
+</html>

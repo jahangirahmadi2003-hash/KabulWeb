@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta name="description" content="KabulWeb؛ بستری برای معرفی کانال‌های واتساپ، تلگرام، محصولات، خدمات و کسب‌وکارها در افغانستان و جهان.">
+  <meta name="description" content="KabulWeb؛ معرفی کانال‌های واتساپ، تلگرام، محصولات، خدمات، کسب‌وکارها و فرصت‌های شغلی در افغانستان و جهان.">
   <meta name="theme-color" content="#0b1020">
 
   <title>KabulWeb | بازار افغانستان و جهان</title>
@@ -27,6 +26,7 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 15px;
     }
 
     body {
@@ -38,12 +38,12 @@
     }
 
     a {
-      text-decoration: none;
       color: inherit;
+      text-decoration: none;
     }
 
     header {
-      padding: 16px 6%;
+      padding: 16px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -61,7 +61,7 @@
 
     nav {
       display: flex;
-      gap: 16px;
+      gap: 13px;
       flex-wrap: wrap;
     }
 
@@ -75,7 +75,7 @@
     }
 
     .hero {
-      padding: 65px 20px;
+      padding: 60px 20px;
       text-align: center;
       background: linear-gradient(145deg, #142747, #0b1020);
     }
@@ -93,7 +93,7 @@
 
     .button {
       display: inline-block;
-      padding: 11px 20px;
+      padding: 11px 18px;
       border-radius: 9px;
       background: var(--green);
       color: #07140b;
@@ -103,12 +103,6 @@
       font-size: 15px;
       font-family: inherit;
       text-align: center;
-      transition: transform .2s, opacity .2s;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      opacity: .9;
     }
 
     .button.blue {
@@ -127,6 +121,10 @@
       padding: 30px 18px;
     }
 
+    section {
+      margin-bottom: 45px;
+    }
+
     .section-title {
       font-size: 25px;
       margin-bottom: 8px;
@@ -141,7 +139,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
-      margin: 25px 0 45px;
+      margin: 25px 0;
     }
 
     .card {
@@ -165,24 +163,15 @@
       font-size: 34px;
     }
 
-    /* بخش کانال‌های رسمی */
     .official-channels {
-      margin-bottom: 45px;
       padding: 25px;
       background: linear-gradient(145deg, #142747, #10182b);
       border: 1px solid var(--border);
       border-radius: 18px;
     }
 
-    .official-channels .grid {
-      margin-bottom: 10px;
-    }
-
     .channel-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: block;
       width: 100%;
       margin-top: 8px;
     }
@@ -194,14 +183,12 @@
 
     .telegram-button {
       background: #168bd2;
-      color: #fff;
+      color: white;
     }
 
     .channels-footer {
-      margin: 18px 0 0;
       color: var(--muted);
       text-align: center;
-      font-size: 14px;
     }
 
     .form-box {
@@ -209,8 +196,8 @@
       padding: 24px;
       border-radius: 15px;
       border: 1px solid var(--border);
-      max-width: 700px;
-      margin: 20px auto 45px;
+      max-width: 760px;
+      margin: 20px auto;
     }
 
     label {
@@ -240,7 +227,6 @@
     select:focus,
     textarea:focus {
       outline: 2px solid var(--blue);
-      outline-offset: 1px;
     }
 
     .notice {
@@ -279,20 +265,53 @@
       font-weight: bold;
     }
 
-    .listing-link {
-      display: inline-block;
-      margin-top: 8px;
-      color: #9db8ff;
-      text-decoration: underline;
-      overflow-wrap: anywhere;
-    }
-
     .empty {
       padding: 20px;
       text-align: center;
       color: var(--muted);
       background: var(--card);
       border-radius: 12px;
+    }
+
+    .jobs-filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+      padding: 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin: 20px 0;
+    }
+
+    .jobs-filters label {
+      margin-top: 0;
+    }
+
+    .jobs-filters input,
+    .jobs-filters select {
+      margin: 0;
+    }
+
+    .job-meta {
+      color: var(--muted);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .job-description {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .job-type-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #20385c;
+      color: #c4ddff;
+      font-size: 12px;
     }
 
     footer {
@@ -308,29 +327,30 @@
       margin: 0 8px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       header {
         justify-content: center;
       }
 
       nav {
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
       }
 
       .hero {
-        padding: 45px 18px;
+        padding: 40px 16px;
       }
 
-      .form-box {
+      .form-box,
+      .official-channels {
         padding: 16px;
       }
 
-      .official-channels {
-        padding: 17px;
+      .grid {
+        grid-template-columns: 1fr;
       }
 
-      .grid {
+      .jobs-filters {
         grid-template-columns: 1fr;
       }
 
@@ -350,7 +370,8 @@
     <a href="#home">خانه</a>
     <a href="#official-channels">کانال‌های ما</a>
     <a href="#categories">دسته‌بندی‌ها</a>
-    <a href="#listings">آگهی‌ها</a>
+    <a href="#listings">محصولات</a>
+    <a href="#jobs">کاریابی</a>
     <a href="#submit">ثبت تبلیغات</a>
     <a href="about.html">درباره ما</a>
   </nav>
@@ -361,28 +382,22 @@
 
   <p>
     کانال واتساپ، تلگرام، فروشگاه، محصولات یا خدماتت را در KabulWeb معرفی کن.
-    درخواستت ثبت می‌شود و پس از بررسی مدیر، دربارهٔ انتشار آن تصمیم گرفته می‌شود.
+    فرصت‌های شغلی را پیدا کن و آگهی استخدام خود را ثبت کن.
   </p>
 
   <a href="#submit" class="button">📢 ثبت درخواست تبلیغات</a>
-  <a href="#listings" class="button blue">🛍️ مشاهده آگهی‌ها</a>
+  <a href="#listings" class="button blue">🛍️ مشاهده محصولات</a>
+  <a href="#jobs" class="button">💼 فرصت‌های شغلی</a>
 </section>
 
 <main>
 
-  <!-- کانال‌های رسمی KabulWeb -->
-  <section
-    class="official-channels"
-    id="official-channels"
-    aria-labelledby="channels-title"
-  >
-    <h2 class="section-title" id="channels-title">
-      🌍 بازار افغانستان و جهان
-    </h2>
+  <!-- کانال‌های رسمی -->
+  <section class="official-channels" id="official-channels">
+    <h2 class="section-title">🌍 بازار افغانستان و جهان</h2>
 
     <p class="section-description">
-      به جامعهٔ KabulWeb بپیوندید! با کسب‌وکارها، محصولات و خدمات جدید
-      آشنا شوید، تبلیغات را دنبال کنید و فرصت‌های همکاری را پیدا کنید.
+      با کسب‌وکارها، محصولات، خدمات و فرصت‌های جدید آشنا شوید.
     </p>
 
     <div class="grid">
@@ -390,60 +405,40 @@
       <article class="card">
         <div class="icon">💬</div>
         <h3>کانال رسمی واتساپ</h3>
-
-        <p>
-          برای دنبال‌کردن معرفی کسب‌وکارها، محصولات، خدمات و تبلیغات جدید
-          به کانال واتساپ ما بپیوندید.
-        </p>
+        <p>معرفی کسب‌وکارها، محصولات و تبلیغات جدید.</p>
 
         <a
           class="button channel-button whatsapp-button"
           href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="عضویت در کانال رسمی واتساپ KabulWeb"
-        >
-          💚 عضویت در واتساپ
-        </a>
+        >💚 عضویت در واتساپ</a>
       </article>
 
       <article class="card">
         <div class="icon">✈️</div>
         <h3>کانال رسمی تلگرام</h3>
-
-        <p>
-          برای دریافت تازه‌ترین معرفی‌ها، تبلیغات و فرصت‌های تجاری
-          در کانال تلگرام ما عضو شوید.
-        </p>
+        <p>دریافت تازه‌ترین معرفی‌ها و فرصت‌های تجاری.</p>
 
         <a
           class="button channel-button telegram-button"
           href="https://t.me/kabulwebs"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="عضویت در کانال رسمی تلگرام KabulWeb"
-        >
-          🔵 عضویت در تلگرام
-        </a>
+        >🔵 عضویت در تلگرام</a>
       </article>
 
     </div>
 
-    <p class="channels-footer">
-      🤝 با هم، فرصت‌های بیشتری می‌سازیم.
-    </p>
+    <p class="channels-footer">🤝 با هم، فرصت‌های بیشتری می‌سازیم.</p>
   </section>
 
   <!-- دسته‌بندی‌ها -->
   <section id="categories">
     <h2 class="section-title">دسته‌بندی‌ها</h2>
-
-    <p class="section-description">
-      زمینهٔ فعالیت خود را انتخاب کن.
-    </p>
+    <p class="section-description">زمینهٔ فعالیت خود را انتخاب کن.</p>
 
     <div class="grid">
-
       <article class="card">
         <div class="icon">💬</div>
         <h3>کانال‌های واتساپ</h3>
@@ -454,45 +449,49 @@
       <article class="card">
         <div class="icon">✈️</div>
         <h3>کانال‌های تلگرام</h3>
-        <p>کانال تلگرام خود را به کاربران معرفی کن.</p>
+        <p>کانال تلگرام خود را معرفی کن.</p>
         <a class="button blue" href="#submit">ثبت درخواست</a>
       </article>
 
       <article class="card">
         <div class="icon">🛍️</div>
         <h3>محصولات و خدمات</h3>
-        <p>کسب‌وکار و محصولات خود را برای مشتریان معرفی کن.</p>
-        <a class="button" href="#listings">مشاهده آگهی‌ها</a>
+        <p>محصولات و خدمات خود را به مشتریان معرفی کن.</p>
+        <a class="button" href="#listings">مشاهده محصولات</a>
       </article>
 
+      <article class="card">
+        <div class="icon">💼</div>
+        <h3>کاریابی</h3>
+        <p>فرصت شغلی پیدا کن یا آگهی استخدام ثبت کن.</p>
+        <a class="button blue" href="#jobs">ورود به کاریابی</a>
+      </article>
     </div>
   </section>
 
-  <!-- مزایای سایت -->
+  <!-- مزایا -->
   <section id="benefits">
     <h2 class="section-title">چرا KabulWeb؟</h2>
 
     <div class="grid">
-
       <article class="card">
         <h3>📝 ثبت آسان</h3>
-        <p>اطلاعات خود را آنلاین ثبت کن و منتظر بررسی مدیر باش.</p>
+        <p>اطلاعات خود را آنلاین ثبت کن.</p>
       </article>
 
       <article class="card">
         <h3>🌍 دسترسی آنلاین</h3>
-        <p>آگهی‌های تأییدشده می‌توانند برای کاربران اینترنت نمایش داده شوند.</p>
+        <p>آگهی‌های تأییدشده برای کاربران نمایش داده می‌شوند.</p>
       </article>
 
       <article class="card">
-        <h3>🤝 معرفی کسب‌وکار</h3>
-        <p>راهی برای معرفی محصولات، خدمات و کانال‌های عمومی.</p>
+        <h3>🤝 فرصت‌های تازه</h3>
+        <p>کسب‌وکارها و فرصت‌های شغلی را پیدا کن.</p>
       </article>
-
     </div>
   </section>
 
-  <!-- آگهی‌های تأییدشده -->
+  <!-- محصولات و خدمات -->
   <section id="listings">
     <h2 class="section-title">🛍️ محصولات و خدمات</h2>
 
@@ -500,35 +499,150 @@
       آگهی‌هایی که مدیر تأیید کرده است در این قسمت نمایش داده می‌شوند.
     </p>
 
-    <button
-      id="refreshListings"
-      class="button blue"
-      type="button"
-    >
+    <button id="refreshListings" class="button blue" type="button">
       🔄 تازه‌سازی آگهی‌ها
     </button>
 
-    <div
-      id="listingMessage"
-      class="message info"
-      role="status"
-      aria-live="polite"
-    ></div>
-
+    <div id="listingMessage" class="message info" role="status" aria-live="polite"></div>
     <div id="listingGrid" class="grid"></div>
   </section>
 
-  <!-- فرم ثبت درخواست تبلیغات -->
+  <!-- کاریابی -->
+  <section id="jobs">
+    <h2 class="section-title">💼 کاریابی کابل‌وب</h2>
+
+    <p class="section-description">
+      فرصت‌های شغلی افغانستان را جستجو کن یا آگهی استخدام خود را ثبت کن.
+      آگهی‌ها پس از بررسی مدیر منتشر می‌شوند.
+    </p>
+
+    <div class="jobs-filters">
+      <div>
+        <label for="jobSearch">جستجوی فرصت شغلی</label>
+        <input
+          id="jobSearch"
+          type="search"
+          maxlength="120"
+          placeholder="عنوان وظیفه، شرکت یا محل کار..."
+        >
+      </div>
+
+      <div>
+        <label for="jobTypeFilter">نوع استخدام</label>
+        <select id="jobTypeFilter">
+          <option value="">همه نوع وظایف</option>
+          <option value="fulltime">تمام‌وقت</option>
+          <option value="parttime">نیمه‌وقت</option>
+          <option value="remote">دورکاری</option>
+          <option value="contract">قراردادی</option>
+        </select>
+      </div>
+
+      <button id="refreshJobs" class="button blue" type="button">
+        🔄 تازه‌سازی
+      </button>
+    </div>
+
+    <div id="jobsMessage" class="message info" role="status" aria-live="polite"></div>
+    <div id="jobsList" class="grid"></div>
+
+    <div class="form-box">
+      <h3>📢 ثبت آگهی استخدام</h3>
+
+      <p class="section-description">
+        شرکت‌ها، فروشگاه‌ها و مؤسسات می‌توانند فرصت‌های شغلی خود را ثبت کنند.
+      </p>
+
+      <form id="jobForm">
+        <label for="jobTitle">عنوان وظیفه</label>
+        <input
+          id="jobTitle"
+          name="title"
+          required
+          maxlength="120"
+          placeholder="مثلاً کارمند فروش"
+        >
+
+        <label for="jobCompany">نام شرکت یا مؤسسه</label>
+        <input
+          id="jobCompany"
+          name="company"
+          required
+          maxlength="120"
+          placeholder="نام استخدام‌کننده"
+        >
+
+        <label for="jobLocation">محل کار</label>
+        <input
+          id="jobLocation"
+          name="location"
+          required
+          maxlength="120"
+          placeholder="مثلاً کابل، دشت برچی"
+        >
+
+        <label for="jobCategory">نوع وظیفه</label>
+        <select id="jobCategory" name="type" required>
+          <option value="">انتخاب کن</option>
+          <option value="fulltime">تمام‌وقت</option>
+          <option value="parttime">نیمه‌وقت</option>
+          <option value="remote">دورکاری</option>
+          <option value="contract">قراردادی</option>
+        </select>
+
+        <label for="jobSalary">معاش</label>
+        <input
+          id="jobSalary"
+          name="salary"
+          maxlength="100"
+          placeholder="مثلاً توافقی یا ۱۲۰۰۰ افغانی"
+        >
+
+        <label for="jobDeadline">آخرین مهلت درخواست</label>
+        <input id="jobDeadline" name="deadline" type="date">
+
+        <label for="jobDescription">شرایط و معلومات وظیفه</label>
+        <textarea
+          id="jobDescription"
+          name="description"
+          required
+          maxlength="3000"
+          rows="5"
+          placeholder="شرایط تحصیلی، تجربه، مسئولیت‌ها و روش درخواست..."
+        ></textarea>
+
+        <label for="jobContact">راه تماس یا لینک رسمی درخواست</label>
+        <input
+          id="jobContact"
+          name="contact"
+          required
+          maxlength="300"
+          placeholder="شماره تماس یا لینک رسمی استخدام"
+        >
+
+        <button id="jobSubmitButton" class="button" type="submit">
+          ثبت آگهی برای بررسی
+        </button>
+
+        <p class="notice">
+          آگهی‌ها پیش از انتشار بررسی می‌شوند. ثبت آگهی به معنی تضمین صحت
+          استخدام یا تأیید شرکت نیست. برای حفظ امنیت، اطلاعات را بررسی کنید.
+        </p>
+
+        <div id="jobFormMessage" class="message" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ثبت تبلیغات -->
   <section id="submit">
     <h2 class="section-title">📢 ثبت درخواست تبلیغات</h2>
 
     <p class="section-description">
-      اطلاعات را کامل کن. درخواست در پایگاه داده ثبت می‌شود و پس از بررسی مدیر
-      دربارهٔ انتشار آن تصمیم گرفته می‌شود.
+      درخواست تبلیغات پس از ثبت برای بررسی مدیر ارسال می‌شود.
     </p>
 
     <div class="form-box">
-
       <form id="channelForm">
 
         <label for="name">نام کانال یا کسب‌وکار</label>
@@ -547,7 +661,6 @@
           name="contact"
           required
           maxlength="100"
-          autocomplete="tel"
           placeholder="شماره تماس یا آیدی تلگرام/واتساپ"
         >
 
@@ -587,26 +700,15 @@
           placeholder="دربارهٔ کانال، محصول یا خدماتت بنویس..."
         ></textarea>
 
-        <button
-          id="submitButton"
-          class="button"
-          type="submit"
-        >
+        <button id="submitButton" class="button" type="submit">
           ثبت درخواست
         </button>
 
         <p class="notice">
           ثبت درخواست رایگان است. انتخاب تبلیغات پولی به معنی پرداخت آنلاین نیست.
-          برای جلوگیری از سوءاستفاده، اطلاعات پیش از انتشار بررسی می‌شوند.
         </p>
 
-        <div
-          id="formMessage"
-          class="message"
-          role="status"
-          aria-live="polite"
-        ></div>
-
+        <div id="formMessage" class="message" role="status" aria-live="polite"></div>
       </form>
     </div>
   </section>
@@ -614,24 +716,18 @@
 </main>
 
 <footer>
-  <p>© 2026 KabulWeb — معرفی آسان، ارتباط بیشتر</p>
+  <p>© 2026 KabulWeb — بنیانگذار: Jahangir Ahmadi</p>
 
   <a href="about.html">درباره ما</a>
   <a href="privacy.html">حریم خصوصی</a>
   <a href="terms.html">شرایط استفاده</a>
 
   <p>
-    <a
-      href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R"
-      target="_blank"
-      rel="noopener noreferrer"
-    >واتساپ</a>
+    <a href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R"
+       target="_blank" rel="noopener noreferrer">واتساپ</a>
 
-    <a
-      href="https://t.me/kabulwebs"
-      target="_blank"
-      rel="noopener noreferrer"
-    >تلگرام</a>
+    <a href="https://t.me/kabulwebs"
+       target="_blank" rel="noopener noreferrer">تلگرام</a>
   </p>
 </footer>
 
@@ -650,67 +746,44 @@
     SUPABASE_PUBLISHABLE_KEY
   );
 
-  const form = document.getElementById("channelForm");
-  const submitButton = document.getElementById("submitButton");
-  const formMessage = document.getElementById("formMessage");
-  const listingMessage = document.getElementById("listingMessage");
-  const listingGrid = document.getElementById("listingGrid");
+  const $ = id => document.getElementById(id);
 
   function showMessage(element, text, type = "info") {
     element.textContent = text;
     element.className = "message " + type;
   }
 
-  // ثبت درخواست در جدول ad_requests
-  form.addEventListener("submit", async function(event) {
+  // -----------------------------
+  // ثبت درخواست تبلیغات
+  // -----------------------------
+  const channelForm = $("channelForm");
+  const submitButton = $("submitButton");
+  const formMessage = $("formMessage");
+
+  channelForm.addEventListener("submit", async event => {
     event.preventDefault();
 
     if (submitButton.disabled) return;
-
     submitButton.disabled = true;
 
-    showMessage(
-      formMessage,
-      "در حال ثبت درخواست؛ لطفاً صبر کن…",
-      "info"
-    );
+    showMessage(formMessage, "در حال ثبت درخواست…", "info");
 
     try {
-      const name =
-        document.getElementById("name").value.trim();
-
-      const contact =
-        document.getElementById("contact").value.trim();
-
-      const category =
-        document.getElementById("category").value;
-
-      const link =
-        document.getElementById("link").value.trim();
-
-      const packageType =
-        document.getElementById("package").value;
-
-      const description =
-        document.getElementById("description").value.trim();
+      const name = $("name").value.trim();
+      const contact = $("contact").value.trim();
+      const category = $("category").value;
+      const link = $("link").value.trim();
+      const packageType = $("package").value;
+      const description = $("description").value.trim();
 
       if (!name || !contact || !category || !link || !description) {
         throw new Error("لطفاً تمام فیلدهای ضروری را تکمیل کن.");
       }
 
-      let parsedURL;
+      const parsedURL = new URL(link);
 
-      try {
-        parsedURL = new URL(link);
-      } catch {
-        throw new Error("لطفاً یک لینک معتبر وارد کن.");
-      }
-
-      if (
-        parsedURL.protocol !== "https:" &&
-        parsedURL.protocol !== "http:"
-      ) {
-        throw new Error("لینک باید با https:// یا http:// شروع شود.");
+      if (!["https:", "http:"].includes(parsedURL.protocol)) {
+        throw new Error("لینک واردشده معتبر نیست.");
       }
 
       if (!["free", "paid"].includes(packageType)) {
@@ -720,35 +793,31 @@
       const { error } = await supabase
         .from("ad_requests")
         .insert([{
-          name: name,
-          contact: contact,
+          name,
+          contact,
           platform: category,
           link: parsedURL.href,
-          description: description,
+          description,
           package: packageType,
           status: "pending"
         }]);
 
       if (error) {
-        console.error("Supabase submission error:", error);
-
-        throw new Error(
-          "درخواست ثبت نشد. اتصال اینترنت و مجوزهای Supabase باید بررسی شوند."
-        );
+        console.error("Ad request error:", error);
+        throw new Error("ثبت درخواست ناموفق بود. لطفاً دوباره تلاش کن.");
       }
 
-      form.reset();
+      channelForm.reset();
 
       showMessage(
         formMessage,
-        "✅ درخواست با موفقیت ثبت شد. درخواست تو با وضعیت «در انتظار بررسی» ذخیره شد.",
+        "✅ درخواست تبلیغات ثبت شد و در انتظار بررسی مدیر است.",
         "success"
       );
-
     } catch (error) {
       showMessage(
         formMessage,
-        error.message || "خطایی رخ داد. لطفاً دوباره تلاش کن.",
+        error.message || "خطایی رخ داد.",
         "error"
       );
     } finally {
@@ -756,30 +825,28 @@
     }
   });
 
-  // دریافت آگهی‌های تأییدشده از جدول listings
+  // -----------------------------
+  // نمایش محصولات و خدمات
+  // -----------------------------
+  const listingGrid = $("listingGrid");
+  const listingMessage = $("listingMessage");
+
   async function loadListings() {
     listingGrid.replaceChildren();
 
-    showMessage(
-      listingMessage,
-      "در حال دریافت آگهی‌ها…",
-      "info"
-    );
+    showMessage(listingMessage, "در حال دریافت آگهی‌ها…", "info");
 
     try {
       const { data, error } = await supabase
         .from("listings")
         .select(
-          "id, seller_name, title, category, listing_type, description, price, currency, image_url"
+          "id,seller_name,title,category,listing_type,description,price,currency,image_url,created_at"
         )
         .eq("status", "approved")
         .order("created_at", { ascending: false })
         .limit(50);
 
-      if (error) {
-        console.error("Supabase listings error:", error);
-        throw new Error("فعلاً دریافت آگهی‌ها ممکن نیست.");
-      }
+      if (error) throw error;
 
       if (!data || data.length === 0) {
         showMessage(
@@ -792,7 +859,7 @@
 
       listingMessage.textContent = "";
 
-      for (const item of data) {
+      data.forEach(item => {
         const card = document.createElement("article");
         card.className = "card";
 
@@ -801,17 +868,13 @@
         card.appendChild(title);
 
         const category = document.createElement("p");
-        category.textContent =
-          "دسته‌بندی: " + (item.category || "سایر");
+        category.textContent = "دسته‌بندی: " + (item.category || "سایر");
         card.appendChild(category);
 
         if (item.listing_type) {
           const type = document.createElement("p");
-
           type.textContent =
-            "نوع: " +
-            (item.listing_type === "product" ? "محصول" : "خدمت");
-
+            "نوع: " + (item.listing_type === "product" ? "محصول" : "خدمت");
           card.appendChild(type);
         }
 
@@ -824,10 +887,8 @@
         if (item.price !== null && item.price !== undefined) {
           const price = document.createElement("p");
           price.className = "listing-price";
-
           price.textContent =
             "قیمت: " + item.price + " " + (item.currency || "AFN");
-
           card.appendChild(price);
         }
 
@@ -843,38 +904,242 @@
 
             if (imageURL.protocol === "https:") {
               const imageLink = document.createElement("a");
-
-              imageLink.className = "listing-link";
               imageLink.href = imageURL.href;
               imageLink.target = "_blank";
               imageLink.rel = "noopener noreferrer";
               imageLink.textContent = "مشاهده تصویر";
-
               card.appendChild(imageLink);
             }
           } catch {
-            // لینک تصویر نامعتبر نمایش داده نمی‌شود.
+            // تصویر نامعتبر نمایش داده نمی‌شود.
           }
         }
 
         listingGrid.appendChild(card);
-      }
-
+      });
     } catch (error) {
+      console.error("Listings error:", error);
       showMessage(
         listingMessage,
-        error.message || "خطا در دریافت آگهی‌ها.",
+        "دریافت آگهی‌ها ناموفق بود. تنظیمات جدول listings را بررسی کن.",
         "error"
       );
     }
   }
 
-  document
-    .getElementById("refreshListings")
-    .addEventListener("click", loadListings);
+  $("refreshListings").addEventListener("click", loadListings);
 
+  // -----------------------------
+  // کاریابی KabulWeb
+  // -----------------------------
+  const jobForm = $("jobForm");
+  const jobSubmitButton = $("jobSubmitButton");
+  const jobFormMessage = $("jobFormMessage");
+  const jobsMessage = $("jobsMessage");
+  const jobsList = $("jobsList");
+  const jobSearch = $("jobSearch");
+  const jobTypeFilter = $("jobTypeFilter");
+
+  let approvedJobs = [];
+
+  const jobTypeLabels = {
+    fulltime: "تمام‌وقت",
+    parttime: "نیمه‌وقت",
+    remote: "دورکاری",
+    contract: "قراردادی"
+  };
+
+  function renderJobs() {
+    const keyword = jobSearch.value.trim().toLocaleLowerCase();
+    const selectedType = jobTypeFilter.value;
+
+    const filtered = approvedJobs.filter(job => {
+      const searchable = [
+        job.title,
+        job.company,
+        job.location,
+        job.description
+      ].filter(Boolean).join(" ").toLocaleLowerCase();
+
+      const matchesKeyword = searchable.includes(keyword);
+      const matchesType = !selectedType || job.type === selectedType;
+
+      return matchesKeyword && matchesType;
+    });
+
+    jobsList.replaceChildren();
+
+    if (!filtered.length) {
+      showMessage(
+        jobsMessage,
+        approvedJobs.length
+          ? "برای جستجوی شما فرصت شغلی پیدا نشد."
+          : "هنوز فرصت شغلی تأییدشده‌ای منتشر نشده است.",
+        "info"
+      );
+      return;
+    }
+
+    jobsMessage.textContent = "";
+
+    filtered.forEach(job => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const title = document.createElement("h3");
+      title.textContent = job.title;
+      card.appendChild(title);
+
+      const company = document.createElement("p");
+      company.className = "job-meta";
+      company.textContent = "🏢 " + job.company;
+      card.appendChild(company);
+
+      const location = document.createElement("p");
+      location.className = "job-meta";
+      location.textContent = "📍 " + job.location;
+      card.appendChild(location);
+
+      const type = document.createElement("span");
+      type.className = "job-type-badge";
+      type.textContent = jobTypeLabels[job.type] || "نوع نامشخص";
+      card.appendChild(type);
+
+      const salary = document.createElement("p");
+      salary.className = "listing-price";
+      salary.textContent = "💰 معاش: " + (job.salary || "توافقی");
+      card.appendChild(salary);
+
+      if (job.deadline) {
+        const deadline = document.createElement("p");
+        deadline.className = "job-meta";
+        deadline.textContent = "⏰ آخرین مهلت درخواست: " + job.deadline;
+        card.appendChild(deadline);
+      }
+
+      const description = document.createElement("p");
+      description.className = "job-description";
+      description.textContent = job.description;
+      card.appendChild(description);
+
+      const contact = document.createElement("p");
+      contact.className = "job-meta";
+      contact.textContent = "📞 راه تماس: " + job.contact;
+      card.appendChild(contact);
+
+      jobsList.appendChild(card);
+    });
+  }
+
+  async function loadJobs() {
+    jobsList.replaceChildren();
+
+    showMessage(jobsMessage, "در حال دریافت فرصت‌های شغلی…", "info");
+
+    try {
+      const { data, error } = await supabase
+        .from("job_posts")
+        .select(
+          "id,title,company,location,type,salary,deadline,description,contact,created_at"
+        )
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(100);
+
+      if (error) throw error;
+
+      approvedJobs = data || [];
+      renderJobs();
+    } catch (error) {
+      console.error("Jobs loading error:", error);
+
+      showMessage(
+        jobsMessage,
+        "دریافت فرصت‌های شغلی ناموفق بود. اتصال و مجوزهای Supabase را بررسی کن.",
+        "error"
+      );
+    }
+  }
+
+  jobForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (jobSubmitButton.disabled) return;
+    jobSubmitButton.disabled = true;
+
+    showMessage(jobFormMessage, "در حال ثبت آگهی…", "info");
+
+    try {
+      const title = $("jobTitle").value.trim();
+      const company = $("jobCompany").value.trim();
+      const location = $("jobLocation").value.trim();
+      const type = $("jobCategory").value;
+      const salary = $("jobSalary").value.trim();
+      const deadline = $("jobDeadline").value;
+      const description = $("jobDescription").value.trim();
+      const contact = $("jobContact").value.trim();
+
+      if (!title || !company || !location || !type || !description || !contact) {
+        throw new Error("لطفاً تمام فیلدهای ضروری را تکمیل کن.");
+      }
+
+      if (!Object.prototype.hasOwnProperty.call(jobTypeLabels, type)) {
+        throw new Error("نوع وظیفه معتبر نیست.");
+      }
+
+      if (deadline && !/^\d{4}-\d{2}-\d{2}$/.test(deadline)) {
+        throw new Error("تاریخ مهلت درخواست معتبر نیست.");
+      }
+
+      if (deadline && deadline < new Date().toISOString().slice(0, 10)) {
+        throw new Error("مهلت درخواست نمی‌تواند در گذشته باشد.");
+      }
+
+      const { error } = await supabase
+        .from("job_posts")
+        .insert([{
+          title,
+          company,
+          location,
+          type,
+          salary: salary || null,
+          deadline: deadline || null,
+          description,
+          contact,
+          status: "pending"
+        }]);
+
+      if (error) {
+        console.error("Job submission error:", error);
+        throw new Error("ثبت آگهی ناموفق بود. تنظیمات جدول و مجوزهای Supabase را بررسی کن.");
+      }
+
+      jobForm.reset();
+
+      showMessage(
+        jobFormMessage,
+        "✅ آگهی استخدام ثبت شد و در انتظار بررسی مدیر است. پس از تأیید نمایش داده خواهد شد.",
+        "success"
+      );
+    } catch (error) {
+      showMessage(
+        jobFormMessage,
+        error.message || "ثبت آگهی ناموفق بود. دوباره تلاش کن.",
+        "error"
+      );
+    } finally {
+      jobSubmitButton.disabled = false;
+    }
+  });
+
+  jobSearch.addEventListener("input", renderJobs);
+  jobTypeFilter.addEventListener("change", renderJobs);
+  $("refreshJobs").addEventListener("click", loadJobs);
+
+  // بارگذاری اولیه
   loadListings();
+  loadJobs();
 </script>
 
 </body>
-  </html>
+    </html>

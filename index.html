@@ -5,117 +5,289 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07170f">
 <meta name="description" content="KabulWeb؛ بازار افغانستان و جهان. کانالت را به جهان معرفی کن.">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>KabulWeb | بازار افغانستان و جهان</title>
+
 <style>
-:root{--bg:#07170f;--panel:#102a1d;--gold:#e4c477;--text:#fff8e8;--muted:#c5d0c7}
+:root{
+  --bg:#07170f;--panel:#102a1d;--gold:#e4c477;
+  --text:#fff8e8;--muted:#c5d0c7;
+  --pink:#ff6fb5;--cyan:#6af0ff;--lime:#a6ff7a;
+  --orange:#ff9a3d
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:100px}
-body{margin:0;background:radial-gradient(ellipse at top,#19472f,transparent 50%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.9}
-a{color:var(--gold)}button,input,select,textarea{font:inherit}
-button,.btn{display:inline-block;border:1px solid var(--gold);border-radius:11px;padding:10px 17px;background:linear-gradient(135deg,#f1dda1,#c9a34e);color:#102218;text-decoration:none;font-weight:bold;cursor:pointer}
+body{
+  margin:0;background:
+  radial-gradient(ellipse at 15% 0,#1f5a3a88,transparent 45%),
+  radial-gradient(ellipse at 90% 20%,#6a2a6a55,transparent 40%),
+  radial-gradient(ellipse at 50% 100%,#0e4a5a55,transparent 45%),
+  var(--bg);
+  background-attachment:fixed;color:var(--text);
+  font-family:Tahoma,Arial,sans-serif;line-height:1.9
+}
+a{color:var(--gold)}
+button,input,select,textarea{font:inherit}
+button,.btn{
+  display:inline-block;border:1px solid var(--gold);
+  border-radius:11px;padding:10px 17px;
+  background:linear-gradient(135deg,#ffe58a,var(--orange));
+  color:#102218;text-decoration:none;font-weight:bold;cursor:pointer
+}
 button:disabled{opacity:.6;cursor:wait}
+button:focus-visible,a:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--cyan);outline-offset:3px
+}
 .container{width:min(1120px,92%);margin:auto}
 section{scroll-margin-top:100px}
-.topbar{position:sticky;top:0;z-index:100;background:#06140fee;backdrop-filter:blur(12px);border-bottom:1px solid #e4c47755}
-.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:10px 0}
+.topbar{
+  position:sticky;top:0;z-index:100;background:#06140fee;
+  backdrop-filter:blur(12px);border-bottom:1px solid #e4c47755
+}
+.nav{
+  min-height:72px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;flex-wrap:wrap;padding:10px 0
+}
 .brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none}
-.brand-icon{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--gold);border-radius:14px;color:var(--gold);font-size:25px}
-.brand-name{direction:ltr;font-weight:bold;font-size:22px}.brand-name span{color:var(--gold)}
+.brand-logo{width:50px;height:50px;filter:drop-shadow(0 0 8px #ff6fb577);transition:transform .6s}
+.brand:hover .brand-logo{transform:rotate(45deg) scale(1.08)}
+.brand-name{direction:ltr;font-weight:bold;font-size:22px}
+.brand-name span{color:var(--gold)}
 .nav-links{display:flex;flex-wrap:wrap;gap:7px 14px}
-.nav-links a{color:var(--text);text-decoration:none;font-size:13px}.nav-links a:hover{color:var(--gold)}
-#opening{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:auto;padding:25px;text-align:center;background:radial-gradient(ellipse at 50% 40%,#245a3b,transparent 48%),radial-gradient(ellipse at bottom,#143b29,#030b07 75%);transition:opacity .9s,visibility .9s}
-#opening:before{content:"";position:absolute;inset:15px;border:1px solid #e4c47799;outline:1px solid #e4c47733;outline-offset:6px;pointer-events:none}
+.nav-links a{color:var(--text);text-decoration:none;font-size:13px}
+.nav-links a:hover{color:var(--gold)}
+#opening{
+  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  overflow:auto;padding:25px;text-align:center;
+  background:radial-gradient(ellipse at 50% 40%,#245a3b,transparent 48%),
+  radial-gradient(ellipse at bottom,#143b29,#030b07 75%);
+  transition:opacity .6s,visibility .6s
+}
+#opening:before{
+  content:"";position:absolute;inset:15px;border:1px solid #e4c47799;
+  outline:1px solid #e4c47733;outline-offset:6px;pointer-events:none
+}
 #opening.hide{opacity:0;visibility:hidden;pointer-events:none}
 .opening-inner{max-width:760px;padding:30px 12px;animation:appear 1.3s ease}
-.ornament{color:var(--gold);font-size:30px;letter-spacing:9px}
-.bismillah{color:#ffe8aa;font-family:"Noto Naskh Arabic","Times New Roman",serif;font-size:clamp(32px,7vw,64px);line-height:1.9;text-shadow:0 0 25px #e4c47755;margin:20px 0;animation:glow 3s infinite}
-.gold-line{height:1px;width:230px;max-width:80%;margin:18px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.opening-brand{color:var(--gold);font-size:clamp(35px,7vw,52px);font-weight:bold;direction:ltr}.opening-small{color:var(--muted);font-size:13px;margin-top:20px}
-@keyframes glow{0%,100%{text-shadow:0 0 5px #e4c47722}50%{text-shadow:0 0 25px #e4c477bb}}
-@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.hero{padding:55px 0 30px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px}
-.eyebrow{display:inline-block;border:1px solid #78643a;border-radius:30px;padding:4px 12px;color:var(--gold);font-size:12px}
-.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.6;margin:15px 0}.hero h1 span{color:var(--gold)}
-.hero p,.section-head p{color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.btn-secondary{background:transparent;color:var(--gold)}
-.hero-art{min-height:270px;display:grid;place-items:center;border:1px solid #e4c47766;border-radius:25px;background:radial-gradient(circle,#1d4c32,#091b11 70%);position:relative;overflow:hidden}
-.hero-art:before,.hero-art:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #e4c47766;border-radius:28px;transform:rotate(45deg)}.hero-art:after{width:140px;height:140px;transform:rotate(22deg)}
-.hero-symbol{z-index:1;text-align:center;color:var(--gold)}.hero-symbol strong{display:block;font-size:30px;direction:ltr}.hero-symbol .star{font-size:55px}
-.quick-grid,.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.quick-grid{grid-template-columns:repeat(4,minmax(0,1fr));margin:15px 0}
-.quick,.card{min-width:0;padding:18px;border:1px solid #ffffff18;border-radius:17px;background:linear-gradient(145deg,var(--panel),#0b2117)}
-.quick{text-align:center;color:var(--muted);font-size:13px}.quick b{display:block;font-size:23px;color:var(--gold)}
-section.block{padding:28px 0}.section-head{margin-bottom:18px}.section-head h2{color:var(--gold);margin:0;font-size:25px}.section-head p{font-size:13px;margin:5px 0}
-.card h3{margin:8px 0}.card p{color:var(--muted);font-size:14px;overflow-wrap:anywhere}.card-icon{font-size:25px;color:var(--gold)}
-.channel-row{display:flex;flex-wrap:wrap;gap:12px}.channel-card{flex:1;min-width:220px;padding:18px;display:flex;align-items:center;gap:12px;border:1px solid #78643a;border-radius:15px;text-decoration:none;color:var(--text);background:#ffffff06}
-.channel-card b{display:block;color:var(--gold)}.channel-card small{color:var(--muted)}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{min-width:0}.field.full,.form-actions{grid-column:1/-1}
-label{display:block;margin-bottom:5px;font-size:13px}
-input,select,textarea{width:100%;min-width:0;border:1px solid #617667;border-radius:10px;padding:11px;color:var(--text);background:#07170f}
-input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}textarea{resize:vertical}
-.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
-.message{color:var(--muted);font-size:13px;overflow-wrap:anywhere}.message.error{color:#ffaaaa}.message.success{color:#70e8a6}
-.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px}.filters input{max-width:400px}
-.listing-card{overflow-wrap:anywhere}.listing-card a{display:inline-block;margin-top:7px}
-.empty{padding:18px;border:1px dashed #ffffff35;border-radius:12px;text-align:center;color:var(--muted);grid-column:1/-1}
-footer{margin-top:35px;padding:27px 0;border-top:1px solid #e4c47744;background:#030b07;color:var(--muted);font-size:13px}
-.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}footer a{margin-inline-start:10px}
-@media(max-width:760px){.nav{align-items:flex-start;flex-direction:column}.hero{grid-template-columns:1fr;padding-top:35px}.hero-art{min-height:210px}.quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:480px){.cards,.form-grid{grid-template-columns:1fr}.field.full,.form-actions{grid-column:auto}.hero h1{font-size:34px}}
-/* ===== Graphic upgrade ===== */
-:root{--pink:#ff6fb5;--cyan:#6af0ff;--lime:#a6ff7a;--orange:#ff9a3d}
-body{background:radial-gradient(ellipse at 15% 0,#1f5a3a88,transparent 45%),radial-gradient(ellipse at 90% 20%,#6a2a6a55,transparent 40%),radial-gradient(ellipse at 50% 100%,#0e4a5a55,transparent 45%),var(--bg);background-attachment:fixed}
-.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
-.brand-logo{width:50px;height:50px;filter:drop-shadow(0 0 8px #ff6fb577);transition:transform .6s}.brand:hover .brand-logo{transform:rotate(45deg) scale(1.08)}
-.opening-logo{width:clamp(110px,22vw,160px);height:auto;margin:0 auto;display:block;filter:drop-shadow(0 0 22px #6af0ff88);animation:float 4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.opening-logo{
+  width:clamp(110px,22vw,160px);height:auto;margin:0 auto;
+  display:block;filter:drop-shadow(0 0 22px #6af0ff88);
+  animation:float 4s ease-in-out infinite
+}
+.ornament{
+  color:var(--gold);font-size:30px;letter-spacing:9px;margin-top:6px;
+  background:linear-gradient(90deg,var(--orange),var(--pink),var(--cyan),var(--lime));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent
+}
+.bismillah{
+  white-space:normal;color:#ffe8aa;
+  font-family:"Noto Naskh Arabic","Times New Roman",serif;
+  font-size:clamp(23px,6.2vw,54px);line-height:1.9;
+  background:linear-gradient(90deg,#ff3b3b,#ff6a00,#ffcf00,#22ff6a,#00f0ff,#3d7bff,#d84dff,#ff4da6,#ff3b3b);
+  background-size:300% 100%;-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent;
+  animation:flow 7s linear infinite,bglow 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px #ff6fb566);margin:14px 0;padding:6px 4px
+}
+.gold-line{
+  height:2px;width:230px;max-width:80%;margin:18px auto;
+  background:linear-gradient(90deg,transparent,var(--pink),var(--cyan),var(--lime),transparent)
+}
+.opening-en{direction:ltr;color:var(--muted);font-size:13px;letter-spacing:.4px}
+.opening-brand{
+  color:var(--gold);font-size:clamp(35px,7vw,52px);
+  font-weight:bold;direction:ltr;
+  background:linear-gradient(90deg,#fff0b3,var(--orange),var(--pink));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent
+}
+.opening-small{color:var(--muted);font-size:13px;margin-top:20px}
+#opening button{
+  background:linear-gradient(135deg,var(--orange),var(--pink),#9b6bff);
+  color:#fff;border-color:#ffffff66;box-shadow:0 0 22px #ff6fb566;margin-top:10px
+}
 @keyframes flow{to{background-position:300% 0}}
+@keyframes bglow{50%{filter:drop-shadow(0 0 20px #ff6fb5aa)}}
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{50%{transform:translateY(-8px)}}
 @keyframes spin{to{transform:rotate(405deg)}}
-.ornament{background:linear-gradient(90deg,var(--orange),var(--pink),var(--cyan),var(--lime));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;margin-top:6px}
-.bismillah{background:linear-gradient(90deg,#ffd86b,var(--pink),var(--cyan),var(--lime),#ffd86b);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;text-shadow:none;animation:flow 7s linear infinite;filter:drop-shadow(0 0 16px #ff6fb566);padding:0 8px}
-.gold-line{background:linear-gradient(90deg,transparent,var(--pink),var(--cyan),var(--lime),transparent);height:2px}
-.opening-en{direction:ltr;color:var(--muted);font-size:13px;letter-spacing:.4px;margin:2px 0 8px}
-.opening-brand{background:linear-gradient(90deg,#fff0b3,var(--orange),var(--pink));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-#opening button{background:linear-gradient(135deg,var(--orange),var(--pink),#9b6bff);color:#fff;border-color:#ffffff66;box-shadow:0 0 22px #ff6fb566;margin-top:10px}
-.hero h1 span{background:linear-gradient(90deg,#ffe58a,var(--orange),var(--pink),var(--cyan));background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:flow 8s linear infinite}
-.hero-art{border-color:#ff6fb577;box-shadow:0 0 50px #6af0ff22,inset 0 0 50px #ff6fb522}
-.hero-art:before{animation:spin 18s linear infinite;border-color:#6af0ff88}.hero-art:after{animation:spin 26s linear infinite reverse;border-color:#ff6fb588}
+.hero{
+  padding:55px 0 30px;display:grid;grid-template-columns:1.1fr .9fr;
+  align-items:center;gap:30px
+}
+.eyebrow{
+  display:inline-block;border:1px solid #78643a;border-radius:30px;
+  padding:4px 12px;color:var(--gold);font-size:12px
+}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.6;margin:15px 0}
+.hero h1 span{
+  background:linear-gradient(90deg,#ffe58a,var(--orange),var(--pink),var(--cyan));
+  background-size:250% 100%;-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent;
+  animation:flow 8s linear infinite
+}
+.hero p,.section-head p{color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn-secondary{background:transparent!important;color:var(--gold)}
+.hero-art{
+  min-height:270px;display:grid;place-items:center;
+  border:1px solid #ff6fb577;border-radius:25px;
+  background:radial-gradient(circle,#1d4c32,#091b11 70%);
+  position:relative;overflow:hidden;box-shadow:0 0 50px #6af0ff22,inset 0 0 50px #ff6fb522
+}
+.hero-art:before,.hero-art:after{
+  content:"";position:absolute;width:190px;height:190px;
+  border:1px solid #6af0ff88;border-radius:28px;transform:rotate(45deg);
+  animation:spin 18s linear infinite
+}
+.hero-art:after{width:140px;height:140px;border-color:#ff6fb588;animation-duration:26s;animation-direction:reverse}
+.hero-symbol{z-index:1;text-align:center;color:var(--gold)}
+.hero-symbol strong{
+  display:block;font-size:30px;direction:ltr;
+  background:linear-gradient(90deg,#fff0b3,var(--cyan),var(--pink));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent
+}
+.hero-symbol small{direction:ltr;display:block}
 .hero-logo{width:150px;height:150px;position:relative;z-index:1;filter:drop-shadow(0 0 22px #ff9a3d88);animation:float 4.5s ease-in-out infinite}
-.hero-symbol strong{background:linear-gradient(90deg,#fff0b3,var(--cyan),var(--pink));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.quick{transition:transform .25s,border-color .25s}.quick:hover,.card:hover{transform:translateY(-4px);border-color:#ff6fb577}
-.card{transition:transform .25s,border-color .25s,box-shadow .25s}.card:hover{box-shadow:0 12px 30px #0006}
-.section-head h2{background:linear-gradient(90deg,var(--gold),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;display:inline-block}
-.section-head h2 small{font-size:13px;-webkit-text-fill-color:var(--muted);color:var(--muted);margin-inline-start:8px;direction:ltr;display:inline-block}
-.btn,button{background:linear-gradient(135deg,#ffe58a,var(--orange))}
-.btn-secondary{background:transparent!important}
+.quick-grid,.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.quick-grid{grid-template-columns:repeat(4,minmax(0,1fr));margin:15px 0}
+.quick,.card{
+  min-width:0;padding:18px;border:1px solid #ffffff18;border-radius:17px;
+  background:linear-gradient(145deg,var(--panel),#0b2117);
+  transition:transform .25s,border-color .25s,box-shadow .25s
+}
+.quick{text-align:center;color:var(--muted);font-size:13px}
+.quick b{display:block;font-size:23px;color:var(--gold)}
+.quick:hover,.card:hover{transform:translateY(-4px);border-color:#ff6fb577}
+.card:hover{box-shadow:0 12px 30px #0006}
+section.block{padding:28px 0}
+.section-head{margin-bottom:18px}
+.section-head h2{
+  color:var(--gold);margin:0;font-size:25px;display:inline-block;
+  background:linear-gradient(90deg,var(--gold),var(--orange));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent
+}
+.section-head h2 small{
+  font-size:13px;-webkit-text-fill-color:var(--muted);
+  margin-inline-start:8px;direction:ltr;display:inline-block
+}
+.card h3{margin:8px 0;overflow-wrap:anywhere}
+.card p{color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.card-icon{font-size:25px;color:var(--gold)}
+.channel-row{display:flex;flex-wrap:wrap;gap:12px}
+.channel-card{
+  flex:1;min-width:220px;padding:18px;display:flex;align-items:center;gap:12px;
+  border:1px solid #78643a;border-radius:15px;text-decoration:none;
+  color:var(--text);background:#ffffff06
+}
+.channel-card b{display:block;color:var(--gold)}
+.channel-card small{color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{min-width:0}
+.field.full,.form-actions{grid-column:1/-1}
+label{display:block;margin-bottom:5px;font-size:13px}
+input,select,textarea{
+  width:100%;min-width:0;border:1px solid #617667;border-radius:10px;
+  padding:11px;color:var(--text);background:#07170f
+}
+textarea{resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.message{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.message.error{color:#ffaaaa}
+.message.success{color:#70e8a6}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px}
+.filters input{max-width:400px}
+.listing-card{overflow-wrap:anywhere;cursor:pointer}
+.listing-card a{display:inline-block;margin-top:7px;position:relative;z-index:2}
+.listing-card .more{display:inline-block;margin-top:8px;margin-inline-end:12px;color:var(--cyan);font-size:13px}
+.badge{
+  display:inline-block;padding:0 10px;margin-inline-start:6px;
+  border-radius:20px;border:1px solid var(--pink);color:var(--pink);font-size:11px
+}
+.empty{
+  padding:18px;border:1px dashed #ffffff35;border-radius:12px;
+  text-align:center;color:var(--muted);grid-column:1/-1
+}
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:s}
-.step{position:relative;padding:20px 18px;border-radius:17px;border:1px solid #ffffff18;background:linear-gradient(145deg,var(--panel),#0b2117);overflow:hidden}
-.step:before{counter-increment:s;content:counter(s);position:absolute;inset-inline-end:14px;top:4px;font-size:58px;font-weight:bold;opacity:.18;background:linear-gradient(135deg,var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.step b{display:block;color:var(--gold);margin-bottom:4px}.step span{color:var(--muted);font-size:14px}.step small{display:block;color:var(--cyan);direction:ltr;text-align:right;font-size:12px;margin-top:6px}
-.tips{margin:0;padding:0;list-style:none;display:grid;gap:8px}.tips li{padding-inline-start:26px;position:relative;color:var(--muted);font-size:14px}.tips li:before{content:"🛡️";position:absolute;inset-inline-start:0}
-.to-top{position:fixed;inset-inline-start:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;width:46px;height:46px;border-radius:50%;padding:0;font-size:20px;display:none}.to-top.show{display:block}
-@media(max-width:760px){.steps{grid-template-columns:1fr}}
-.listing-card{cursor:pointer}.listing-card .more{display:inline-block;margin-top:8px;margin-inline-end:12px;color:var(--cyan);font-size:13px}
-.badge{display:inline-block;padding:0 10px;margin-inline-start:6px;border-radius:20px;border:1px solid var(--pink);color:var(--pink);font-size:11px;vertical-align:middle}
-dialog#detailModal{width:min(680px,94vw);max-height:90vh;overflow:auto;padding:0;border:1px solid #ff6fb577;border-radius:20px;background:#0b2117;color:var(--text);box-shadow:0 20px 60px #000a}
+.step{
+  position:relative;padding:20px 18px;border-radius:17px;
+  border:1px solid #ffffff18;background:linear-gradient(145deg,var(--panel),#0b2117);
+  overflow:hidden
+}
+.step:before{
+  counter-increment:s;content:counter(s);position:absolute;
+  inset-inline-end:14px;top:4px;font-size:58px;font-weight:bold;opacity:.18;color:var(--pink)
+}
+.step b{display:block;color:var(--gold);margin-bottom:4px}
+.step span{color:var(--muted);font-size:14px}
+.step small{display:block;color:var(--cyan);direction:ltr;text-align:right;font-size:12px;margin-top:6px}
+.tips{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.tips li{padding-inline-start:26px;position:relative;color:var(--muted);font-size:14px}
+.tips li:before{content:"🛡️";position:absolute;inset-inline-start:0}
+.to-top{
+  position:fixed;inset-inline-start:16px;
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  z-index:90;width:46px;height:46px;border-radius:50%;
+  padding:0;font-size:20px;display:none
+}
+.to-top.show{display:block}
+dialog#detailModal{
+  width:min(680px,94vw);max-height:90vh;overflow:auto;padding:0;
+  border:1px solid #ff6fb577;border-radius:20px;
+  background:#0b2117;color:var(--text);box-shadow:0 20px 60px #000a
+}
 dialog#detailModal::backdrop{background:#000b;backdrop-filter:blur(4px)}
-.dm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:16px 18px;border-bottom:1px solid #ffffff18;position:sticky;top:0;background:#0b2117;z-index:1}
+.dm-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+  padding:16px 18px;border-bottom:1px solid #ffffff18;
+  position:sticky;top:0;background:#0b2117;z-index:1
+}
 .dm-head h3{margin:0;color:var(--gold);font-size:18px;overflow-wrap:anywhere}
 .dm-close{padding:4px 12px;background:transparent!important;color:var(--gold)}
 .dm-body{padding:14px 18px 20px;display:grid;gap:12px}
 .dm-row{padding:10px 12px;border:1px solid #ffffff14;border-radius:12px;background:#ffffff06;overflow-wrap:anywhere}
-.dm-row b{display:block;color:var(--gold);font-size:13px}.dm-row span,.dm-row a{font-size:14px}
+.dm-row b{display:block;color:var(--gold);font-size:13px}
+.dm-row span,.dm-row a{font-size:14px}
 .dm-copy{margin-inline-start:8px;padding:2px 10px;font-size:12px;border-radius:8px}
 .dm-full{white-space:pre-wrap;color:var(--muted);font-size:13px;line-height:1.9;margin:6px 0 0}
 .dm-note{color:var(--pink);font-size:12px}
-/* ===== 20-colour bismillah (single line) ===== */
-.bismillah{white-space:nowrap;font-size:clamp(19px,6.2vw,54px);background-image:linear-gradient(90deg,#ff3b3b,#ff6a00,#ff9a00,#ffc400,#ffee00,#c6ff00,#7dff3a,#22ff6a,#00ffb3,#00f0ff,#00b8ff,#3d7bff,#6a4dff,#a14dff,#d84dff,#ff4de1,#ff4da6,#ff4d6d,#ffd86b,#ff3b3b);background-size:300% 100%;background-repeat:repeat-x;animation:flow 6s linear infinite,bglow 3s ease-in-out infinite;margin:14px -10px;padding:6px 4px;overflow:visible}
-@keyframes bglow{0%,100%{filter:drop-shadow(0 0 6px #ffffff33)}50%{filter:drop-shadow(0 0 20px #ff6fb5aa)}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}}
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+footer{margin-top:35px;padding:27px 0;border-top:1px solid #e4c47744;background:#030b07;color:var(--muted);font-size:13px}
+.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer a{margin-inline-start:10px}
+@media(max-width:760px){
+  .nav{align-items:flex-start;flex-direction:column}
+  .hero{grid-template-columns:1fr;padding-top:35px}
+  .hero-art{min-height:210px}
+  .quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .cards,.form-grid{grid-template-columns:1fr}
+  .field.full,.form-actions{grid-column:auto}
+  .hero h1{font-size:34px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+}
 </style>
 </head>
+
 <body>
-<svg class="svg-defs" aria-hidden="true" focusable="false"><defs>
-  <linearGradient id="kwg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset=".35" stop-color="#ff9a3d"/><stop offset=".7" stop-color="#ff6fb5"/><stop offset="1" stop-color="#6af0ff"/></linearGradient>
-  <radialGradient id="kwc" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#2d7a50"/><stop offset="1" stop-color="#0a2016"/></radialGradient>
+<svg class="svg-defs" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="kwg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffe58a"/>
+    <stop offset=".35" stop-color="#ff9a3d"/>
+    <stop offset=".7" stop-color="#ff6fb5"/>
+    <stop offset="1" stop-color="#6af0ff"/>
+  </linearGradient>
+  <radialGradient id="kwc" cx=".5" cy=".4" r=".7">
+    <stop offset="0" stop-color="#2d7a50"/>
+    <stop offset="1" stop-color="#0a2016"/>
+  </radialGradient>
   <symbol id="kw-logo" viewBox="0 0 100 100">
     <circle cx="50" cy="50" r="47" fill="url(#kwc)" stroke="url(#kwg)" stroke-width="3"/>
     <circle cx="50" cy="50" r="41" fill="none" stroke="url(#kwg)" stroke-width="1" stroke-dasharray="2 4"/>
@@ -123,145 +295,398 @@ dialog#detailModal::backdrop{background:#000b;backdrop-filter:blur(4px)}
     <rect x="25" y="25" width="50" height="50" rx="3" fill="none" stroke="url(#kwg)" stroke-width="3" transform="rotate(45 50 50)"/>
     <circle cx="50" cy="50" r="17" fill="url(#kwg)"/>
     <text x="50" y="58.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="bold" fill="#07170f">K</text>
-    <circle cx="50" cy="8" r="3" fill="#6af0ff"/><circle cx="50" cy="92" r="3" fill="#ff6fb5"/><circle cx="8" cy="50" r="3" fill="#a6ff7a"/><circle cx="92" cy="50" r="3" fill="#ffe58a"/>
+    <circle cx="50" cy="8" r="3" fill="#6af0ff"/>
+    <circle cx="50" cy="92" r="3" fill="#ff6fb5"/>
+    <circle cx="8" cy="50" r="3" fill="#a6ff7a"/>
+    <circle cx="92" cy="50" r="3" fill="#ffe58a"/>
   </symbol>
-</defs></svg>
+</defs>
+</svg>
+
 <section id="opening" aria-label="صفحه افتتاحیه">
   <div class="opening-inner">
-    <svg class="opening-logo" viewBox="0 0 100 100" role="img" aria-label="لوگوی KabulWeb"><use href="#kw-logo"/></svg>
+    <svg class="opening-logo" viewBox="0 0 100 100" role="img" aria-label="لوگوی KabulWeb">
+      <use href="#kw-logo"/>
+    </svg>
     <div class="ornament">۞ ✦ ۞</div>
     <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     <div class="gold-line"></div>
     <p>به نام خداوند بخشنده و مهربان</p>
-    <div class="opening-en">In the name of God, the Most Gracious, the Most Merciful</div>
+    <div class="opening-en">In the name of God, the Most Gracious and the Most Merciful</div>
     <div class="opening-brand">KabulWeb</div>
     <p>بازار افغانستان و جهان<br>کانالت را به جهان معرفی کن</p>
     <button id="enterSite" type="button">ورود به کابل‌وب ←</button>
     <div class="opening-small">با توکل بر خداوند، به سوی آینده‌ای بهتر</div>
   </div>
 </section>
+
 <header class="topbar">
   <div class="container nav">
-    <a class="brand" href="#home"><svg class="brand-logo" viewBox="0 0 100 100" aria-hidden="true"><use href="#kw-logo"/></svg><span><span class="brand-name">Kabul<span>Web</span></span><br><small>بازار افغانستان و جهان</small></span></a>
-    <nav class="nav-links">
-      <a href="#home">خانه</a><a href="#channels">کانال‌های رسمی</a><a href="#categories">دسته‌بندی‌ها</a><a href="#listings">بازار</a><a href="#jobs">کاریابی</a><a href="#advertise">ثبت تبلیغ</a><a href="account.html">حساب کاربری</a><a href="admin.html">مدیریت</a>
+    <a class="brand" href="#home">
+      <svg class="brand-logo" viewBox="0 0 100 100" aria-hidden="true"><use href="#kw-logo"/></svg>
+      <span><span class="brand-name">Kabul<span>Web</span></span><br><small>بازار افغانستان و جهان</small></span>
+    </a>
+    <nav class="nav-links" aria-label="ناوبری اصلی">
+      <a href="#home">خانه</a>
+      <a href="#channels">کانال‌های رسمی</a>
+      <a href="#categories">دسته‌بندی‌ها</a>
+      <a href="#listings">بازار</a>
+      <a href="#jobs">کاریابی</a>
+      <a href="#advertise">ثبت تبلیغ</a>
+      <a href="account.html">حساب کاربری</a>
+      <a href="admin.html">مدیریت</a>
     </nav>
   </div>
 </header>
+
 <main class="container" id="home">
   <noscript><p class="message error">برای استفاده از کابل‌وب، جاوااسکریپت مرورگر باید فعال باشد.</p></noscript>
+
   <section class="hero">
-    <div><span class="eyebrow">🌍 بازار افغانستان و جهان</span><h1>کسب‌وکار خود را<br><span>به جهان معرفی کن</span></h1><p>کانال، فروشگاه، محصول، خدمات و فرصت کاری خود را معرفی کن. درخواست تبلیغات پس از ثبت در انتظار بررسی مدیریت قرار می‌گیرد.</p><div class="actions"><a class="btn" href="#advertise">📢 ثبت تبلیغات</a><a class="btn btn-secondary" href="#listings">دیدن بازار</a></div></div>
-    <div class="hero-art"><div class="hero-symbol"><svg class="hero-logo" viewBox="0 0 100 100" role="img" aria-label="لوگوی KabulWeb"><use href="#kw-logo"/></svg><strong>KabulWeb</strong><small>BUILD • CONNECT • GROW</small></div></div>
+    <div>
+      <span class="eyebrow">🌍 بازار افغانستان و جهان</span>
+      <h1>کسب‌وکار خود را<br><span>به جهان معرفی کن</span></h1>
+      <p>کانال، فروشگاه، محصول، خدمات و فرصت کاری خود را معرفی کن. درخواست تبلیغات پس از ثبت در انتظار بررسی مدیریت قرار می‌گیرد.</p>
+      <div class="actions">
+        <a class="btn" href="#advertise">📢 ثبت تبلیغات</a>
+        <a class="btn btn-secondary" href="#listings">دیدن بازار</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-symbol">
+        <svg class="hero-logo" viewBox="0 0 100 100" role="img" aria-label="لوگوی KabulWeb"><use href="#kw-logo"/></svg>
+        <strong>KabulWeb</strong>
+        <small>BUILD • CONNECT • GROW</small>
+      </div>
+    </div>
   </section>
-  <div class="quick-grid"><div class="quick"><b>📣</b>معرفی کانال‌ها</div><div class="quick"><b>🛍️</b>محصولات و خدمات</div><div class="quick"><b>💼</b>فرصت‌های کاری</div><div class="quick"><b>🛡️</b>بررسی آگهی‌ها</div></div>
-  <section class="block" id="how"><div class="section-head"><h2>✨ چطور کار می‌کند؟ <small>How it works</small></h2></div><div class="steps">
-    <div class="step"><b>۱. درخواست را ثبت کن</b><span>فرم تبلیغات را با لینک کانال یا فروشگاه پر کن.</span><small>Submit your request</small></div>
-    <div class="step"><b>۲. بررسی مدیریت</b><span>تیم کابل‌وب درخواست را بررسی و تأیید می‌کند.</span><small>Reviewed by our team</small></div>
-    <div class="step"><b>۳. نمایش در بازار</b><span>آگهی تأییدشده برای همه نمایش داده می‌شود.</span><small>Published to everyone</small></div>
-  </div></section>
-  <section class="block" id="channels"><div class="section-head"><h2>🌐 کانال‌های رسمی کابل‌وب</h2><p>از شبکه‌های رسمی ما دیدن کن.</p></div><div class="channel-row">
-    <a class="channel-card" href="https://t.me/kabulwebs" target="_blank" rel="noopener noreferrer"><span class="card-icon">✈️</span><span><b>کانال تلگرام</b><small>t.me/kabulwebs</small></span></a>
-    <a class="channel-card" href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R" target="_blank" rel="noopener noreferrer"><span class="card-icon">💬</span><span><b>کانال واتساپ</b><small>کانال رسمی کابل‌وب</small></span></a>
-  </div></section>
-  <section class="block" id="categories"><div class="section-head"><h2>دسته‌بندی‌ها</h2><p>بخش مورد نظر خود را انتخاب کن.</p></div><div class="cards">
-    <article class="card"><div class="card-icon">📣</div><h3>کانال‌ها</h3><p>کانال‌های واتساپ و تلگرام.</p><a href="#advertise">ثبت کانال ←</a></article>
-    <article class="card"><div class="card-icon">🛍️</div><h3>محصولات و فروشگاه‌ها</h3><p>معرفی محصولات و فروشگاه‌های آنلاین.</p><a href="#listings">دیدن بازار ←</a></article>
-    <article class="card"><div class="card-icon">🧰</div><h3>خدمات</h3><p>معرفی خدمات محلی و دیجیتالی.</p><a href="#advertise">ثبت خدمات ←</a></article>
-    <article class="card"><div class="card-icon">📚</div><h3>آموزش</h3><p>دوره‌ها و منابع یادگیری.</p><a href="#advertise">ثبت آموزش ←</a></article>
-    <article class="card"><div class="card-icon">💼</div><h3>کاریابی</h3><p>فرصت‌های کاری منتشرشده.</p><a href="#jobs">دیدن فرصت‌ها ←</a></article>
-    <article class="card"><div class="card-icon">✨</div><h3>سرگرمی و سایر</h3><p>محتوا و خدمات دیگر.</p><a href="#advertise">ثبت درخواست ←</a></article>
-  </div></section>
-  <section class="block" id="listings"><div class="section-head"><h2>🛒 بازار محصولات و خدمات</h2><p>آگهی‌های تأییدشده در این قسمت نمایش داده می‌شوند.</p></div><div class="filters"><input id="listingSearch" type="search" placeholder="جست‌وجوی محصولات و خدمات…" aria-label="جست‌وجوی بازار"></div><p id="listingMessage" class="message" role="status">در حال بارگذاری…</p><div id="listingGrid" class="cards"><div class="empty">در حال بارگذاری آگهی‌ها…</div></div></section>
-  <section class="block" id="jobs"><div class="section-head"><h2>💼 فرصت‌های کاری</h2><p>پیش از پرداخت پول برای استخدام، اعتبار کارفرما را بررسی کن.</p></div><div class="filters"><input id="jobSearch" type="search" placeholder="جست‌وجوی عنوان، شرکت یا محل کار…" aria-label="جست‌وجوی کاریابی"></div><p id="jobsMessage" class="message" role="status">در حال بارگذاری…</p><div id="jobsList" class="cards"></div></section>
-  <section class="block" id="advertise"><div class="section-head"><h2>📢 ثبت درخواست تبلیغات</h2><p>درخواست پس از ثبت در انتظار بررسی مدیریت می‌ماند.</p></div><div class="card">
-    <form id="adForm" class="form-grid" novalidate>
-      <div class="field"><label for="adName">نام شما یا فروشگاه *</label><input id="adName" name="name" maxlength="100" required autocomplete="organization"></div>
-      <div class="field"><label for="adContact">راه تماس *</label><input id="adContact" name="contact" maxlength="100" required autocomplete="off"></div>
-      <div class="field"><label for="adPlatform">نوع تبلیغ *</label><select id="adPlatform" name="platform" required><option value="">انتخاب کن</option><option>کانال واتساپ</option><option>کانال تلگرام</option><option>فروشگاه آنلاین</option><option>محصول</option><option>خدمات</option><option>آموزش و یادگیری</option><option>سرگرمی</option><option>سایر</option></select></div>
-      <div class="field"><label for="adPackage">بسته تبلیغاتی *</label><select id="adPackage" name="package" required><option value="رایگان">رایگان</option><option value="پولی">پولی</option></select></div>
-      <div class="field full"><label for="adLink">لینک کانال یا فروشگاه *</label><input id="adLink" name="link" type="url" inputmode="url" dir="ltr" placeholder="https://..." maxlength="500" required></div>
-      <div class="field full"><label for="adDescription">توضیحات</label><textarea id="adDescription" name="description" rows="4" maxlength="2000"></textarea></div>
-      <div class="hp" aria-hidden="true"><label for="adWebsite">وب‌سایت</label><input id="adWebsite" name="website" tabindex="-1" autocomplete="off"></div>
-      <div class="form-actions"><button id="adSubmit" type="submit">ثبت درخواست</button><p id="adMessage" class="message" role="status"></p></div>
-    </form>
-  </div></section>
-  <section class="block" id="approvedAds"><div class="section-head"><h2>✨ آگهی‌های تأییدشده</h2><p>فقط درخواست‌هایی که مدیر تأیید کرده باشد نمایش داده می‌شوند.</p></div><p id="adsMessage" class="message" role="status">در حال بارگذاری…</p><div id="adsList" class="cards"></div></section>
-  <section class="block" id="safety"><div class="section-head"><h2>🛡️ نکات امنیتی <small>Stay safe</small></h2></div><div class="card"><ul class="tips">
-    <li>برای استخدام یا ثبت‌نام هرگز پیش‌پرداخت نده؛ اعتبار کارفرما را بررسی کن.</li>
-    <li>رمز عبور، کد تأیید و اطلاعات بانکی خود را با هیچ آگهی‌دهنده‌ای در میان نگذار.</li>
-    <li>پیش از خرید، از فروشنده نمونه کار یا مدرک معتبر بخواه.</li>
-    <li>آگهی مشکوک را از طریق کانال رسمی تلگرام به ما گزارش بده.</li>
-  </ul></div></section>
-  <section class="block" id="about"><div class="section-head"><h2>درباره کابل‌وب</h2></div><div class="card"><p>کابل‌وب بستری برای معرفی کانال‌ها، فروشگاه‌ها، محصولات، خدمات و فرصت‌های کاری در افغانستان و جهان است.</p><p>بنیانگذار: Jahangir Ahmadi</p></div></section>
+
+  <div class="quick-grid">
+    <div class="quick"><b>📣</b>معرفی کانال‌ها</div>
+    <div class="quick"><b>🛍️</b>محصولات و خدمات</div>
+    <div class="quick"><b>💼</b>فرصت‌های کاری</div>
+    <div class="quick"><b>🛡️</b>بررسی آگهی‌ها</div>
+  </div>
+
+  <section class="block" id="how">
+    <div class="section-head"><h2>✨ چطور کار می‌کند؟ <small>How it works</small></h2></div>
+    <div class="steps">
+      <div class="step"><b>۱. درخواست را ثبت کن</b><span>فرم تبلیغات را با لینک کانال یا فروشگاه پر کن.</span><small>Submit your request</small></div>
+      <div class="step"><b>۲. بررسی مدیریت</b><span>تیم کابل‌وب درخواست را بررسی و تأیید می‌کند.</span><small>Reviewed by our team</small></div>
+      <div class="step"><b>۳. نمایش در بازار</b><span>آگهی تأییدشده برای همه نمایش داده می‌شود.</span><small>Published to everyone</small></div>
+    </div>
+  </section>
+
+  <section class="block" id="channels">
+    <div class="section-head"><h2>🌐 کانال‌های رسمی کابل‌وب</h2><p>از شبکه‌های رسمی ما دیدن کن.</p></div>
+    <div class="channel-row">
+      <a class="channel-card" href="https://t.me/kabulwebs" target="_blank" rel="noopener noreferrer">
+        <span class="card-icon">✈️</span><span><b>کانال تلگرام</b><small>t.me/kabulwebs</small></span>
+      </a>
+      <a class="channel-card" href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R" target="_blank" rel="noopener noreferrer">
+        <span class="card-icon">💬</span><span><b>کانال واتساپ</b><small>کانال رسمی کابل‌وب</small></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="block" id="categories">
+    <div class="section-head"><h2>دسته‌بندی‌ها</h2><p>بخش مورد نظر خود را انتخاب کن.</p></div>
+    <div class="cards">
+      <article class="card"><div class="card-icon">📣</div><h3>کانال‌ها</h3><p>کانال‌های واتساپ و تلگرام.</p><a href="#advertise">ثبت کانال ←</a></article>
+      <article class="card"><div class="card-icon">🛍️</div><h3>محصولات و فروشگاه‌ها</h3><p>معرفی محصولات و فروشگاه‌های آنلاین.</p><a href="#listings">دیدن بازار ←</a></article>
+      <article class="card"><div class="card-icon">🧰</div><h3>خدمات</h3><p>معرفی خدمات محلی و دیجیتالی.</p><a href="#advertise">ثبت خدمات ←</a></article>
+      <article class="card"><div class="card-icon">📚</div><h3>آموزش</h3><p>دوره‌ها و منابع یادگیری.</p><a href="#advertise">ثبت آموزش ←</a></article>
+      <article class="card"><div class="card-icon">💼</div><h3>کاریابی</h3><p>فرصت‌های کاری منتشرشده.</p><a href="#jobs">دیدن فرصت‌ها ←</a></article>
+      <article class="card"><div class="card-icon">✨</div><h3>سرگرمی و سایر</h3><p>محتوا و خدمات دیگر.</p><a href="#advertise">ثبت درخواست ←</a></article>
+    </div>
+  </section>
+
+  <section class="block" id="listings">
+    <div class="section-head"><h2>🛒 بازار محصولات و خدمات</h2><p>آگهی‌های تأییدشده در این قسمت نمایش داده می‌شوند.</p></div>
+    <div class="filters"><input id="listingSearch" type="search" placeholder="جست‌وجوی محصولات و خدمات…" aria-label="جست‌وجوی بازار"></div>
+    <p id="listingMessage" class="message" role="status" aria-live="polite">در حال بارگذاری…</p>
+    <div id="listingGrid" class="cards"><div class="empty">در حال بارگذاری آگهی‌ها…</div></div>
+  </section>
+
+  <section class="block" id="jobs">
+    <div class="section-head"><h2>💼 فرصت‌های کاری</h2><p>پیش از پرداخت پول برای استخدام، اعتبار کارفرما را بررسی کن.</p></div>
+    <div class="filters"><input id="jobSearch" type="search" placeholder="جست‌وجوی عنوان، شرکت یا محل کار…" aria-label="جست‌وجوی کاریابی"></div>
+    <p id="jobsMessage" class="message" role="status" aria-live="polite">در حال بارگذاری…</p>
+    <div id="jobsList" class="cards"></div>
+  </section>
+
+  <section class="block" id="advertise">
+    <div class="section-head"><h2>📢 ثبت درخواست تبلیغات</h2><p>درخواست پس از ثبت در انتظار بررسی مدیریت می‌ماند.</p></div>
+    <div class="card">
+      <form id="adForm" class="form-grid" novalidate>
+        <div class="field">
+          <label for="adName">نام شما یا فروشگاه *</label>
+          <input id="adName" name="name" maxlength="100" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="adContact">راه تماس *</label>
+          <input id="adContact" name="contact" maxlength="100" required autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="adPlatform">نوع تبلیغ *</label>
+          <select id="adPlatform" name="platform" required>
+            <option value="">انتخاب کن</option>
+            <option>کانال واتساپ</option><option>کانال تلگرام</option>
+            <option>فروشگاه آنلاین</option><option>محصول</option>
+            <option>خدمات</option><option>آموزش و یادگیری</option>
+            <option>سرگرمی</option><option>سایر</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="adPackage">بسته تبلیغاتی *</label>
+          <select id="adPackage" name="package" required>
+            <option value="رایگان">رایگان</option><option value="پولی">پولی</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="adLink">لینک کانال یا فروشگاه *</label>
+          <input id="adLink" name="link" type="url" inputmode="url" dir="ltr" placeholder="https://..." maxlength="500" required>
+        </div>
+        <div class="field full">
+          <label for="adDescription">توضیحات</label>
+          <textarea id="adDescription" name="description" rows="4" maxlength="2000"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="adWebsite">وب‌سایت</label>
+          <input id="adWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="form-actions">
+          <button id="adSubmit" type="submit">ثبت درخواست</button>
+          <p id="adMessage" class="message" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="block" id="approvedAds">
+    <div class="section-head"><h2>✨ آگهی‌های تأییدشده</h2><p>فقط درخواست‌هایی که مدیر تأیید کرده باشد نمایش داده می‌شوند.</p></div>
+    <p id="adsMessage" class="message" role="status" aria-live="polite">در حال بارگذاری…</p>
+    <div id="adsList" class="cards"></div>
+  </section>
+
+  <section class="block" id="safety">
+    <div class="section-head"><h2>🛡️ نکات امنیتی <small>Stay safe</small></h2></div>
+    <div class="card">
+      <ul class="tips">
+        <li>برای استخدام یا ثبت‌نام هرگز پیش‌پرداخت نده؛ اعتبار کارفرما را بررسی کن.</li>
+        <li>رمز عبور، کد تأیید و اطلاعات بانکی خود را با هیچ آگهی‌دهنده‌ای در میان نگذار.</li>
+        <li>پیش از خرید، از فروشنده نمونه کار یا مدرک معتبر بخواه.</li>
+        <li>آگهی مشکوک را از طریق کانال رسمی تلگرام به ما گزارش بده.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="section-head"><h2>درباره کابل‌وب</h2></div>
+    <div class="card">
+      <p>کابل‌وب بستری برای معرفی کانال‌ها، فروشگاه‌ها، محصولات، خدمات و فرصت‌های کاری در افغانستان و جهان است.</p>
+      <p>بنیانگذار: Jahangir Ahmadi</p>
+    </div>
+  </section>
 </main>
-<dialog id="detailModal" aria-labelledby="dmTitle"><div class="dm-head"><h3 id="dmTitle"></h3><button class="dm-close" id="dmClose" type="button" aria-label="بستن">✕</button></div><div class="dm-body" id="dmBody"></div></dialog>
+
+<dialog id="detailModal" aria-labelledby="dmTitle">
+  <div class="dm-head">
+    <h3 id="dmTitle"></h3>
+    <button class="dm-close" id="dmClose" type="button" aria-label="بستن">✕</button>
+  </div>
+  <div class="dm-body" id="dmBody"></div>
+</dialog>
+
 <button id="toTop" class="to-top" type="button" aria-label="بازگشت به بالا">↑</button>
-<footer><div class="container footer-inner"><div>© <span id="year"></span> KabulWeb — بنیانگذار: Jahangir Ahmadi<br>بازار افغانستان و جهان</div><div><a href="about.html">درباره ما</a><a href="privacy.html">حریم خصوصی</a><a href="terms.html">شرایط استفاده</a><a href="account.html">حساب کاربری</a><a href="admin.html">پنل مدیریت</a></div></div></footer>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> KabulWeb — بنیانگذار: Jahangir Ahmadi<br>بازار افغانستان و جهان</div>
+    <div>
+      <a href="about.html">درباره ما</a>
+      <a href="privacy.html">حریم خصوصی</a>
+      <a href="terms.html">شرایط استفاده</a>
+      <a href="account.html">حساب کاربری</a>
+      <a href="admin.html">پنل مدیریت</a>
+    </div>
+  </div>
+</footer>
+
 <script>
 (() => {
-  const opening = document.getElementById("opening");
-  const enterBtn = document.getElementById("enterSite");
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const opening = $("opening");
+  const enterBtn = $("enterSite");
   let seen = false;
-  try { seen = sessionStorage.getItem("kw_seen") === "1"; } catch (e) {}
+
+  try { seen = sessionStorage.getItem("kw_seen") === "1"; } catch (_) {}
+
   function enterSite() {
     opening.classList.add("hide");
     document.body.style.overflow = "";
-    try { sessionStorage.setItem("kw_seen", "1"); } catch (e) {}
+    try { sessionStorage.setItem("kw_seen", "1"); } catch (_) {}
   }
+
   enterBtn.addEventListener("click", enterSite);
-  if (seen) { opening.classList.add("hide"); } else { document.body.style.overflow = "hidden"; enterBtn.focus(); window.setTimeout(enterSite, 5000); }
-  document.getElementById("year").textContent = new Date().getFullYear();
-  const toTop = document.getElementById("toTop");
-  window.addEventListener("scroll", () => toTop.classList.toggle("show", window.scrollY > 600), { passive: true });
-  toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  if (seen) {
+    opening.classList.add("hide");
+  } else {
+    document.body.style.overflow = "hidden";
+    enterBtn.focus();
+    window.setTimeout(enterSite, 7000);
+  }
+
+  $("year").textContent = new Date().getFullYear();
+
+  const toTop = $("toTop");
+  window.addEventListener("scroll", () => {
+    toTop.classList.toggle("show", window.scrollY > 600);
+  }, { passive: true });
+
+  toTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 })();
 </script>
+
 <script type="module">
+"use strict";
+
+/*
+ * KabulWeb frontend configuration.
+ * The publishable key is intended for browser use.
+ * Never put a Supabase secret/service_role key in this file.
+ */
 const SUPABASE_URL = "https://netspaxkjtoumfoobgnu.supabase.co";
 const SUPABASE_KEY = "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
+
 const $ = id => document.getElementById(id);
 const state = { listings: [], jobs: [], ads: [] };
+let supabase = null;
+let submitting = false;
 
-function message(id, text, type = "") { const el = $(id); el.textContent = text; el.className = "message" + (type ? " " + type : ""); }
+function message(id, text, type = "") {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = "message" + (type ? " " + type : "");
+}
+
 function firstValue(row, keys, fallback = "") {
-  for (const key of keys) { const value = row?.[key]; if (value !== null && value !== undefined && String(value).trim() !== "") return String(value); }
+  for (const key of keys) {
+    const value = row?.[key];
+    if (value !== null && value !== undefined && String(value).trim() !== "") {
+      return String(value).trim();
+    }
+  }
   return fallback;
 }
+
 function safeUrl(value) {
-  try { const u = new URL(value); return ["https:", "http:"].includes(u.protocol) ? u.href : ""; } catch { return ""; }
-}
-function makeCard(title, description, link, row, linkText = "مشاهده آگهی") {
-  const article = document.createElement("article"); article.className = "card listing-card";
-  const heading = document.createElement("h3"); heading.textContent = title || "آگهی";
-  if (row?.isExample) { const b = document.createElement("span"); b.className = "badge"; b.textContent = "نمونه"; heading.appendChild(b); }
-  article.appendChild(heading);
-  if (row) {
-    article.tabIndex = 0; article.setAttribute("role", "button");
-    article.addEventListener("click", e => { if (!e.target.closest("a")) openDetails(row); });
-    article.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target === article) { e.preventDefault(); openDetails(row); } });
+  try {
+    const u = new URL(String(value || "").trim());
+    if (u.protocol !== "https:" && u.protocol !== "http:") return "";
+    if (!u.hostname || !u.hostname.includes(".")) return "";
+    return u.href;
+  } catch (_) {
+    return "";
   }
-  if (description) { const p = document.createElement("p"); p.textContent = description; article.appendChild(p); }
-  const url = safeUrl(link);
-  if (url) { const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = linkText + " ↗"; article.appendChild(a); }
-  if (row) { const m = document.createElement("div"); m.className = "more"; m.textContent = "جزئیات کامل ←"; article.insertBefore(m, article.querySelector("a")); }
-  return article;
-}
-// Search only over the fields that are actually displayed (never hidden columns such as contact)
-function renderRows(rows, containerId, searchValue, titleKeys, descKeys, linkKeys, emptyText) {
-  const container = $(containerId); container.replaceChildren();
-  const query = (searchValue || "").trim().toLocaleLowerCase();
-  const views = rows.map(row => ({
-    title: firstValue(row, titleKeys, "آگهی"),
-    description: [firstValue(row, ["category", "platform", "type", "company", "location", "city"]), firstValue(row, descKeys)].filter(Boolean).join(" — "),
-    link: firstValue(row, linkKeys), row
-  })).filter(v => !query || (v.title + " " + v.description).toLocaleLowerCase().includes(query));
-  if (!views.length) { const empty = document.createElement("div"); empty.className = "empty"; empty.textContent = emptyText; container.appendChild(empty); return; }
-  for (const v of views) container.appendChild(makeCard(v.title, v.description, v.link, v.row));
 }
 
-// ===== Details modal =====
-const STATUS_FA = { pending: "در انتظار تأیید مدیریت", approved: "تأییدشده", rejected: "ردشده" };
+function addText(parent, tag, text, className = "") {
+  const el = document.createElement(tag);
+  el.textContent = text;
+  if (className) el.className = className;
+  parent.appendChild(el);
+  return el;
+}
+
+function makeCard(title, description, link, row, linkText = "مشاهده آگهی") {
+  const article = document.createElement("article");
+  article.className = "card listing-card";
+
+  const heading = addText(article, "h3", title || "آگهی");
+
+  if (row?.isExample) {
+    addText(heading, "span", "نمونه نمایشی", "badge");
+  }
+
+  if (description) addText(article, "p", description);
+
+  const url = safeUrl(link);
+
+  if (url) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.textContent = linkText + " ↗";
+    article.appendChild(a);
+  }
+
+  if (row) {
+    article.tabIndex = 0;
+    article.setAttribute("role", "button");
+    article.setAttribute("aria-label", "دیدن جزئیات " + (title || "آگهی"));
+
+    article.addEventListener("click", event => {
+      if (!event.target.closest("a")) openDetails(row);
+    });
+
+    article.addEventListener("keydown", event => {
+      if ((event.key === "Enter" || event.key === " ") && event.target === article) {
+        event.preventDefault();
+        openDetails(row);
+      }
+    });
+
+    addText(article, "div", "جزئیات کامل ←", "more");
+  }
+
+  return article;
+}
+
+/*
+ * Search only through visible information.
+ * Private contact fields are never included in public search.
+ */
+function renderRows(rows, containerId, searchValue, titleKeys, descKeys, linkKeys, emptyText) {
+  const container = $(containerId);
+  container.replaceChildren();
+
+  const query = String(searchValue || "").trim().toLocaleLowerCase();
+
+  const views = rows.map(row => ({
+    title: firstValue(row, titleKeys, "آگهی"),
+    description: [
+      firstValue(row, ["category", "platform", "type", "company", "location", "city"]),
+      firstValue(row, descKeys)
+    ].filter(Boolean).join(" — "),
+    link: firstValue(row, linkKeys),
+    row
+  })).filter(view =>
+    !query || (view.title + " " + view.description).toLocaleLowerCase().includes(query)
+  );
+
+  if (!views.length) {
+    addText(container, "div", emptyText, "empty");
+    return;
+  }
+
+  for (const view of views) {
+    container.appendChild(makeCard(view.title, view.description, view.link, view.row));
+  }
+}
+
+const STATUS_FA = {
+  pending: "در انتظار تأیید مدیریت",
+  approved: "تأییدشده",
+  rejected: "ردشده"
+};
+
 const FIELD_DEFS = [
   ["🏢 شرکت", ["company", "employer"]],
   ["🗂️ دسته‌بندی", ["category", "platform", "type"]],
@@ -271,184 +696,461 @@ const FIELD_DEFS = [
   ["📦 بسته", ["package"]],
   ["📝 توضیحات", ["description", "details"]]
 ];
+
 const LINK_DEFS = [
   ["📥 لینک ثبت‌نام / مشاهده", ["link", "url", "apply_url", "website"]],
   ["📲 کانال واتساپ", ["whatsapp", "whatsapp_link", "channel_link"]]
 ];
-const NOTE = "🔎 یادداشت مهم: این اعلان صرفاً برای آگهی‌دهی و آگاهی است. پیش از ثبت‌نام، اعتبار اعلان و شرایط را بررسی کنید. کابل‌وب مسئول روند استخدام یا معامله نیست.";
+
+const NOTE =
+  "🔎 یادداشت مهم: این اعلان صرفاً برای آگهی‌دهی و آگاهی است. " +
+  "پیش از ثبت‌نام، اعتبار اعلان و شرایط را بررسی کنید. " +
+  "کابل‌وب مسئول روند استخدام یا معامله نیست.";
+
 const EXAMPLE_JOB = {
-  isExample: true, status: "pending",
-  title: "Solar Hybrid Technician — تخنیکر سولر هایبرید",
-  company: "Afghan Wireless (افغان بیسیم)",
+  isExample: true,
+  title: "نمونه فرصت کاری — تخنیکر سولر هایبرید",
+  company: "نام کارفرما باید در اعلان اصلی تأیید شود",
   category: "مخابرات و تخنیک",
-  education: "فارغ صنف دوازدهم؛ شرایط دقیق تحصیلی را در اعلان اصلی بررسی کنید.",
-  salary: "مطابق شرایط و امتیازات درج‌شده در اعلان اصلی کارفرما.",
+  education: "شرایط دقیق تحصیلی را در اعلان اصلی بررسی کنید.",
+  salary: "معاش مطابق اعلان اصلی کارفرما بررسی شود.",
   link: "https://wazifagroup.com/opportunity/solar-hybrid-technician/",
-  description: "فرصت کاری تخنیکر سولر هایبرید. علاقه‌مندان باید شرایط، مسئولیت‌ها، اسناد مورد نیاز و مهلت ثبت‌نام را در صفحه اصلی اعلان بررسی کنند. شرایط استخدام و ارتباط این فرصت با افغان بیسیم باید پیش از نشر تأیید شود.",
-  whatsapp: "https://whatsapp.com/channel/0029VbDYDtu4tRro2xn2PF07"
+  description:
+    "این کارت فقط نمونه نمایشی ساختار کاریابی است؛ " +
+    "ارتباط فرصت با هر شرکت و اعتبار آگهی از این صفحه تأیید نشده است."
 };
+
 const EXAMPLE_AD = {
-  isExample: true, status: "approved",
+  isExample: true,
   name: "کانال رسمی کابل‌وب",
   platform: "کانال تلگرام",
   package: "رایگان",
   link: "https://t.me/kabulwebs",
-  description: "نمونهٔ آگهی: اخبار، فرصت‌های کاری و معرفی کانال‌ها و کسب‌وکارهای افغانستان."
+  description: "نمونه نمایشی ساختار آگهی؛ این مورد از پایگاه داده دریافت نشده است."
 };
-function pick(row, keys) { return firstValue(row, keys); }
+
+function pick(row, keys) {
+  return firstValue(row, keys);
+}
+
 function buildAnnouncement(row) {
-  const title = pick(row, ["title", "job_title", "name", "position"]);
+  const title = pick(row, ["title", "job_title", "name", "position"]) || "اعلان";
   const lines = ["📢 اعلان | " + title];
-  const c = pick(row, ["company", "employer"]); if (c) lines.push("🏢 شرکت: " + c);
-  const e = pick(row, ["education", "requirements", "qualification"]); if (e) lines.push("🎓 شرایط تحصیلی: " + e);
-  const s = pick(row, ["salary", "benefits"]); if (s) lines.push("💼 معاش و امتیازات: " + s);
-  const l = safeUrl(pick(row, ["link", "url", "apply_url", "website"])); if (l) lines.push("📥 لینک:\n" + l);
-  const w = safeUrl(pick(row, ["whatsapp", "whatsapp_link", "channel_link"])); if (w) lines.push("📲 کانال واتساپ:\n" + w);
+
+  const company = pick(row, ["company", "employer"]);
+  if (company) lines.push("🏢 شرکت: " + company);
+
+  const education = pick(row, ["education", "requirements", "qualification"]);
+  if (education) lines.push("🎓 شرایط تحصیلی: " + education);
+
+  const salary = pick(row, ["salary", "benefits"]);
+  if (salary) lines.push("💼 معاش و امتیازات: " + salary);
+
+  const link = safeUrl(pick(row, ["link", "url", "apply_url", "website"]));
+  if (link) lines.push("📥 لینک:\n" + link);
+
+  const whatsapp = safeUrl(pick(row, ["whatsapp", "whatsapp_link", "channel_link"]));
+  if (whatsapp) lines.push("📲 کانال واتساپ:\n" + whatsapp);
+
   lines.push(NOTE);
   return lines.join("\n\n");
 }
-async function copyText(text, btn) {
-  const old = btn.textContent;
-  try { await navigator.clipboard.writeText(text); btn.textContent = "کپی شد ✓"; }
-  catch { btn.textContent = "کپی نشد"; }
-  setTimeout(() => { btn.textContent = old; }, 1500);
-}
-function dmRow(label, build) {
-  const r = document.createElement("div"); r.className = "dm-row";
-  const b = document.createElement("b"); b.textContent = label; r.appendChild(b); build(r); return r;
-}
-function copyBtn(value) {
-  const c = document.createElement("button"); c.type = "button"; c.className = "dm-copy"; c.textContent = "کپی";
-  c.addEventListener("click", () => copyText(value, c)); return c;
-}
-function openDetails(row) {
-  const modal = $("detailModal"), body = $("dmBody"); body.replaceChildren();
-  $("dmTitle").textContent = pick(row, ["title", "job_title", "name", "product_name", "position"]) || "جزئیات آگهی";
-  for (const [label, keys] of FIELD_DEFS) {
-    const v = pick(row, keys); if (!v) continue;
-    body.appendChild(dmRow(label, r => { const s = document.createElement("span"); s.textContent = v; r.append(s, copyBtn(v)); }));
+
+async function copyText(text, button) {
+  const old = button.textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    button.textContent = "کپی شد ✓";
+  } catch (_) {
+    button.textContent = "کپی نشد";
   }
-  for (const [label, keys] of LINK_DEFS) {
-    const raw = pick(row, keys); const url = safeUrl(raw); if (!raw) continue;
-    body.appendChild(dmRow(label, r => {
-      if (url) { const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = url; a.dir = "ltr"; r.append(a, copyBtn(url)); }
-      else { const s = document.createElement("span"); s.textContent = raw; r.appendChild(s); }
+  window.setTimeout(() => { button.textContent = old; }, 1500);
+}
+
+function dmRow(label, build) {
+  const row = document.createElement("div");
+  row.className = "dm-row";
+  addText(row, "b", label);
+  build(row);
+  return row;
+}
+
+function copyBtn(value) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "dm-copy";
+  button.textContent = "کپی";
+  button.addEventListener("click", () => copyText(value, button));
+  return button;
+}
+
+function openDetails(row) {
+  const modal = $("detailModal");
+  const body = $("dmBody");
+  body.replaceChildren();
+
+  $("dmTitle").textContent =
+    pick(row, ["title", "job_title", "name", "product_name", "position"]) ||
+    "جزئیات آگهی";
+
+  for (const [label, keys] of FIELD_DEFS) {
+    const value = pick(row, keys);
+    if (!value) continue;
+
+    body.appendChild(dmRow(label, element => {
+      const span = document.createElement("span");
+      span.textContent = value;
+      element.append(span, copyBtn(value));
     }));
   }
-  const st = row.isExample ? "نمونه — ارتباط با شرکت تأیید نشده است" : (STATUS_FA[row.status] || row.status || "");
-  if (st) body.appendChild(dmRow("📌 وضعیت اعلان", r => { const s = document.createElement("span"); s.textContent = st; r.appendChild(s); }));
-  const full = pick(row, ["full_text", "announcement", "content"]) || buildAnnouncement(row);
-  body.appendChild(dmRow("📋 متن کامل اعلان برای نشر", r => {
-    r.appendChild(copyBtn(full));
-    const p = document.createElement("p"); p.className = "dm-full"; p.textContent = full; r.appendChild(p);
+
+  for (const [label, keys] of LINK_DEFS) {
+    const raw = pick(row, keys);
+    if (!raw) continue;
+
+    const url = safeUrl(raw);
+
+    body.appendChild(dmRow(label, element => {
+      if (url) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = url;
+        a.dir = "ltr";
+        element.append(a, copyBtn(url));
+      } else {
+        addText(element, "span", raw);
+      }
+    }));
+  }
+
+  const status = row.isExample
+    ? "نمونه نمایشی — از پایگاه داده دریافت نشده است"
+    : (STATUS_FA[row.status] || row.status || "وضعیت نامشخص");
+
+  body.appendChild(dmRow("📌 وضعیت اعلان", element => {
+    addText(element, "span", status);
   }));
-  if (row.isExample) { const n = document.createElement("div"); n.className = "dm-note"; n.textContent = "این یک نمونه برای نمایش ساختار اعلان است و تا زمان تأیید مدیریت، آگهی رسمی محسوب نمی‌شود."; body.appendChild(n); }
-  if (typeof modal.showModal === "function") modal.showModal(); else modal.setAttribute("open", "");
-}
-$("dmClose").addEventListener("click", () => $("detailModal").close());
-$("detailModal").addEventListener("click", e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
-const LISTING_ARGS = [["title", "name", "product_name"], ["description", "details"], ["link", "url", "website"]];
-const JOB_ARGS = [["title", "job_title", "name", "position"], ["description", "details", "salary"], ["link", "url", "apply_url"]];
-const AD_ARGS = [["name", "title"], ["description", "platform", "package"], ["link", "url"]];
+  const full =
+    pick(row, ["full_text", "announcement", "content"]) ||
+    buildAnnouncement(row);
 
-let supabase = null;
-try {
-  const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm");
-  supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-} catch (error) {
-  console.error("KabulWeb: Supabase library failed to load:", error);
+  body.appendChild(dmRow("📋 متن کامل اعلان برای نشر", element => {
+    element.appendChild(copyBtn(full));
+    addText(element, "p", full, "dm-full");
+  }));
+
+  if (row.isExample) {
+    addText(
+      body,
+      "div",
+      "این یک نمونه نمایشی است و آگهی رسمی تأییدشده محسوب نمی‌شود.",
+      "dm-note"
+    );
+  }
+
+  if (typeof modal.showModal === "function") {
+    if (!modal.open) modal.showModal();
+  } else {
+    modal.setAttribute("open", "");
+  }
 }
+
+$("dmClose").addEventListener("click", () => {
+  const modal = $("detailModal");
+  if (typeof modal.close === "function") modal.close();
+  else modal.removeAttribute("open");
+});
+
+$("detailModal").addEventListener("click", event => {
+  if (event.target === event.currentTarget) {
+    const modal = $("detailModal");
+    if (typeof modal.close === "function") modal.close();
+    else modal.removeAttribute("open");
+  }
+});
+
+const LISTING_ARGS = [
+  ["title", "name", "product_name"],
+  ["description", "details"],
+  ["link", "url", "website"]
+];
+
+const JOB_ARGS = [
+  ["title", "job_title", "name", "position"],
+  ["description", "details", "salary"],
+  ["link", "url", "apply_url", "website"]
+];
+
+const AD_ARGS = [
+  ["name", "title"],
+  ["description", "platform", "package"],
+  ["link", "url"]
+];
 
 function offline() {
-  message("listingMessage", "اتصال به سرور برقرار نشد. اینترنت را بررسی کن و دوباره تلاش کن.", "error");
-  message("jobsMessage", "اتصال به سرور برقرار نشد. اینترنت را بررسی کن و دوباره تلاش کن.", "error");
-  message("adsMessage", "اتصال به سرور برقرار نشد. اینترنت را بررسی کن و دوباره تلاش کن.", "error");
+  message("listingMessage", "اتصال به سرور برقرار نشد. اینترنت و تنظیمات اتصال را بررسی کن.", "error");
+  message("jobsMessage", "اتصال به سرور برقرار نشد. اینترنت و تنظیمات اتصال را بررسی کن.", "error");
+  message("adsMessage", "اتصال به سرور برقرار نشد. اینترنت و تنظیمات اتصال را بررسی کن.", "error");
+
   renderRows([], "listingGrid", "", [], [], [], "فعلاً آگهی‌ای برای نمایش موجود نیست.");
   renderRows([], "jobsList", "", [], [], [], "فعلاً فرصت کاری برای نمایش موجود نیست.");
+  $("adsList").replaceChildren();
 }
 
 async function loadListings() {
-  const { data, error } = await supabase.from("listings").select("*").eq("status", "approved").limit(60);
-  if (error) {
+  try {
+    const { data, error } = await supabase
+      .from("listings")
+      .select("*")
+      .eq("status", "approved")
+      .limit(60);
+
+    if (error) throw error;
+
+    state.listings = data || [];
+
+    message(
+      "listingMessage",
+      state.listings.length
+        ? "آگهی‌های تأییدشده بارگذاری شد."
+        : "هنوز آگهی تأییدشده‌ای در بازار نیست.",
+      state.listings.length ? "success" : ""
+    );
+
+    renderRows(
+      state.listings, "listingGrid", $("listingSearch").value,
+      ...LISTING_ARGS, "آگهی مطابق جست‌وجو پیدا نشد."
+    );
+  } catch (error) {
     console.error("KabulWeb listings loading failed:", error);
     state.listings = [];
-    message("listingMessage", "بازار بارگذاری نشد. نام جدول، ستون status و سیاست‌های RLS در Supabase باید بررسی شود.", "error");
-    renderRows([], "listingGrid", "", [], [], [], "فعلاً آگهی‌ای برای نمایش موجود نیست."); return;
+    message("listingMessage", "بازار بارگذاری نشد. جدول listings، ستون status و سیاست‌های RLS را بررسی کن.", "error");
+    renderRows([], "listingGrid", "", [], [], [], "فعلاً آگهی‌ای برای نمایش موجود نیست.");
   }
-  state.listings = data || [];
-  message("listingMessage", state.listings.length ? "آگهی‌های تأییدشده بارگذاری شد." : "هنوز آگهی تأییدشده‌ای در بازار نیست.", state.listings.length ? "success" : "");
-  renderRows(state.listings, "listingGrid", $("listingSearch").value, ...LISTING_ARGS, "آگهی مطابق جست‌وجو پیدا نشد.");
 }
 
 async function loadJobs() {
-  const { data, error } = await supabase.from("job_posts").select("*").eq("status", "approved").limit(60);
-  if (error) {
+  try {
+    const { data, error } = await supabase
+      .from("job_posts")
+      .select("*")
+      .eq("status", "approved")
+      .limit(60);
+
+    if (error) throw error;
+
+    const realJobs = data || [];
+    state.jobs = realJobs.length ? realJobs : [EXAMPLE_JOB];
+
+    message(
+      "jobsMessage",
+      realJobs.length
+        ? "فرصت‌های تأییدشده بارگذاری شد. برای دیدن جزئیات روی هر کارت بزن."
+        : "فرصت تأییدشده‌ای ثبت نشده است؛ نمونه نمایشی زیر آگهی واقعی نیست."
+    );
+
+    renderRows(
+      state.jobs, "jobsList", $("jobSearch").value,
+      ...JOB_ARGS, "فرصت کاری مطابق جست‌وجو پیدا نشد."
+    );
+  } catch (error) {
     console.error("KabulWeb job posts loading failed:", error);
     state.jobs = [];
-    message("jobsMessage", "فرصت‌های کاری بارگذاری نشدند. جدول job_posts و سیاست‌های RLS را بررسی کن.", "error");
-    renderRows([], "jobsList", "", [], [], [], "فعلاً فرصت کاری برای نمایش موجود نیست."); return;
+    message("jobsMessage", "فرصت‌های کاری بارگذاری نشدند. جدول job_posts، ستون status و سیاست‌های RLS را بررسی کن.", "error");
+    renderRows([], "jobsList", "", [], [], [], "فعلاً فرصت کاری برای نمایش موجود نیست.");
   }
-  const realJobs = data || [];
-  state.jobs = realJobs.length ? realJobs : [EXAMPLE_JOB];
-  message("jobsMessage", realJobs.length ? "فرصت‌های تأییدشده بارگذاری شد. برای دیدن جزئیات روی هر کارت بزن." : "هنوز فرصت کاری تأییدشده‌ای ثبت نشده است؛ یک نمونه نمایش داده می‌شود. برای دیدن جزئیات روی آن بزن.");
-  renderRows(state.jobs, "jobsList", $("jobSearch").value, ...JOB_ARGS, "فرصت کاری مطابق جست‌وجو پیدا نشد.");
 }
 
 async function loadAds() {
-  // Explicit columns: private fields such as `contact` are never requested by the public page
-  const { data, error } = await supabase.from("ad_requests").select("id,name,platform,link,package,description").eq("status", "approved").limit(60);
-  if (error) {
+  try {
+    /*
+     * Explicit public fields only.
+     * Never request the private contact field on the public page.
+     */
+    const { data, error } = await supabase
+      .from("ad_requests")
+      .select("id,name,platform,link,package,description,status")
+      .eq("status", "approved")
+      .limit(60);
+
+    if (error) throw error;
+
+    state.ads = data || [];
+
+    message(
+      "adsMessage",
+      state.ads.length
+        ? "آگهی‌های تأییدشده بارگذاری شد."
+        : "هنوز آگهی تأییدشده‌ای وجود ندارد."
+    );
+
+    renderRows(
+      state.ads, "adsList", "",
+      ...AD_ARGS, "آگهی‌ای برای نمایش وجود ندارد."
+    );
+  } catch (error) {
     console.error("KabulWeb ads loading failed:", error);
     state.ads = [];
-    message("adsMessage", "آگهی‌ها بارگذاری نشدند. مجوز خواندن آگهی‌های تأییدشده در Supabase را بررسی کن.", "error");
-    $("adsList").replaceChildren(); return;
+    message("adsMessage", "آگهی‌ها بارگذاری نشدند. مجوز خواندن آگهی‌های تأییدشده و نام ستون‌ها را بررسی کن.", "error");
+    $("adsList").replaceChildren();
+    addText($("adsList"), "div", "آگهی‌ها فعلاً در دسترس نیستند.", "empty");
   }
-  const realAds = data || [];
-  state.ads = realAds.length ? realAds : [EXAMPLE_AD];
-  message("adsMessage", realAds.length ? "آگهی‌های تأییدشده بارگذاری شد. برای دیدن جزئیات روی هر کارت بزن." : "هنوز آگهی تأییدشده‌ای وجود ندارد؛ یک نمونه نمایش داده می‌شود. برای دیدن جزئیات روی آن بزن.");
-  renderRows(state.ads, "adsList", "", ...AD_ARGS, "آگهی‌ای برای نمایش وجود ندارد.");
 }
 
-$("listingSearch").addEventListener("input", () => renderRows(state.listings, "listingGrid", $("listingSearch").value, ...LISTING_ARGS, "آگهی مطابق جست‌وجو پیدا نشد."));
-$("jobSearch").addEventListener("input", () => renderRows(state.jobs, "jobsList", $("jobSearch").value, ...JOB_ARGS, "فرصت کاری مطابق جست‌وجو پیدا نشد."));
+$("listingSearch").addEventListener("input", () => {
+  renderRows(
+    state.listings, "listingGrid", $("listingSearch").value,
+    ...LISTING_ARGS, "آگهی مطابق جست‌وجو پیدا نشد."
+  );
+});
 
-let submitting = false;
-$("adForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (submitting) return;
-  const formEl = event.currentTarget;
-  const form = new FormData(formEl);
-  if (String(form.get("website") || "").trim() !== "") { formEl.reset(); message("adMessage", "درخواست ثبت شد و در انتظار بررسی مدیریت است.", "success"); return; } // honeypot
-  if (!supabase) { message("adMessage", "اتصال به سرور برقرار نشد. اینترنت را بررسی کن و صفحه را دوباره باز کن.", "error"); return; }
+$("jobSearch").addEventListener("input", () => {
+  renderRows(
+    state.jobs, "jobsList", $("jobSearch").value,
+    ...JOB_ARGS, "فرصت کاری مطابق جست‌وجو پیدا نشد."
+  );
+});
+
+function validRequiredFields(form) {
   const name = String(form.get("name") || "").trim();
   const contact = String(form.get("contact") || "").trim();
   const platform = String(form.get("platform") || "").trim();
-  const link = safeUrl(String(form.get("link") || "").trim());
-  if (!name || !contact || !platform) { message("adMessage", "لطفاً همهٔ فیلدهای ستاره‌دار را پر کن.", "error"); return; }
-  if (!link) { message("adMessage", "لطفاً یک لینک معتبر با http:// یا https:// وارد کن.", "error"); return; }
-  const record = {
-    name, contact, platform, link,
-    package: String(form.get("package") || "رایگان"),
-    description: String(form.get("description") || "").trim(),
-    status: "pending"
+  const packageName = String(form.get("package") || "").trim();
+  const rawLink = String(form.get("link") || "").trim();
+  const description = String(form.get("description") || "").trim();
+  const link = safeUrl(rawLink);
+
+  if (!name || !contact || !platform || !packageName || !rawLink) {
+    return { error: "لطفاً همه فیلدهای ستاره‌دار را پر کن." };
+  }
+
+  if (name.length > 100 || contact.length > 100 ||
+      description.length > 2000 || rawLink.length > 500) {
+    return { error: "طول یکی از فیلدها بیش از حد مجاز است." };
+  }
+
+  if (!link) {
+    return { error: "لطفاً یک لینک معتبر با http:// یا https:// وارد کن." };
+  }
+
+  return {
+    value: {
+      name,
+      contact,
+      platform,
+      package: packageName,
+      link,
+      description,
+      status: "pending"
+    }
   };
+}
+
+$("adForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (submitting) return;
+
+  const formElement = event.currentTarget;
+  const form = new FormData(formElement);
+
+  /*
+   * Honeypot: silently discard bot submissions.
+   * Do not falsely tell the sender that an advertisement was saved.
+   */
+  if (String(form.get("website") || "").trim() !== "") {
+    message("adMessage", "درخواست قابل پردازش نیست.", "error");
+    return;
+  }
+
+  if (!supabase) {
+    message("adMessage", "اتصال به سرور برقرار نیست. اینترنت را بررسی کن و دوباره تلاش کن.", "error");
+    return;
+  }
+
+  const validation = validRequiredFields(form);
+
+  if (validation.error) {
+    message("adMessage", validation.error, "error");
+    return;
+  }
+
+  const record = validation.value;
+  const button = $("adSubmit");
+
   submitting = true;
-  const button = $("adSubmit"); button.disabled = true; message("adMessage", "در حال ثبت درخواست…");
+  button.disabled = true;
+  message("adMessage", "در حال ثبت درخواست…");
+
   try {
-    const { error } = await supabase.from("ad_requests").insert([record]);
+    /*
+     * Public users may insert pending requests only if the matching
+     * Supabase RLS INSERT policy allows these fields and this status.
+     */
+    const { error } = await supabase
+      .from("ad_requests")
+      .insert([record]);
+
     if (error) throw error;
-    formEl.reset();
-    message("adMessage", "درخواست ثبت شد و در انتظار بررسی مدیریت است.", "success");
+
+    formElement.reset();
+    message(
+      "adMessage",
+      "درخواست ثبت شد و در انتظار بررسی مدیریت است. این پیام به معنی تأیید آگهی نیست.",
+      "success"
+    );
   } catch (error) {
     console.error("KabulWeb ad request failed:", error);
-    const text = String(error?.message || "");
-    if (text.includes("rate_limit")) message("adMessage", "تعداد درخواست‌های امروز برای این راه تماس به حد مجاز رسیده است. فردا دوباره تلاش کن یا از کانال رسمی با ما در تماس باش.", "error");
-    else message("adMessage", "ثبت انجام نشد. اتصال اینترنت و اطلاعات فرم را بررسی کن و دوباره تلاش کن.", "error");
-  } finally { submitting = false; button.disabled = false; }
+
+    const code = String(error?.code || "");
+    const text = String(error?.message || "").toLowerCase();
+
+    if (code === "23505") {
+      message("adMessage", "این درخواست احتمالاً قبلاً ثبت شده است. فهرست درخواست‌ها را بررسی کن.", "error");
+    } else if (code === "42501" || text.includes("row-level security") || text.includes("permission denied")) {
+      message("adMessage", "سرور اجازه ثبت درخواست را نداد. سیاست INSERT در Supabase باید بررسی شود.", "error");
+    } else if (text.includes("rate_limit") || text.includes("too many requests")) {
+      message("adMessage", "تعداد درخواست‌ها به محدودیت مجاز رسیده است. بعداً دوباره تلاش کن.", "error");
+    } else if (text.includes("failed to fetch") || text.includes("network")) {
+      message("adMessage", "اتصال اینترنت برقرار نیست یا سرور در دسترس نیست. دوباره تلاش کن.", "error");
+    } else {
+      message("adMessage", "ثبت درخواست انجام نشد. اطلاعات جدول و سیاست‌های Supabase را بررسی کن.", "error");
+    }
+  } finally {
+    submitting = false;
+    button.disabled = false;
+  }
 });
 
-if (supabase) { loadListings(); loadJobs(); loadAds(); } else { offline(); }
+async function start() {
+  try {
+    const { createClient } = await import(
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm"
+    );
+
+    supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      }
+    });
+
+    await Promise.allSettled([
+      loadListings(),
+      loadJobs(),
+      loadAds()
+    ]);
+  } catch (error) {
+    console.error("KabulWeb initialization failed:", error);
+    supabase = null;
+    offline();
+  }
+}
+
+start();
 </script>
 </body>
 </html>

@@ -1,161 +1,70 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071b16">
-
+  <meta name="description" content="KabulWeb؛ بازار افغانستان و جهان. کانالت را به جهان معرفی کن.">
   <title>KabulWeb | بازار افغانستان و جهان</title>
-
-  <meta name="description"
-    content="KabulWeb؛ کانالت را به جهان معرفی کن.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap"
-        rel="stylesheet">
 
   <style>
     :root {
-      --gold: #e6c77b;
+      --green: #0d3528;
       --dark: #071b16;
-      --green: #123b2b;
-      --cream: #fff4d6;
+      --gold: #d7b66b;
+      --cream: #fff8e8;
+      --muted: #c9d2cc;
+      --panel: #102b22;
+      --border: #6e5b31;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: "Noto Naskh Arabic", serif;
       background: var(--dark);
-      color: white;
+      color: var(--cream);
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.9;
     }
 
-    /* صفحه افتتاحیه */
+    a { color: var(--gold); }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button, .button {
+      display: inline-block;
+      background: var(--gold);
+      color: #14251c;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
     #opening {
       position: fixed;
       inset: 0;
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
       padding: 24px;
-      overflow-y: auto;
       background:
-        radial-gradient(
-          ellipse at center,
-          rgba(36, 91, 62, .55),
-          transparent 65%
-        ),
-        linear-gradient(145deg, #04120f, #103626, #04120f);
-      transition: opacity 1s ease, visibility 1s ease;
-    }
-
-    #opening::before {
-      content: "";
-      position: absolute;
-      inset: 15px;
-      border: 1px solid rgba(230, 199, 123, .7);
-      outline: 1px solid rgba(230, 199, 123, .2);
-      outline-offset: 7px;
-      pointer-events: none;
-    }
-
-    #opening::after {
-      content: "۞";
-      position: absolute;
-      top: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 32px;
-      color: var(--gold);
-    }
-
-    .opening-content {
-      width: 100%;
-      max-width: 650px;
+        radial-gradient(ellipse at center, #164936 0%, #071b16 70%);
       text-align: center;
-      animation: appear 1.5s ease both;
-    }
-
-    .ornament {
-      color: var(--gold);
-      font-size: 34px;
-      margin-bottom: 15px;
-    }
-
-    .bismillah {
-      font-family: "Amiri", serif;
-      font-size: clamp(35px, 8vw, 66px);
-      font-weight: 700;
-      line-height: 1.8;
-      color: var(--cream);
-      text-shadow: 0 0 25px rgba(230, 199, 123, .25);
-      margin: 15px 0;
-    }
-
-    .translation {
-      color: #dfd0a8;
-      font-size: 15px;
-      margin: 15px 0 35px;
-    }
-
-    .gold-line {
-      width: 180px;
-      height: 1px;
-      margin: 25px auto;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        var(--gold),
-        transparent
-      );
-    }
-
-    .brand {
-      color: var(--gold);
-      font-family: Georgia, serif;
-      font-size: clamp(27px, 6vw, 42px);
-      letter-spacing: 2px;
-      font-weight: bold;
-    }
-
-    .tagline {
-      color: #f2e8ce;
-      font-size: 17px;
-      margin: 12px 0 30px;
-    }
-
-    .enter-button {
-      border: 1px solid var(--gold);
-      border-radius: 50px;
-      padding: 13px 38px;
-      background: linear-gradient(135deg, #f3dda0, #c49b48);
-      color: #14271b;
-      font: inherit;
-      font-weight: 700;
-      font-size: 17px;
-      cursor: pointer;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, .25);
-      transition: transform .2s, box-shadow .2s;
-    }
-
-    .enter-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 35px rgba(230, 199, 123, .2);
-    }
-
-    .opening-footer {
-      color: #c6c1ad;
-      font-size: 12px;
-      margin-top: 30px;
+      transition: opacity .8s, visibility .8s;
     }
 
     #opening.hide {
@@ -164,164 +73,207 @@
       pointer-events: none;
     }
 
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .opening-content {
+      width: min(100%, 700px);
+      padding: 30px 18px;
+      border: 1px solid var(--gold);
+      border-radius: 22px;
+      box-shadow: 0 0 40px #0007;
     }
 
-    /* سایت اصلی */
+    .ornament {
+      color: var(--gold);
+      font-size: 42px;
+    }
+
+    .bismillah {
+      color: var(--gold);
+      font-family: "Times New Roman", serif;
+      font-size: clamp(30px, 7vw, 52px);
+      line-height: 1.8;
+      margin: 15px 0;
+    }
+
+    .gold-line {
+      width: 150px;
+      height: 2px;
+      background: var(--gold);
+      margin: 15px auto;
+    }
+
+    .translation { color: var(--muted); }
+
+    .brand {
+      font-size: 34px;
+      color: var(--gold);
+      font-weight: bold;
+      margin-top: 15px;
+      direction: ltr;
+    }
+
+    .tagline { color: var(--cream); }
+
+    .opening-footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 25px;
+    }
+
     header {
-      background: #0b261d;
-      border-bottom: 1px solid rgba(230, 199, 123, .35);
-      padding: 20px;
+      padding: 35px 15px;
       text-align: center;
+      background: linear-gradient(140deg, #174a35, #071b16);
+      border-bottom: 1px solid var(--border);
     }
 
     header h1 {
-      margin: 0;
       color: var(--gold);
-      font-family: Georgia, serif;
-    }
-
-    header p {
-      margin-bottom: 0;
+      font-size: clamp(32px, 7vw, 48px);
+      margin: 0;
+      direction: ltr;
     }
 
     nav {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 12px;
-      padding: 15px;
-      background: #102f23;
+      gap: 10px;
+      padding: 13px;
+      background: #0b251c;
+      border-bottom: 1px solid #ffffff12;
     }
 
     nav a {
-      color: white;
+      color: var(--cream);
       text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 20px;
+      padding: 6px 10px;
     }
 
-    nav a:hover {
-      background: #28553d;
-      color: var(--gold);
-    }
+    nav a:hover { color: var(--gold); }
 
     main {
-      width: min(100% - 32px, 900px);
-      margin: 30px auto;
+      width: min(100% - 28px, 900px);
+      margin: 25px auto;
     }
 
     .welcome, .site-section {
-      background: rgba(255, 255, 255, .04);
-      border: 1px solid rgba(230, 199, 123, .2);
-      border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 20px;
+      margin: 20px 0;
+      padding: 22px;
+      background: var(--panel);
+      border: 1px solid #ffffff16;
+      border-radius: 16px;
     }
 
-    .welcome {
-      text-align: center;
-    }
+    .welcome { text-align: center; }
 
-    .welcome h2, .site-section h2 {
-      color: var(--gold);
-    }
+    h2 { color: var(--gold); margin-top: 0; }
 
     .channel-link {
       display: inline-block;
-      margin: 8px;
-      padding: 10px 18px;
+      margin: 5px;
+      padding: 9px 15px;
       border: 1px solid var(--gold);
       border-radius: 25px;
-      color: var(--cream);
       text-decoration: none;
+      color: var(--cream);
     }
 
     .channel-link:hover {
       background: var(--green);
     }
 
+    form label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 4px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px;
+      color: var(--cream);
+      background: #071b16;
+      border: 1px solid #64796c;
+      border-radius: 9px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--gold);
+      outline-offset: 1px;
+    }
+
+    form button { margin-top: 17px; }
+
+    #adMessage, #adsMessage {
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .ad-card {
+      padding: 16px;
+      margin: 12px 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #071b16;
+      overflow-wrap: anywhere;
+    }
+
+    .ad-card h3 { color: var(--gold); }
+
+    .ad-card a { display: inline-block; margin-top: 8px; }
+
     footer {
       text-align: center;
       padding: 25px 15px;
       background: #04120f;
-      color: #c9c6b9;
+      color: var(--muted);
       font-size: 14px;
     }
 
-    footer a {
-      color: var(--gold);
-      margin: 0 7px;
+    footer a { margin: 0 7px; }
+
+    @media (max-width: 500px) {
+      .welcome, .site-section { padding: 16px; }
+      nav { gap: 4px; }
+      nav a { padding: 5px; font-size: 14px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
         scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- صفحه افتتاحیه بسم الله -->
-  <section id="opening" aria-label="صفحه افتتاحیه کابل وب">
+  <section id="opening" aria-label="صفحه افتتاحیه کابل‌وب">
     <div class="opening-content">
-
       <div class="ornament">۞</div>
-
-      <p class="bismillah">
-        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-      </p>
-
+      <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
       <div class="gold-line"></div>
-
-      <p class="translation">
-        به نام خداوند بخشنده و مهربان
-      </p>
-
+      <p class="translation">به نام خداوند بخشنده و مهربان</p>
       <div class="brand">KabulWeb</div>
-
-      <p class="tagline">
-        بازار افغانستان و جهان
-        <br>
-        کانالت را به جهان معرفی کن
-      </p>
-
-      <button
-        class="enter-button"
-        id="enterSite"
-        type="button">
-        ورود به کابل‌وب ←
-      </button>
-
-      <div class="opening-footer">
-        با توکل بر خداوند، به سوی آینده‌ای بهتر
-      </div>
-
+      <p class="tagline">بازار افغانستان و جهان<br>کانالت را به جهان معرفی کن</p>
+      <button id="enterSite" type="button">ورود به کابل‌وب ←</button>
+      <div class="opening-footer">با توکل بر خداوند، به سوی آینده‌ای بهتر</div>
     </div>
   </section>
 
-  <!-- محتوای سایت -->
   <header id="home">
     <h1>KabulWeb</h1>
     <p>بازار افغانستان و جهان</p>
+    <p>کانالت را به جهان معرفی کن</p>
   </header>
 
   <nav aria-label="منوی اصلی">
     <a href="#home">صفحه اصلی</a>
     <a href="#channels">کانال‌های رسمی</a>
     <a href="#advertise">ثبت تبلیغات</a>
+    <a href="#approvedAds">آگهی‌ها</a>
+    <a href="account.html">حساب کاربری</a>
+    <a href="admin.html">پنل مدیریت</a>
     <a href="about.html">درباره ما</a>
     <a href="privacy.html">حریم خصوصی</a>
   </nav>
@@ -338,42 +290,75 @@
 
     <section class="site-section" id="channels">
       <h2>🌍 کانال‌های رسمی ما</h2>
-
-      <a
-        class="channel-link"
-        href="https://t.me/kabulwebs"
-        target="_blank"
-        rel="noopener noreferrer">
+      <a class="channel-link"
+         href="https://t.me/kabulwebs"
+         target="_blank" rel="noopener noreferrer">
         کانال تلگرام
       </a>
-
-      <a
-        class="channel-link"
-        href="https://whatsapp.com/channel/0029Vaj1Al0R"
-        target="_blank"
-        rel="noopener noreferrer">
+      <a class="channel-link"
+         href="https://whatsapp.com/channel/0029Vaj1Al0R"
+         target="_blank" rel="noopener noreferrer">
         کانال واتساپ
       </a>
     </section>
 
     <section class="site-section" id="advertise">
       <h2>📢 ثبت درخواست تبلیغات</h2>
-      <p>
-        برای معرفی کانال یا فروشگاه خود، از بخش
-        ثبت تبلیغات سایت استفاده کنید.
+      <p>درخواست خود را ثبت کنید. پس از بررسی مدیر، آگهی تأییدشده نمایش داده می‌شود.</p>
+
+      <form id="adForm">
+        <label for="adName">نام شما یا نام فروشگاه</label>
+        <input id="adName" name="name" required maxlength="100">
+
+        <label for="adContact">شماره تماس یا راه ارتباطی</label>
+        <input id="adContact" name="contact" required maxlength="100">
+
+        <label for="adPlatform">نوع تبلیغ</label>
+        <select id="adPlatform" name="platform" required>
+          <option value="">انتخاب کنید</option>
+          <option value="کانال واتساپ">کانال واتساپ</option>
+          <option value="کانال تلگرام">کانال تلگرام</option>
+          <option value="فروشگاه آنلاین">فروشگاه آنلاین</option>
+          <option value="آموزش و یادگیری">آموزش و یادگیری</option>
+          <option value="سرگرمی">سرگرمی</option>
+          <option value="سایر">سایر</option>
+        </select>
+
+        <label for="adLink">لینک کانال یا فروشگاه</label>
+        <input id="adLink" name="link" type="url"
+               placeholder="https://..." required maxlength="500">
+
+        <label for="adPackage">بسته تبلیغاتی</label>
+        <select id="adPackage" name="package" required>
+          <option value="رایگان">رایگان</option>
+          <option value="پولی">پولی</option>
+        </select>
+
+        <label for="adDescription">توضیحات</label>
+        <textarea id="adDescription" name="description"
+                  rows="4" maxlength="2000"
+                  placeholder="درباره کانال یا خدمات خود بنویسید"></textarea>
+
+        <button type="submit" id="adSubmit">ثبت درخواست</button>
+        <p id="adMessage" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="site-section" id="approvedAds">
+      <h2>✨ آگهی‌های تأییدشده</h2>
+      <p id="adsMessage" role="status" aria-live="polite">
+        در حال دریافت آگهی‌ها...
       </p>
-      <p>
-        فرم و فهرست تبلیغات موجود باید از نسخه اصلی
-        پروژه شما حفظ شود.
-      </p>
+      <div id="adsList"></div>
     </section>
   </main>
 
   <footer>
-    <p>© KabulWeb — بنیانگذار: Jahangir Ahmadi</p>
+    <p>© <span id="year"></span> KabulWeb — بنیانگذار: Jahangir Ahmadi</p>
     <a href="about.html">درباره ما</a>
     <a href="privacy.html">حریم خصوصی</a>
     <a href="terms.html">شرایط استفاده</a>
+    <p>بازار افغانستان و جهان</p>
   </footer>
 
   <script>
@@ -387,19 +372,144 @@
       }
 
       enterButton.addEventListener("click", enterWebsite);
-
-      // نمایش خودکار صفحه اصلی پس از 8 ثانیه
-      const autoEnter = window.setTimeout(enterWebsite, 8000);
-
-      // تا زمان ورود، اسکرول صفحه را متوقف می‌کنیم
       document.body.style.overflow = "hidden";
+      window.setTimeout(enterWebsite, 8000);
 
-      // با ورود دستی، تایمر لغو می‌شود
-      enterButton.addEventListener("click", () => {
-        window.clearTimeout(autoEnter);
-      }, { once: true });
+      document.getElementById("year").textContent =
+        new Date().getFullYear();
     })();
   </script>
 
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://netspaxkjtoumfoobgnu.supabase.co";
+
+    // کلید عمومی پروژه است؛ کلید service_role را هرگز در سایت قرار نده.
+    const SUPABASE_KEY =
+      "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const form = document.getElementById("adForm");
+    const message = document.getElementById("adMessage");
+    const submit = document.getElementById("adSubmit");
+    const adsList = document.getElementById("adsList");
+    const adsMessage = document.getElementById("adsMessage");
+
+    function showFormMessage(text, isError = false) {
+      message.textContent = text;
+      message.style.color = isError ? "#ff9b9b" : "#d7b66b";
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      submit.disabled = true;
+      showFormMessage("در حال ثبت درخواست...");
+
+      try {
+        const values = new FormData(form);
+        const request = {
+          name: String(values.get("name") || "").trim(),
+          contact: String(values.get("contact") || "").trim(),
+          platform: String(values.get("platform") || ""),
+          link: String(values.get("link") || "").trim(),
+          package: String(values.get("package") || ""),
+          description: String(values.get("description") || "").trim(),
+          status: "pending"
+        };
+
+        const { error } = await supabase
+          .from("ad_requests")
+          .insert(request);
+
+        if (error) throw error;
+
+        form.reset();
+        showFormMessage(
+          "درخواست شما ثبت شد و پس از بررسی مدیر نتیجه مشخص می‌شود."
+        );
+      } catch (error) {
+        console.error("KabulWeb ad submission error:", error);
+        showFormMessage(
+          "ثبت درخواست ناموفق بود. اتصال اینترنت، ستون‌های جدول و سیاست‌های RLS را بررسی کنید.",
+          true
+        );
+      } finally {
+        submit.disabled = false;
+      }
+    });
+
+    async function loadApprovedAds() {
+      adsMessage.textContent = "در حال دریافت آگهی‌ها...";
+      adsList.replaceChildren();
+
+      try {
+        const { data, error } = await supabase
+          .from("ad_requests")
+          .select("id,name,platform,link,description,created_at")
+          .eq("status", "approved")
+          .order("created_at", { ascending: false })
+          .limit(50);
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          adsMessage.textContent =
+            "فعلاً آگهی تأییدشده‌ای وجود ندارد.";
+          return;
+        }
+
+        let shown = 0;
+
+        for (const ad of data) {
+          let url;
+
+          try {
+            url = new URL(ad.link);
+            if (url.protocol !== "https:" && url.protocol !== "http:") {
+              continue;
+            }
+          } catch {
+            continue;
+          }
+
+          const card = document.createElement("article");
+          card.className = "ad-card";
+
+          const title = document.createElement("h3");
+          title.textContent = ad.name || "آگهی کابل‌وب";
+
+          const platform = document.createElement("p");
+          platform.textContent = ad.platform || "تبلیغ";
+
+          const description = document.createElement("p");
+          description.textContent = ad.description || "";
+
+          const link = document.createElement("a");
+          link.href = url.href;
+          link.textContent = "مشاهده کانال یا فروشگاه";
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+
+          card.append(title, platform, description, link);
+          adsList.appendChild(card);
+          shown++;
+        }
+
+        adsMessage.textContent = shown
+          ? `تعداد آگهی‌های نمایش‌داده‌شده: ${shown}`
+          : "آگهی تأییدشده قابل نمایش پیدا نشد.";
+      } catch (error) {
+        console.error("KabulWeb approved ads error:", error);
+        adsMessage.textContent =
+          "دریافت آگهی‌ها ناموفق بود. دسترسی خواندن عمومی و سیاست‌های RLS در Supabase را بررسی کنید.";
+      }
+    }
+
+    loadApprovedAds();
+  </script>
 </body>
-  </html>
+</html>

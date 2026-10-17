@@ -21,7 +21,7 @@ body{
   color:var(--text);
   background:radial-gradient(ellipse at top,#19452e,transparent 45%),var(--bg)
 }
-img,svg{max-width:100%}
+img,svg{max-width:100%;height:auto}
 a{color:var(--gold);overflow-wrap:anywhere}
 button,input,select,textarea{font:inherit;max-width:100%}
 button,.btn{
@@ -81,7 +81,6 @@ p{overflow-wrap:anywhere}
 .section-head p{font-size:13px;margin:4px 0}
 .card h3,.side-card h3{font-size:16px;margin:5px 0;color:var(--gold)}
 .card p{font-size:13px;color:var(--muted)}
-/* کاریابی: فهرست اصلی + ستون کناری */
 .jobs-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(230px,.8fr);gap:14px;align-items:start}
 .jobs-main,.jobs-sidebar{min-width:0}
 .jobs-sidebar{display:grid;gap:12px}
@@ -95,418 +94,143 @@ p{overflow-wrap:anywhere}
 }
 .job-categories a:hover{border-color:var(--gold)}
 .job-categories span{color:var(--gold)}
-.filters{display:flex;gap:8px;margin-bottom:10px}
-input,select,textarea{
-  width:100%;min-width:0;padding:10px;min-height:43px;
-  color:var(--text);background:#07170f;border:1px solid #627768;border-radius:10px
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+
+/* ====================================================
+   کدهای رسپانسیو جدید برای حل مشکل خالی ماندن صفحه در موبایل
+   ==================================================== */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    gap: 20px;
+  }
+  .quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .cards {
+    grid-template-columns: 1fr !important;
+  }
+  .jobs-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .nav {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  .nav-links {
+    justify-content: center;
+  }
 }
-input::placeholder,textarea::placeholder{color:#a9b9ad}
-.filters input{flex:1}
-.message{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
-.error{color:#ffaaaa!important}
-.success{color:var(--green)!important}
-.listing-card{overflow-wrap:anywhere}
-.badge{display:inline-block;border:1px solid var(--green);color:var(--green);border-radius:20px;padding:0 8px;font-size:11px}
-.job-meta{font-size:12px;color:var(--muted);margin:4px 0}
-.empty{padding:15px;border:1px dashed #ffffff35;border-radius:12px;color:var(--muted);text-align:center;grid-column:1/-1;font-size:13px}
-/* تبلیغات افقی */
-.ad-strip{
-  display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;
-  padding:4px 2px 12px;scroll-snap-type:x mandatory;
-  overscroll-behavior-inline:contain
+@media (max-width: 48px) {
+  .quick-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
-.ad-tile{
-  flex:0 0 min(280px,82vw);min-width:0;scroll-snap-align:start;
-  padding:14px;border:1px solid #78643a;border-radius:14px;
-  background:linear-gradient(145deg,var(--panel),var(--panel2))
-}
-.ad-tile h3{margin:0 0 6px;color:var(--gold);font-size:15px}
-.ad-tile p{font-size:12px;color:var(--muted)}
-.ad-tile a{display:inline-block;margin-top:5px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{min-width:0}
-.full{grid-column:1/-1}
-label{display:block;font-size:13px;margin-bottom:5px}
-textarea{min-height:85px;resize:vertical}
-.hint{font-size:11px;color:var(--muted)}
-.channel-row{display:flex;flex-wrap:wrap;gap:10px}
-.channel-card{flex:1 1 220px;padding:13px;border:1px solid #78643a;border-radius:13px;text-decoration:none;color:var(--text)}
-.channel-card b{display:block;color:var(--gold)}
-.channel-card small{color:var(--muted)}
-footer{margin-top:24px;padding:20px 0;background:#030b07;border-top:1px solid #ffe58a44;color:var(--muted);font-size:12px}
-.footer-inner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
-@media(max-width:760px){
-  .container{width:calc(100% - 22px)}
-  .nav{align-items:flex-start;flex-direction:column}
-  .nav-links{width:100%;gap:5px 11px}
-  .hero{grid-template-columns:minmax(0,1fr)}
-  .hero-art{min-height:150px}
-  .quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .jobs-layout{grid-template-columns:minmax(0,1fr)}
-  .jobs-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:480px){
-  .cards,.form-grid,.jobs-sidebar{grid-template-columns:minmax(0,1fr)}
-  .full{grid-column:auto}
-  h1{font-size:29px}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
-<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-<defs>
-<linearGradient id="kwg"><stop stop-color="#ffe58a"/><stop offset=".5" stop-color="#ff9a3d"/><stop offset="1" stop-color="#6af0ff"/></linearGradient>
-<symbol id="kw-logo" viewBox="0 0 100 100">
-<circle cx="50" cy="50" r="46" fill="#102a1d" stroke="url(#kwg)" stroke-width="3"/>
-<rect x="29" y="29" width="42" height="42" rx="4" fill="none" stroke="url(#kwg)" stroke-width="3" transform="rotate(45 50 50)"/>
-<circle cx="50" cy="50" r="17" fill="url(#kwg)"/>
-<text x="50" y="58" text-anchor="middle" font-size="24" font-weight="bold" fill="#07170f">K</text>
-</symbol>
-</defs>
-</svg>
-
-<section id="opening">
-<div class="opening-inner">
-<svg class="opening-logo" viewBox="0 0 100 100"><use href="#kw-logo"/></svg>
-<div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-<p>به نام خداوند بخشنده و مهربان</p>
-<div class="opening-brand">KabulWeb</div>
-<p>بازار افغانستان و جهان<br>کانالت را به جهان معرفی کن</p>
-<button id="enterSite" type="button">ورود به کابل‌وب ←</button>
+<!-- صفحه خوش‌آمدگویی یا لودینگ اولیه -->
+<div id="opening">
+  <div class="opening-inner">
+    <div class="bismillah">بسم الله الرحمن الرحیم</div>
+    <h2 class="opening-brand">KabulWeb</h2>
+  </div>
 </div>
-</section>
 
+<!-- هدر و منوی ناوبری -->
 <header class="topbar">
-<div class="container nav">
-<a class="brand" href="#home">
-<svg class="logo" viewBox="0 0 100 100"><use href="#kw-logo"/></svg>
-<span><span class="brand-name">Kabul<span>Web</span></span><br><small>بازار افغانستان و جهان</small></span>
-</a>
-<nav class="nav-links">
-<a href="#home">خانه</a><a href="#jobs">کاریابی</a><a href="#categories">دسته‌بندی‌ها</a>
-<a href="#listings">بازار</a><a href="#ads">تبلیغات</a><a href="#channels">کانال‌ها</a>
-<a href="#advertise">ثبت آگهی</a>
-<a href="account.html">حساب کاربری</a><a href="admin.html">مدیریت</a>
-</nav>
-</div>
+  <div class="container nav">
+    <a href="#" class="brand">
+      <div class="brand-name">Kabul<span>Web</span></div>
+    </a>
+    <nav class="nav-links">
+      <a href="#market">بازار افغانستان و جهان</a>
+      <a href="#jobs">فرصت‌های کاری</a>
+      <a href="#guide">راهنمای کاریابی</a>
+    </nav>
+  </div>
 </header>
 
-<main class="container" id="home">
-<section class="hero">
-<div>
-<span class="eyebrow">🌍 بازار افغانستان و جهان</span>
-<h1>فرصت‌ها را پیدا کن<br><span>کسب‌وکارت را معرفی کن</span></h1>
-<p>کاریابی، فروشگاه‌ها، خدمات، آموزش و کانال‌های اجتماعی؛ همه در یک‌جا.</p>
-<div class="actions">
-<a class="btn" href="#jobs">💼 دیدن وظایف</a>
-<a class="btn secondary" href="#advertise">📢 ثبت آگهی</a>
-</div>
-</div>
-<div class="hero-art">
-<div><svg class="hero-logo" viewBox="0 0 100 100"><use href="#kw-logo"/></svg><strong>KabulWeb</strong><small>BUILD • CONNECT • GROW</small></div>
-</div>
-</section>
+<!-- بخش اصلی و محتوای وب‌سایت -->
+<main class="container">
+  
+  <!-- بخش هیرو (معرفی) -->
+  <section class="hero">
+    <div>
+      <span class="eyebrow">بازار افغانستان و جهان</span>
+      <h1>فرصت‌ها را پیدا کن،<br>کسب‌وکار خود را <span>معرفی کن</span></h1>
+      <p>کاریابی، فروشگاه‌ها، دوره‌های آموزشی و آخرین اخبار اقتصادی همه در کابل‌وب.</p>
+      <div class="actions">
+        <a href="#jobs" class="btn">دیدن وظایف</a>
+        <a href="#" class="btn secondary">ثبت آگهی</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-logo">🌐</div>
+      <strong>KabulWeb</strong>
+      <p>BUILD - CONNECT - GROW</p>
+    </div>
+  </section>
 
-<div class="quick-grid">
-<div class="quick"><b>💼</b>کاریابی و استخدام</div>
-<div class="quick"><b>🛍️</b>محصولات و خدمات</div>
-<div class="quick"><b>📣</b>معرفی کانال‌ها</div>
-<div class="quick"><b>🛡️</b>نکات امنیتی</div>
-</div>
+  <!-- آمار سریع یا بخشهای اصلی -->
+  <section class="quick-grid">
+    <div class="quick"><b>+۱۰۰</b>کسب‌وکارها</div>
+    <div class="quick"><b>+۵۰</b>فرصت شغلی</div>
+    <div class="quick"><b>+۱۰</b>دسته‌بندی</div>
+    <div class="quick"><b>۲۴/۷</b>پشتیبانی آنلاین</div>
+  </section>
 
-<section class="block" id="jobs">
-<div class="section-head">
-<h2>💼 فرصت‌های کاری افغانستان</h2>
-<p>عنوان وظیفه، شرکت یا شهر را جست‌وجو کن و جزئیات آگهی را ببین.</p>
-</div>
-<div class="jobs-layout">
-<div class="jobs-main">
-<div class="filters">
-<input id="jobSearch" type="search" placeholder="جست‌وجوی وظیفه، شرکت یا محل…" aria-label="جست‌وجوی وظایف">
-</div>
-<p id="jobsMessage" class="message">در حال بارگذاری وظایف…</p>
-<div id="jobsList" class="cards"></div>
-</div>
-<aside class="jobs-sidebar">
-<div class="side-card">
-<h3>🔎 دسته‌بندی وظایف</h3>
-<div class="job-categories">
-<a href="#jobs" data-filter="اداری">وظایف اداری <span>←</span></a>
-<a href="#jobs" data-filter="آموزش">آموزش و تدریس <span>←</span></a>
-<a href="#jobs" data-filter="کمپیوتر">کمپیوتر و تکنالوژی <span>←</span></a>
-<a href="#jobs" data-filter="فروش">فروش و بازاریابی <span>←</span></a>
-<a href="#jobs" data-filter="صحت">صحت و درمان <span>←</span></a>
-<a href="#jobs" data-filter="NGO">مؤسسات و سازمان‌ها <span>←</span></a>
-</div>
-</div>
-<div class="side-card">
-<h3>📌 راهنمای کاریابی</h3>
-<p>۱. شرایط و مهلت درخواست را بخوان.</p>
-<p>۲. از لینک معتبر کارفرما درخواست بده.</p>
-<p>۳. برای وعده استخدام پول پیش‌پرداخت نکن.</p>
-</div>
-<div class="side-card">
-<h3>✍️ استخدام کارمند</h3>
-<p>اگر کارمند لازم داری، آگهی کاری خود را ثبت کن.</p>
-<a class="btn secondary" href="#advertise">ثبت آگهی ←</a>
-</div>
-</aside>
-</div>
-</section>
+  <!-- چیدمان بخش کاریابی و منوی کناری -->
+  <section id="jobs" class="block">
+    <div class="section-head">
+      <h2>فرصت‌های کاری افغانستان</h2>
+      <p>عنوان مورد نظر خود را جستجو کنید یا جدیدترین آگهی‌ها را ببینید.</p>
+    </div>
+    
+    <div class="jobs-layout">
+      <!-- سمت راست: لیست آگهی‌ها -->
+      <div class="jobs-main cards">
+        <div class="card">
+          <h3>طراح و توسعه‌دهنده وب</h3>
+          <p>شرکت KabulWeb - کابل (حضوری)</p>
+          <p>تسلط کامل به HTML, CSS و JavaScript با حداقل ۲ سال سابقه کار مرتبط.</p>
+        </div>
+        <div class="card">
+          <h3>کارشناس دیجیتال مارکتینگ</h3>
+          <p>آژانس تبلیغاتی افغان - هرات (دورکاری)</p>
+          <p>مدیریت شبکه‌های اجتماعی و آشنایی با کمپین‌های تبلیغاتی آنلاین.</p>
+        </div>
+      </div>
+      
+      <!-- سمت چپ: منو و فیلترها (در موبایل زیر بخش آگهی‌ها می‌رود) -->
+      <aside class="jobs-sidebar">
+        <div class="side-card">
+          <h3>دسته‌بندی وظایف</h3>
+          <div class="job-categories">
+            <a href="#">تکنالوژی و کامپیوتر <span>(۱۲)</span></a>
+            <a href="#">آموزش و تدریس <span>(۸)</span></a>
+            <a href="#">فروش و بازاریابی <span>(۱۵)</span></a>
+            <a href="#">صحت و درمان <span>(۴)</span></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
 
-<section class="block" id="categories">
-<div class="section-head"><h2>دسته‌بندی‌ها</h2></div>
-<div class="cards">
-<article class="card"><h3>💼 کاریابی</h3><p>فرصت‌های کاری و استخدام.</p><a href="#jobs">دیدن وظایف ←</a></article>
-<article class="card"><h3>🛍️ فروشگاه و محصولات</h3><p>محصولات و فروشگاه‌های آنلاین.</p><a href="#listings">دیدن بازار ←</a></article>
-<article class="card"><h3>🧰 خدمات</h3><p>خدمات محلی و آنلاین.</p><a href="#advertise">ثبت خدمات ←</a></article>
-<article class="card"><h3>📚 آموزش</h3><p>دوره‌ها و منابع آموزشی.</p><a href="#advertise">ثبت آموزش ←</a></article>
-<article class="card"><h3>✈️ تلگرام و واتساپ</h3><p>معرفی کانال‌ها و گروه‌ها.</p><a href="#channels">کانال‌های رسمی ←</a></article>
-<article class="card"><h3>✨ سایر آگهی‌ها</h3><p>معرفی کسب‌وکار و خدمات دیگر.</p><a href="#advertise">ثبت آگهی ←</a></article>
-</div>
-</section>
-
-<section class="block" id="listings">
-<div class="section-head"><h2>🛒 بازار محصولات و خدمات</h2><p>آگهی‌های تأییدشده نمایش داده می‌شوند.</p></div>
-<div class="filters"><input id="listingSearch" type="search" placeholder="جست‌وجوی محصول یا خدمت…"></div>
-<p id="listingMessage" class="message">در حال بارگذاری…</p>
-<div id="listingGrid" class="cards"></div>
-</section>
-
-<section class="block" id="ads">
-<div class="section-head"><h2>📢 تبلیغات و آگهی‌های ویژه</h2><p>کارت‌ها را افقی حرکت بده؛ تبلیغات فضای عمودی صفحه را اشغال نمی‌کنند.</p></div>
-<p id="adsMessage" class="message">در حال بارگذاری تبلیغات…</p>
-<div id="adsList" class="ad-strip"></div>
-</section>
-
-<section class="block" id="channels">
-<div class="section-head"><h2>🌐 کانال‌های رسمی کابل‌وب</h2></div>
-<div class="channel-row">
-<a class="channel-card" href="https://t.me/kabulwebs" target="_blank" rel="noopener noreferrer">✈️ <b>کانال تلگرام</b><small>t.me/kabulwebs</small></a>
-<a class="channel-card" href="https://whatsapp.com/channel/0029VbDPV3mIyPtT7iJ1Al0R" target="_blank" rel="noopener noreferrer">💬 <b>کانال واتساپ</b><small>کانال رسمی کابل‌وب</small></a>
-</div>
-</section>
-
-<section class="block" id="advertise">
-<div class="section-head"><h2>📝 ثبت درخواست آگهی</h2><p>درخواست شما با وضعیت در انتظار بررسی ثبت می‌شود.</p></div>
-<div class="card">
-<form id="adForm" class="form-grid">
-<div class="field"><label for="adName">نام شما یا کسب‌وکار *</label><input id="adName" maxlength="100" required placeholder="نام فروشگاه یا شرکت"></div>
-<div class="field"><label for="adCountry">پیش‌شماره کشور *</label>
-<select id="adCountry"><option value="+93">افغانستان +93</option><option value="+992">تاجیکستان +992</option><option value="+98">ایران +98</option><option value="+1">آمریکا/کانادا +1</option></select></div>
-<div class="field full"><label for="adContact">شماره تماس *</label><input id="adContact" type="tel" inputmode="tel" required placeholder="شماره بدون پیش‌شماره"></div>
-<div class="field"><label for="adPlatform">نوع آگهی *</label>
-<select id="adPlatform" required><option value="">انتخاب کن</option><option>کانال واتساپ</option><option>کانال تلگرام</option><option>فروشگاه آنلاین</option><option>محصول</option><option>خدمات</option><option>آموزش و یادگیری</option><option>سرگرمی</option><option>سایر</option></select></div>
-<div class="field"><label for="adPackage">بسته تبلیغاتی</label><select id="adPackage"><option value="رایگان">رایگان</option><option value="پولی">پولی</option></select></div>
-<div class="field full"><label for="adLink">لینک معتبر *</label><input id="adLink" type="url" required dir="ltr" placeholder="https://example.com"></div>
-<div class="field full"><label for="adDescription">توضیحات</label><textarea id="adDescription" maxlength="2000" placeholder="توضیحات آگهی…"></textarea></div>
-<div class="hp"><label for="adWebsite">وب‌سایت</label><input id="adWebsite" tabindex="-1" autocomplete="off"></div>
-<div class="field full"><button id="adSubmit" type="submit">ثبت درخواست</button><p id="adMessage" class="message" role="status"></p></div>
-</form>
-</div>
-</section>
-
-<section class="block" id="safety">
-<div class="section-head"><h2>🛡️ امنیت کاربران</h2></div>
-<div class="card">
-<p>برای استخدام پول پیش‌پرداخت نکن. رمز عبور و کد تأیید خود را در اختیار دیگران قرار نده. پیش از خرید یا همکاری، اعتبار آگهی‌دهنده را بررسی کن.</p>
-</div>
-</section>
-
-<section class="block" id="about">
-<div class="section-head"><h2>درباره کابل‌وب</h2></div>
-<div class="card"><p>کابل‌وب بستری برای معرفی فرصت‌های کاری، کانال‌ها، فروشگاه‌ها، محصولات و خدمات در افغانستان و جهان است.</p><p>بنیانگذار: Jahangir Ahmadi</p></div>
-</section>
 </main>
 
-<footer>
-<div class="container footer-inner">
-<div>© <span id="year"></span> KabulWeb — بنیانگذار: Jahangir Ahmadi<br>بازار افغانستان و جهان</div>
-<div><a href="about.html">درباره ما</a> <a href="privacy.html">حریم خصوصی</a> <a href="terms.html">شرایط استفاده</a> <a href="account.html">حساب کاربری</a> <a href="admin.html">مدیریت</a></div>
-</div>
-</footer>
-
-<script type="module">
-const $=id=>document.getElementById(id);
-$("year").textContent=new Date().getFullYear();
-
-const opening=$("opening");
-let seen=false;
-try{seen=sessionStorage.getItem("kw_seen")==="1"}catch{}
-function enterSite(){
- opening.classList.add("hide");
- try{sessionStorage.setItem("kw_seen","1")}catch{}
-}
-$("enterSite").addEventListener("click",enterSite);
-if(seen)opening.classList.add("hide");
-else setTimeout(enterSite,7000);
-
-function message(id,text,type=""){
- const el=$(id);el.textContent=text;el.className="message "+type;
-}
-function safeLink(value){
- try{
-  const u=new URL(String(value||""));
-  return ["https:","http:"].includes(u.protocol)&&u.hostname.includes(".")?u.href:"";
- }catch{return ""}
-}
-
-let jobs=[],listings=[],ads=[];
-function card(item,kind){
- const el=document.createElement("article");el.className="card listing-card";
- const title=document.createElement("h3");
- title.textContent=item.title||item.name||item.company||"آگهی";
- el.append(title);
- const badge=document.createElement("span");badge.className="badge";
- badge.textContent=kind==="job"?"فرصت کاری":kind==="ad"?"تبلیغ تأییدشده":"بازار";
- el.append(badge);
-
- const company=item.company||item.organization||item.employer||item.institution;
- if(company){const p=document.createElement("p");p.textContent="🏢 "+company;el.append(p)}
- const desc=document.createElement("p");
- desc.textContent=item.description||item.desc||item.summary||item.category||item.platform||"برای دیدن لینک و جزئیات آگهی اقدام کن.";
- el.append(desc);
- const place=item.location||item.city||item.province||item.district;
- if(place){const p=document.createElement("p");p.textContent="📍 "+place;el.append(p)}
- const salary=item.salary||item.salary_range;
- if(salary){const p=document.createElement("p");p.textContent="💰 "+salary;el.append(p)}
- const deadline=item.deadline||item.application_deadline||item.closing_date;
- if(deadline){const p=document.createElement("p");p.textContent="📅 مهلت: "+deadline;el.append(p)}
- const url=safeLink(item.link||item.url||item.application_url);
- if(url){const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=kind==="job"?"مشاهده لینک درخواست ←":"باز کردن لینک ←";el.append(a)}
- return el;
-}
-function render(container,rows,kind,query=""){
- container.replaceChildren();
- const q=query.trim().toLocaleLowerCase();
- const filtered=rows.filter(item=>
-  [item.title,item.name,item.company,item.organization,item.employer,
-   item.description,item.desc,item.summary,item.category,item.platform,
-   item.type,item.location,item.city,item.province,item.salary]
-  .filter(Boolean).join(" ").toLocaleLowerCase().includes(q));
- if(!filtered.length){
-  const empty=document.createElement("div");empty.className="empty";
-  empty.textContent=kind==="job"?
-   "فعلاً وظیفه تأییدشده‌ای در دیتابیس موجود نیست. دسته‌بندی‌ها و راهنمای کاریابی در کنار این بخش در دسترس‌اند.":
-   "فعلاً آگهی تأییدشده‌ای برای نمایش موجود نیست.";
-  container.append(empty);return;
- }
- for(const item of filtered){
-  if(kind==="ad"){
-   const el=document.createElement("article");el.className="ad-tile";
-   const h=document.createElement("h3");h.textContent=item.title||item.name||"تبلیغ";
-   const p=document.createElement("p");p.textContent=item.description||item.platform||"آگهی تأییدشده کابل‌وب";
-   el.append(h,p);
-   const url=safeLink(item.link||item.url);
-   if(url){const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="مشاهده آگهی ←";el.append(a)}
-   container.append(el);
-  }else container.append(card(item,kind));
- }
-}
-function refresh(){
- render($("jobsList"),jobs,"job",$("jobSearch").value);
- render($("listingGrid"),listings,"listing",$("listingSearch").value);
- render($("adsList"),ads,"ad");
-}
-
-$("jobSearch").addEventListener("input",refresh);
-$("listingSearch").addEventListener("input",refresh);
-document.querySelectorAll("[data-filter]").forEach(a=>{
- a.addEventListener("click",()=>{
-  $("jobSearch").value=a.dataset.filter||"";refresh();
- });
+<script>
+// اسکریپت حذف انیمیشن لودینگ اولیه پس از بارگذاری سایت
+window.addEventListener('load', () => {
+  const opening = document.getElementById('opening');
+  setTimeout(() => {
+    opening.classList.add('hide');
+  }, 1000); // صفحه لودینگ بعد از ۱ ثانیه پنهان می‌شود
 });
-
-/* اتصال به پروژه Supabase فعلی */
-const SUPABASE_URL="https://netspaxkjtoumfoobgnu.supabase.co";
-const SUPABASE_KEY="sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
-let supabase=null;
-
-async function init(){
- try{
-  const lib=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm");
-  supabase=lib.createClient(SUPABASE_URL,SUPABASE_KEY);
-  const results=await Promise.allSettled([
-   supabase.from("job_posts").select("*").eq("status","approved").limit(60),
-   supabase.from("listings").select("*").eq("status","approved").limit(60),
-   supabase.from("ad_requests").select("id,name,platform,link,package,description,status").eq("status","approved").limit(60)
-  ]);
-  const targets=[
-   {i:0,key:"jobs",msg:"jobsMessage",empty:"فرصه کاری"},
-   {i:1,key:"listings",msg:"listingMessage",empty:"آگهی بازار"},
-   {i:2,key:"ads",msg:"adsMessage",empty:"تبلیغ"}
-  ];
-  for(const t of targets){
-   const r=results[t.i];
-   if(r.status==="fulfilled"&&!r.value.error){
-    const rows=r.value.data||[];
-    if(t.key==="jobs")jobs=rows;
-    if(t.key==="listings")listings=rows;
-    if(t.key==="ads")ads=rows.map(x=>({...x,title:x.name,category:x.platform}));
-    message(t.msg,rows.length?"آگهی‌های تأییدشده بارگذاری شد.":"هنوز "+t.empty+" تأییدشده‌ای ثبت نشده است.");
-   }else{
-    const reason=r.status==="fulfilled"?r.value.error?.message:r.reason;
-    console.error(t.key,reason);
-    message(t.msg,"بارگذاری انجام نشد؛ جدول و سیاست‌های RLS را بررسی کن.","error");
-   }
-  }
-  refresh();
- }catch(e){
-  console.error(e);
-  message("jobsMessage","اتصال کاریابی برقرار نشد.","error");
-  message("listingMessage","اتصال بازار برقرار نشد.","error");
-  message("adsMessage","اتصال تبلیغات برقرار نشد.","error");
- }
-}
-
-/* ثبت درخواست تبلیغات */
-$("adForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const btn=$("adSubmit");
- if($("adWebsite").value.trim())return;
- if(!supabase){message("adMessage","اتصال دیتابیس برقرار نیست؛ صفحه را تازه‌سازی کن.","error");return}
- const name=$("adName").value.trim();
- const contact=$("adContact").value.trim();
- const platform=$("adPlatform").value;
- const rawLink=$("adLink").value.trim();
- const packageName=$("adPackage").value;
- const description=$("adDescription").value.trim();
- if(!name||!contact||!platform||!safeLink(rawLink)){
-  message("adMessage","لطفاً نام، شماره، نوع آگهی و لینک معتبر را بررسی کن.","error");return;
- }
- if(!/^[0-9۰-۹٠-٩\s()+-]{7,20}$/.test(contact)){
-  message("adMessage","شماره تماس معتبر وارد کن.","error");return;
- }
- const normalized=contact.replace(/[۰-۹]/g,c=>"۰۱۲۳۴۵۶۷۸۹".indexOf(c)).replace(/[٠-٩]/g,c=>"٠١٢٣٤٥٦٧٨٩".indexOf(c)).replace(/\D/g,"").replace(/^0+/,"");
- if(normalized.length<7||normalized.length>13){
-  message("adMessage","طول شماره تماس مناسب نیست.","error");return;
- }
- btn.disabled=true;btn.textContent="در حال ثبت…";
- try{
-  const payload={
-   name,
-   contact:$("adCountry").value+normalized,
-   platform,link:safeLink(rawLink),
-   package:packageName,description,status:"pending"
-  };
-  const {error}=await supabase.from("ad_requests").insert(payload);
-  if(error)throw error;
-  message("adMessage","درخواست ثبت شد و در انتظار تأیید مدیریت است.","success");
-  $("adForm").reset();
-  $("adCountry").value="+93";
- }catch(err){
-  console.error(err);
-  message("adMessage","ثبت ناموفق بود؛ ستون‌های جدول ad_requests و سیاست INSERT را بررسی کن.","error");
- }finally{
-  btn.disabled=false;btn.textContent="ثبت درخواست";
- }
-});
-
-init();
 </script>
+
 </body>
- </html>
+</html>

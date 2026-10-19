@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1877f2">
-  <meta name="description" content="پنل شخصی کاربران کابل‌وب">
+  <meta name="description" content="حساب کاربری و پنل شخصی کابل‌وب">
   <title>حساب کاربری | کابل‌وب</title>
 
   <style>
     :root {
       --blue: #1877f2;
+      --blue-dark: #0866ff;
       --bg: #f0f2f5;
       --white: #fff;
       --text: #1c1e21;
@@ -17,19 +18,29 @@
       --border: #e4e6eb;
       --green: #188038;
       --red: #c62828;
-      --radius: 13px;
+      --radius: 14px;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      min-height: 100%;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
       background: var(--bg);
       color: var(--text);
       font-family: Tahoma, Arial, sans-serif;
       font-size: 14px;
+      line-height: 1.7;
     }
 
     button, input {
@@ -40,13 +51,13 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
-    }
-
-    button {
-      cursor: pointer;
     }
 
     [hidden] {
@@ -56,9 +67,9 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 20;
-      height: 62px;
-      padding: 0 20px;
+      z-index: 50;
+      min-height: 64px;
+      padding: 9px 20px;
       background: white;
       border-bottom: 1px solid var(--border);
       display: flex;
@@ -71,16 +82,18 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
     }
 
     .brand-logo {
-      width: 42px;
-      height: 42px;
+      width: 43px;
+      height: 43px;
+      flex-shrink: 0;
       display: grid;
       place-items: center;
-      background: var(--blue);
+      background: linear-gradient(135deg, var(--blue), #65b6ff);
       color: white;
-      border-radius: 12px;
+      border-radius: 13px;
       font-size: 23px;
       font-weight: bold;
     }
@@ -92,24 +105,25 @@
     }
 
     .brand-subtitle {
-      margin-top: 4px;
-      font-size: 11px;
       color: var(--muted);
+      font-size: 11px;
     }
 
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
     }
 
-    .round-button, .avatar {
-      width: 39px;
-      height: 39px;
+    .round-button,
+    .avatar {
+      width: 40px;
+      height: 40px;
       border: 0;
       border-radius: 50%;
       display: grid;
       place-items: center;
+      flex-shrink: 0;
     }
 
     .round-button {
@@ -120,8 +134,8 @@
     .avatar {
       background: var(--blue);
       color: white;
-      font-size: 17px;
       font-weight: bold;
+      font-size: 17px;
     }
 
     .layout {
@@ -136,15 +150,16 @@
     }
 
     .sidebar {
+      min-width: 0;
       position: sticky;
-      top: 82px;
+      top: 84px;
     }
 
     .card {
       background: white;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: 0 1px 2px #00000008;
+      box-shadow: 0 1px 3px #00000008;
       min-width: 0;
     }
 
@@ -154,13 +169,12 @@
     }
 
     .cover {
-      height: 90px;
-      background: linear-gradient(120deg, #0866ff, #69b5ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffffdf;
-      font-size: 23px;
+      height: 95px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(120deg, #0758ce, #70c2ff);
+      color: white;
+      font-size: 24px;
       font-weight: bold;
     }
 
@@ -180,7 +194,7 @@
       color: white;
       display: grid;
       place-items: center;
-      font-size: 29px;
+      font-size: 28px;
       font-weight: bold;
     }
 
@@ -199,8 +213,8 @@
 
     .badge {
       display: inline-block;
-      margin-top: 12px;
-      padding: 6px 10px;
+      margin-top: 10px;
+      padding: 5px 10px;
       border-radius: 20px;
       background: #e7f5eb;
       color: var(--green);
@@ -212,7 +226,7 @@
     }
 
     .menu-title {
-      padding: 10px;
+      padding: 9px 10px;
       color: var(--muted);
       font-size: 12px;
       font-weight: bold;
@@ -222,8 +236,8 @@
       width: 100%;
       display: flex;
       align-items: center;
-      gap: 11px;
-      padding: 12px;
+      gap: 10px;
+      padding: 11px;
       margin-bottom: 3px;
       border: 0;
       border-radius: 9px;
@@ -244,11 +258,11 @@
     }
 
     .menu-icon {
-      width: 30px;
-      height: 30px;
+      width: 31px;
+      height: 31px;
       display: grid;
       place-items: center;
-      border-radius: 8px;
+      border-radius: 9px;
       background: #f0f2f5;
       font-size: 16px;
       flex-shrink: 0;
@@ -269,14 +283,13 @@
     }
 
     .welcome h1 {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       font-size: 21px;
     }
 
     .welcome p {
       margin: 5px 0;
       color: var(--muted);
-      line-height: 1.9;
     }
 
     .section-heading {
@@ -288,11 +301,11 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 13px;
-      margin-bottom: 23px;
+      margin-bottom: 22px;
     }
 
     .stat {
-      padding: 18px;
+      padding: 17px;
     }
 
     .stat-icon {
@@ -303,11 +316,11 @@
       border-radius: 11px;
       background: #e7f3ff;
       font-size: 20px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .stat h3 {
-      margin: 0 0 8px;
+      margin: 0 0 7px;
       font-size: 13px;
     }
 
@@ -315,10 +328,12 @@
       margin: 0;
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.8;
+      overflow-wrap: anywhere;
     }
 
-    .primary, .secondary, .danger {
+    .primary,
+    .secondary,
+    .danger {
       display: inline-block;
       padding: 11px 15px;
       border: 0;
@@ -334,7 +349,7 @@
     }
 
     .primary:hover {
-      background: #0866ff;
+      background: var(--blue-dark);
     }
 
     .secondary {
@@ -345,6 +360,11 @@
     .danger {
       background: #ffebee;
       color: var(--red);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .6;
     }
 
     .page-section {
@@ -361,19 +381,19 @@
     }
 
     .panel h2 {
-      margin: 0 0 10px;
+      margin: 0 0 9px;
       font-size: 18px;
     }
 
     .muted {
       color: var(--muted);
-      line-height: 1.9;
       font-size: 12px;
+      line-height: 1.9;
     }
 
     .info {
-      padding: 14px;
-      margin: 15px 0;
+      padding: 13px;
+      margin: 14px 0;
       border-radius: 9px;
       border: 1px solid var(--border);
       background: #f7f8fa;
@@ -384,7 +404,7 @@
 
     .field-label {
       display: block;
-      margin: 14px 0 8px;
+      margin: 14px 0 7px;
       font-weight: bold;
       font-size: 13px;
     }
@@ -403,6 +423,7 @@
 
     .input:focus {
       border-color: var(--blue);
+      box-shadow: 0 0 0 2px #1877f21c;
     }
 
     .input[readonly] {
@@ -433,17 +454,17 @@
     .table-wrap {
       width: 100%;
       overflow-x: auto;
-      margin-top: 15px;
+      margin: 15px 0;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 470px;
+      min-width: 440px;
     }
 
     th, td {
-      padding: 12px;
+      padding: 11px;
       border-bottom: 1px solid var(--border);
       text-align: right;
       line-height: 1.8;
@@ -465,7 +486,7 @@
     .auth-wrap {
       max-width: 520px;
       margin: 35px auto;
-      padding: 22px;
+      padding: 23px;
     }
 
     .auth-wrap h1 {
@@ -496,26 +517,24 @@
       display: none;
     }
 
-    @media (max-width: 850px) {
+    @media (max-width: 900px) {
       .layout {
         grid-template-columns: 1fr;
-        padding: 12px;
+        padding: 13px;
       }
 
       .sidebar {
         position: static;
       }
 
-      .profile-card {
-        display: none;
-      }
-
+      .profile-card,
       .menu-card {
         display: none;
       }
 
       .sidebar.open .menu-card {
         display: block;
+        margin-bottom: 12px;
       }
 
       .mobile-menu {
@@ -527,11 +546,15 @@
       }
 
       .topbar {
-        padding: 0 11px;
+        padding: 9px 12px;
       }
     }
 
     @media (max-width: 500px) {
+      .welcome {
+        padding: 17px;
+      }
+
       .welcome h1 {
         font-size: 18px;
       }
@@ -546,6 +569,19 @@
 
       .brand-name {
         font-size: 17px;
+      }
+
+      .stats {
+        gap: 9px;
+      }
+
+      .stat {
+        padding: 13px;
+      }
+
+      .auth-wrap {
+        margin: 18px 12px;
+        padding: 18px;
       }
     }
   </style>
@@ -574,10 +610,10 @@
   در حال اتصال به حساب کاربری...
 </div>
 
-<!-- فرم ورود و ثبت‌نام -->
+<!-- ورود و ثبت‌نام -->
 <section id="authBox" class="card auth-wrap" hidden>
   <h1>حساب کابل‌وب</h1>
-  <p class="muted">وارد حساب شو یا حساب جدید بساز.</p>
+  <p class="muted">وارد حساب خود شو یا یک حساب جدید بساز.</p>
 
   <form id="authForm">
     <label class="field-label" for="authEmail">ایمیل</label>
@@ -595,11 +631,11 @@
     </div>
 
     <div class="button-row">
-      <button class="primary" type="submit">ورود</button>
-      <button class="secondary" type="button" id="toggleSignup">
+      <button class="primary" id="authSubmit" type="submit">ورود</button>
+      <button class="secondary" id="toggleSignup" type="button">
         ساخت حساب جدید
       </button>
-      <button class="secondary" type="button" id="forgotPassword">
+      <button class="secondary" id="forgotPassword" type="button">
         فراموشی رمز
       </button>
     </div>
@@ -607,7 +643,7 @@
     <div id="authMessage" class="message" role="status"></div>
   </form>
 
-  <p><a class="muted" href="index.html">بازگشت به صفحه اصلی ←</a></p>
+  <p><a class="muted" href="index.html">← بازگشت به صفحه اصلی</a></p>
 </section>
 
 <div class="layout" id="dashboard" hidden>
@@ -658,7 +694,7 @@
         <span class="menu-icon">🌐</span> بازار کابل‌وب
       </a>
 
-      <button class="menu-item" id="logoutButton">
+      <button class="menu-item" id="logoutButton" type="button">
         <span class="menu-icon">🚪</span> خروج از حساب
       </button>
     </nav>
@@ -672,9 +708,9 @@
         <div>
           <h1>خوش آمدی، <span id="welcomeName">کاربر</span> 👋</h1>
           <p>به فضای شخصی خود در کابل‌وب خوش آمدی.</p>
-          <p>از اینجا فعالیت‌ها و اطلاعات حسابت را مدیریت کن.</p>
+          <p>فعالیت‌ها و اطلاعات حسابت را از اینجا مدیریت کن.</p>
         </div>
-        <a href="index.html" class="primary">ورود به بازار ←</a>
+        <a href="index.html" class="primary">رفتن به بازار ←</a>
       </div>
 
       <h2 class="section-heading">خلاصه فعالیت‌های من</h2>
@@ -707,7 +743,7 @@
         <div class="card stat">
           <div class="stat-icon">🔐</div>
           <h3>امنیت حساب</h3>
-          <p>حساب با ایمیل شما مدیریت می‌شود.</p>
+          <p>حساب از طریق ایمیل مدیریت می‌شود.</p>
         </div>
 
         <div class="card stat">
@@ -720,7 +756,7 @@
       <div class="card panel">
         <h2>شروع فعالیت</h2>
         <p class="muted">
-          برای ثبت تبلیغ، معرفی محصول یا خدمات و مشاهده فرصت‌های کاری،
+          برای ثبت تبلیغ، معرفی محصولات یا خدمات و مشاهده فرصت‌های کاری،
           وارد بازار کابل‌وب شو.
         </p>
         <a href="index.html" class="primary">رفتن به صفحه اصلی</a>
@@ -732,10 +768,6 @@
       <div class="card panel">
         <h2>📢 تبلیغات من</h2>
         <p class="muted">درخواست‌های تبلیغاتی مرتبط با حساب تو.</p>
-        <div class="info">
-          فقط درخواست‌هایی نمایش داده می‌شوند که با شناسه حساب تو
-          در دیتابیس ثبت شده باشند.
-        </div>
         <div id="adsTable" class="empty">در حال بارگذاری...</div>
         <a href="index.html" class="primary">ثبت درخواست تبلیغ</a>
       </div>
@@ -745,7 +777,7 @@
     <section class="page-section" id="page-store">
       <div class="card panel">
         <h2>🛍️ محصولات و خدمات من</h2>
-        <p class="muted">فهرست محصولات یا خدمات ثبت‌شده توسط حساب تو.</p>
+        <p class="muted">محصولات یا خدمات ثبت‌شده توسط حساب تو.</p>
         <div id="listingsTable" class="empty">در حال بارگذاری...</div>
         <a href="index.html" class="primary">رفتن به بازار</a>
       </div>
@@ -765,7 +797,7 @@
     <section class="page-section" id="page-orders">
       <div class="card panel">
         <h2>📦 سفارش‌های من</h2>
-        <p class="muted">سفارش‌هایی که به حساب تو مرتبط هستند.</p>
+        <p class="muted">سفارش‌های مرتبط با حساب تو.</p>
         <div id="ordersTable" class="empty">در حال بارگذاری...</div>
       </div>
     </section>
@@ -776,12 +808,12 @@
         <h2>🔔 اعلان‌ها</h2>
         <div class="info">
           سیستم اعلان‌های شخصی هنوز راه‌اندازی نشده است.
-          در حال حاضر پیام‌های تأیید درخواست‌ها از طریق این بخش ارسال نمی‌شوند.
+          این بخش فعلاً پیام‌های خودکار تأیید درخواست‌ها را نمایش نمی‌دهد.
         </div>
       </div>
     </section>
 
-    <!-- تنظیمات -->
+    <!-- تنظیمات حساب -->
     <section class="page-section" id="page-settings">
       <div class="card panel">
         <h2>⚙️ تنظیمات حساب</h2>
@@ -811,8 +843,8 @@
       <div class="card panel">
         <h2>🔐 امنیت حساب</h2>
         <p class="muted">
-          رمز عبور خود را با دیگران شریک نکن. اگر از دستگاه عمومی استفاده
-          می‌کنی، پس از پایان کار از حسابت خارج شو.
+          رمز عبور خود را با دیگران شریک نکن. پس از استفاده از دستگاه عمومی،
+          از حساب خود خارج شو.
         </p>
         <button class="danger" id="logoutButton2" type="button">
           خروج از حساب
@@ -834,9 +866,9 @@
   const SUPABASE_URL =
     "https://netspaxkjtoumfoobgnu.supabase.co";
 
-  // فقط کلید عمومی پروژه را استفاده کن؛ هرگز service_role را در سایت نگذار.
+  // کلید عمومی Publishable پروژه؛ هرگز service_role را در سایت نگذار.
   const SUPABASE_KEY =
-    "sb_publishable_qGHIeuxoYN01V10g5n7nw_R0rQpUTE";
+    "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = id => document.getElementById(id);
@@ -856,9 +888,10 @@
     $("dashboard").hidden = true;
     $("authBox").hidden = false;
     $("nameField").hidden = !signupMode;
+    $("authName").required = signupMode;
 
-    const submit = $("authForm").querySelector('button[type="submit"]');
-    submit.textContent = signupMode ? "ساخت حساب" : "ورود";
+    $("authSubmit").textContent = signupMode ? "ساخت حساب" : "ورود";
+
     $("toggleSignup").textContent = signupMode
       ? "قبلاً حساب ساخته‌ام"
       : "ساخت حساب جدید";
@@ -890,7 +923,19 @@
       : "ایمیل هنوز تأیید نشده";
   }
 
-  function safeTable(containerId, rows, columns, emptyMessage) {
+  function formatStatus(status) {
+    const labels = {
+      pending: "در انتظار بررسی",
+      approved: "تأیید شده",
+      rejected: "رد شده",
+      completed: "تکمیل شده",
+      cancelled: "لغو شده"
+    };
+
+    return labels[status] || status || "نامشخص";
+  }
+
+  function renderTable(containerId, rows, columns, emptyMessage) {
     const root = $(containerId);
     root.replaceChildren();
 
@@ -906,9 +951,9 @@
     const thead = document.createElement("thead");
     const headRow = document.createElement("tr");
 
-    columns.forEach(col => {
+    columns.forEach(column => {
       const th = document.createElement("th");
-      th.textContent = col.label;
+      th.textContent = column.label;
       headRow.appendChild(th);
     });
 
@@ -920,9 +965,17 @@
     rows.forEach(row => {
       const tr = document.createElement("tr");
 
-      columns.forEach(col => {
+      columns.forEach(column => {
         const td = document.createElement("td");
-        const value = row[col.key];
+        let value = row[column.key];
+
+        if (column.key === "status") {
+          value = formatStatus(value);
+        }
+
+        if (column.key === "created_at" && value) {
+          value = new Date(value).toLocaleDateString("fa-AF");
+        }
 
         td.textContent = value == null || value === ""
           ? "—"
@@ -938,20 +991,39 @@
     root.appendChild(table);
   }
 
-  function formatStatus(status) {
-    const labels = {
-      pending: "در انتظار بررسی",
-      approved: "تأیید شده",
-      rejected: "رد شده",
-      completed: "تکمیل شده",
-      cancelled: "لغو شده"
-    };
+  async function loadOneTable(user, config) {
+    try {
+      const { data, error } = await supabase
+        .from(config.table)
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(50);
 
-    return labels[status] || status || "نامشخص";
+      if (error) throw error;
+
+      $(config.count).textContent = `${data.length} مورد`;
+
+      renderTable(
+        config.target,
+        data,
+        config.columns,
+        config.empty
+      );
+    } catch (error) {
+      console.error("KabulWeb table error:", config.table, error);
+
+      $(config.count).textContent = "دریافت ناموفق";
+
+      const target = $(config.target);
+      target.className = "info";
+      target.textContent =
+        "اطلاعات این بخش دریافت نشد. نام جدول، ستون user_id و سیاست‌های دسترسی دیتابیس را بررسی کن.";
+    }
   }
 
   async function loadOwnedData(user) {
-    const jobs = [
+    const tables = [
       {
         table: "ad_requests",
         count: "adCount",
@@ -1002,36 +1074,9 @@
       }
     ];
 
-    for (const item of jobs) {
-      try {
-        const { data, error } = await supabase
-          .from(item.table)
-          .select("*")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(50);
-
-        if (error) throw error;
-
-        $(item.count).textContent = `${data.length} مورد`;
-
-        const displayRows = data.map(row => ({
-          ...row,
-          status: formatStatus(row.status),
-          created_at: row.created_at
-            ? new Date(row.created_at).toLocaleDateString("fa-AF")
-            : ""
-        }));
-
-        safeTable(item.target, displayRows, item.columns, item.empty);
-      } catch (error) {
-        $(item.count).textContent = "دریافت ناموفق";
-        $(item.target).className = "info";
-        $(item.target).textContent =
-          "اطلاعات این بخش دریافت نشد. احتمال دارد جدول یا سیاست دسترسی نیاز به اصلاح داشته باشد.";
-        console.error("KabulWeb table error:", item.table, error);
-      }
-    }
+    await Promise.all(
+      tables.map(config => loadOneTable(user, config))
+    );
   }
 
   async function loadDashboard(user) {
@@ -1040,8 +1085,8 @@
     showDashboard();
 
     if (dashboardLoadedFor === user.id) return;
-    dashboardLoadedFor = user.id;
 
+    dashboardLoadedFor = user.id;
     await loadOwnedData(user);
   }
 
@@ -1054,17 +1099,18 @@
 
       if (error) throw error;
 
-      if (data.session?.user) {
+      if (data.session && data.session.user) {
         await loadDashboard(data.session.user);
       } else {
         dashboardLoadedFor = null;
         showAuth();
       }
     } catch (error) {
+      console.error("Session error:", error);
+
       $("loading").hidden = false;
       $("loading").textContent =
         "اتصال ناموفق بود. اینترنت و تنظیمات Supabase را بررسی کن.";
-      console.error("Session error:", error);
     }
   }
 
@@ -1080,14 +1126,17 @@
     const password = $("authPassword").value;
     const name = $("authName").value.trim();
 
-    const submit = $("authForm").querySelector('button[type="submit"]');
-    submit.disabled = true;
+    $("authSubmit").disabled = true;
     setMessage("authMessage", "لطفاً صبر کن...");
 
     try {
       if (signupMode) {
         if (name.length < 2) {
-          setMessage("authMessage", "نام کامل خود را وارد کن.", "error");
+          setMessage(
+            "authMessage",
+            "نام کامل خود را وارد کن.",
+            "error"
+          );
           return;
         }
 
@@ -1102,7 +1151,7 @@
 
         if (error) throw error;
 
-        if (data.session?.user) {
+        if (data.session && data.session.user) {
           dashboardLoadedFor = null;
           await loadDashboard(data.session.user);
         } else {
@@ -1112,10 +1161,11 @@
           );
         }
       } else {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
+        const { data, error } =
+          await supabase.auth.signInWithPassword({
+            email,
+            password
+          });
 
         if (error) throw error;
 
@@ -1125,7 +1175,7 @@
     } catch (error) {
       setMessage("authMessage", "خطا: " + error.message, "error");
     } finally {
-      submit.disabled = false;
+      $("authSubmit").disabled = false;
     }
   });
 
@@ -1133,14 +1183,21 @@
     const email = $("authEmail").value.trim();
 
     if (!email) {
-      setMessage("authMessage", "ابتدا ایمیل خود را وارد کن.", "error");
+      setMessage(
+        "authMessage",
+        "ابتدا ایمیل خود را وارد کن.",
+        "error"
+      );
       return;
     }
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.href.split("#")[0]
-      });
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo: window.location.href.split("#")[0]
+        }
+      );
 
       if (error) throw error;
 
@@ -1161,7 +1218,10 @@
       });
 
       const page = $("page-" + button.dataset.page);
-      if (page) page.classList.add("visible");
+
+      if (page) {
+        page.classList.add("visible");
+      }
 
       document.querySelectorAll(".menu-item[data-page]").forEach(item => {
         item.classList.toggle("active", item === button);
@@ -1182,7 +1242,11 @@
     const name = $("fullName").value.trim();
 
     if (name.length < 2) {
-      setMessage("settingsMessage", "نام کامل را وارد کن.", "error");
+      setMessage(
+        "settingsMessage",
+        "نام کامل را وارد کن.",
+        "error"
+      );
       return;
     }
 
@@ -1206,22 +1270,32 @@
         "success"
       );
     } catch (error) {
-      setMessage("settingsMessage", "خطا: " + error.message, "error");
+      setMessage(
+        "settingsMessage",
+        "خطا: " + error.message,
+        "error"
+      );
     } finally {
       $("saveName").disabled = false;
     }
   });
 
   $("resetPassword").addEventListener("click", async () => {
-    if (!currentUser?.email) {
-      setMessage("settingsMessage", "ایمیل حساب پیدا نشد.", "error");
+    if (!currentUser || !currentUser.email) {
+      setMessage(
+        "settingsMessage",
+        "ایمیل حساب پیدا نشد.",
+        "error"
+      );
       return;
     }
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(
         currentUser.email,
-        { redirectTo: window.location.href.split("#")[0] }
+        {
+          redirectTo: window.location.href.split("#")[0]
+        }
       );
 
       if (error) throw error;
@@ -1232,22 +1306,33 @@
         "success"
       );
     } catch (error) {
-      setMessage("settingsMessage", "خطا: " + error.message, "error");
+      setMessage(
+        "settingsMessage",
+        "خطا: " + error.message,
+        "error"
+      );
     }
   });
 
   async function logout() {
-    const { error } = await supabase.auth.signOut();
+    $("logoutButton").disabled = true;
+    $("logoutButton2").disabled = true;
 
-    if (error) {
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+
+      currentUser = null;
+      dashboardLoadedFor = null;
+      signupMode = false;
+      showAuth("از حساب خارج شدی.");
+    } catch (error) {
       alert("خروج ناموفق بود: " + error.message);
-      return;
+    } finally {
+      $("logoutButton").disabled = false;
+      $("logoutButton2").disabled = false;
     }
-
-    currentUser = null;
-    dashboardLoadedFor = null;
-    signupMode = false;
-    showAuth("از حساب خارج شدی.");
   }
 
   $("logoutButton").addEventListener("click", logout);
@@ -1257,6 +1342,7 @@
     if (event === "SIGNED_OUT") {
       currentUser = null;
       dashboardLoadedFor = null;
+      signupMode = false;
       showAuth();
     }
   });

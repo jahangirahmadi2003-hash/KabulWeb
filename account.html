@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1877f2">
+  <meta name="theme-color" content="#0b1020">
   <meta name="description" content="حساب کاربری و پنل شخصی کابل‌وب">
   <title>حساب کاربری | کابل‌وب</title>
 
   <style>
     :root {
-      --blue: #1877f2;
-      --blue-dark: #0866ff;
-      --bg: #f0f2f5;
-      --white: #fff;
-      --text: #1c1e21;
-      --muted: #65676b;
-      --border: #e4e6eb;
-      --green: #188038;
-      --red: #c62828;
+      --gold: #f3c969;
+      --gold-light: #ffe6a0;
+      --gold-dark: #a77c2a;
+      --bg: #0b1020;
+      --bg-2: #121b30;
+      --bg-3: #17243c;
+      --text: #f5f7ff;
+      --muted: #aab7cf;
+      --border: #293954;
+      --green: #31c48d;
+      --red: #ff788b;
       --radius: 14px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       min-height: 100%;
@@ -43,47 +43,28 @@
       line-height: 1.7;
     }
 
-    button, input {
-      font: inherit;
-    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
 
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
-
+    /* ---------- Topbar ---------- */
     .topbar {
       position: sticky;
       top: 0;
       z-index: 50;
       min-height: 64px;
       padding: 9px 20px;
-      background: white;
+      background: rgba(11, 16, 32, 0.93);
       border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
 
     .brand-logo {
       width: 43px;
@@ -91,32 +72,19 @@
       flex-shrink: 0;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--blue), #65b6ff);
-      color: white;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #10182a;
       border-radius: 13px;
       font-size: 23px;
       font-weight: bold;
     }
 
-    .brand-name {
-      color: var(--blue);
-      font-size: 19px;
-      font-weight: bold;
-    }
+    .brand-name { color: var(--gold); font-size: 19px; font-weight: bold; }
+    .brand-subtitle { color: var(--muted); font-size: 11px; }
 
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 11px;
-    }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
 
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .round-button,
-    .avatar {
+    .round-button, .avatar {
       width: 40px;
       height: 40px;
       border: 0;
@@ -127,17 +95,19 @@
     }
 
     .round-button {
-      background: #f0f2f5;
+      background: var(--bg-3);
+      color: var(--text);
       font-size: 18px;
     }
 
     .avatar {
-      background: var(--blue);
-      color: white;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #10182a;
       font-weight: bold;
       font-size: 17px;
     }
 
+    /* ---------- Layout ---------- */
     .layout {
       width: 100%;
       max-width: 1450px;
@@ -156,13 +126,13 @@
     }
 
     .card {
-      background: white;
+      background: var(--bg-2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: 0 1px 3px #00000008;
       min-width: 0;
     }
 
+    /* ---------- Profile card ---------- */
     .profile-card {
       overflow: hidden;
       margin-bottom: 14px;
@@ -172,10 +142,11 @@
       height: 95px;
       display: grid;
       place-items: center;
-      background: linear-gradient(120deg, #0758ce, #70c2ff);
-      color: white;
-      font-size: 24px;
+      background: linear-gradient(120deg, var(--bg-3), var(--bg));
+      color: var(--gold);
+      font-size: 20px;
       font-weight: bold;
+      border-bottom: 1px solid var(--border);
     }
 
     .profile-info {
@@ -188,10 +159,10 @@
       height: 78px;
       margin: -39px auto 10px;
       position: relative;
-      border: 4px solid white;
+      border: 4px solid var(--bg-2);
       border-radius: 50%;
-      background: var(--blue);
-      color: white;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #10182a;
       display: grid;
       place-items: center;
       font-size: 28px;
@@ -216,14 +187,13 @@
       margin-top: 10px;
       padding: 5px 10px;
       border-radius: 20px;
-      background: #e7f5eb;
+      background: rgba(49, 196, 141, 0.12);
       color: var(--green);
       font-size: 11px;
     }
 
-    .menu-card {
-      padding: 9px;
-    }
+    /* ---------- Menu ---------- */
+    .menu-card { padding: 9px; }
 
     .menu-title {
       padding: 9px 10px;
@@ -245,15 +215,14 @@
       color: var(--text);
       text-align: right;
       font-size: 13px;
+      transition: 0.2s;
     }
 
-    .menu-item:hover {
-      background: #f0f2f5;
-    }
+    .menu-item:hover { background: var(--bg-3); }
 
     .menu-item.active {
-      background: #e7f3ff;
-      color: var(--blue);
+      background: rgba(243, 201, 105, 0.10);
+      color: var(--gold);
       font-weight: bold;
     }
 
@@ -263,14 +232,17 @@
       display: grid;
       place-items: center;
       border-radius: 9px;
-      background: #f0f2f5;
+      background: var(--bg-3);
       font-size: 16px;
       flex-shrink: 0;
     }
 
-    .main {
-      min-width: 0;
+    .menu-item.active .menu-icon {
+      background: rgba(243, 201, 105, 0.18);
     }
+
+    /* ---------- Main ---------- */
+    .main { min-width: 0; }
 
     .welcome {
       padding: 22px;
@@ -282,21 +254,17 @@
       flex-wrap: wrap;
     }
 
-    .welcome h1 {
-      margin: 0 0 8px;
-      font-size: 21px;
-    }
-
-    .welcome p {
-      margin: 5px 0;
-      color: var(--muted);
-    }
+    .welcome h1 { margin: 0 0 8px; font-size: 21px; }
+    .welcome h1 span { color: var(--gold); }
+    .welcome p { margin: 5px 0; color: var(--muted); }
 
     .section-heading {
       font-size: 17px;
       margin: 0 0 14px;
+      color: var(--gold);
     }
 
+    /* ---------- Stats ---------- */
     .stats {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -304,9 +272,7 @@
       margin-bottom: 22px;
     }
 
-    .stat {
-      padding: 17px;
-    }
+    .stat { padding: 17px; }
 
     .stat-icon {
       width: 42px;
@@ -314,26 +280,16 @@
       display: grid;
       place-items: center;
       border-radius: 11px;
-      background: #e7f3ff;
+      background: rgba(243, 201, 105, 0.12);
       font-size: 20px;
       margin-bottom: 10px;
     }
 
-    .stat h3 {
-      margin: 0 0 7px;
-      font-size: 13px;
-    }
+    .stat h3 { margin: 0 0 7px; font-size: 13px; }
+    .stat p { margin: 0; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
 
-    .stat p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      overflow-wrap: anywhere;
-    }
-
-    .primary,
-    .secondary,
-    .danger {
+    /* ---------- Buttons ---------- */
+    .primary, .secondary, .danger {
       display: inline-block;
       padding: 11px 15px;
       border: 0;
@@ -341,93 +297,81 @@
       text-align: center;
       font-size: 13px;
       font-weight: bold;
+      transition: 0.2s;
     }
 
     .primary {
-      background: var(--blue);
-      color: white;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #151a26;
     }
 
-    .primary:hover {
-      background: var(--blue-dark);
-    }
+    .primary:hover { background: var(--gold-light); }
 
     .secondary {
-      background: #e4e6eb;
+      background: var(--bg-3);
       color: var(--text);
+      border: 1px solid var(--border);
     }
 
+    .secondary:hover { background: #1e2e4a; }
+
     .danger {
-      background: #ffebee;
+      background: rgba(255, 120, 139, 0.12);
       color: var(--red);
     }
 
-    button:disabled {
-      cursor: not-allowed;
-      opacity: .6;
-    }
+    button:disabled { cursor: not-allowed; opacity: .6; }
 
-    .page-section {
-      display: none;
-    }
+    /* ---------- Pages ---------- */
+    .page-section { display: none; }
+    .page-section.visible { display: block; }
 
-    .page-section.visible {
-      display: block;
-    }
+    .panel { padding: 22px; margin-bottom: 20px; }
+    .panel h2 { margin: 0 0 9px; font-size: 18px; color: var(--gold); }
 
-    .panel {
-      padding: 22px;
-      margin-bottom: 20px;
-    }
-
-    .panel h2 {
-      margin: 0 0 9px;
-      font-size: 18px;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-    }
+    .muted { color: var(--muted); font-size: 12px; line-height: 1.9; }
 
     .info {
       padding: 13px;
       margin: 14px 0;
       border-radius: 9px;
       border: 1px solid var(--border);
-      background: #f7f8fa;
-      color: var(--muted);
+      background: var(--bg-3);
+      color: #c4cee0;
       line-height: 1.9;
       overflow-wrap: anywhere;
     }
 
+    /* ---------- Forms ---------- */
     .field-label {
       display: block;
       margin: 14px 0 7px;
       font-weight: bold;
       font-size: 13px;
+      color: var(--muted);
     }
 
     .input {
       display: block;
       width: 100%;
       padding: 12px;
-      border: 1px solid #ccd0d5;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      background: white;
+      background: #0b1222;
       color: var(--text);
       outline: none;
       margin-bottom: 12px;
+      transition: 0.2s;
     }
 
     .input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 2px #1877f21c;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(243, 201, 105, 0.15);
     }
 
     .input[readonly] {
-      background: #f0f2f5;
+      background: var(--bg-3);
+      color: var(--text);
     }
 
     .button-row {
@@ -443,14 +387,10 @@
       overflow-wrap: anywhere;
     }
 
-    .success {
-      color: var(--green);
-    }
+    .success { color: var(--green); }
+    .error { color: var(--red); }
 
-    .error {
-      color: var(--red);
-    }
-
+    /* ---------- Tables ---------- */
     .table-wrap {
       width: 100%;
       overflow-x: auto;
@@ -473,7 +413,8 @@
     }
 
     th {
-      background: #f7f8fa;
+      background: var(--bg-3);
+      color: var(--gold);
     }
 
     .empty {
@@ -483,6 +424,7 @@
       line-height: 2;
     }
 
+    /* ---------- Auth ---------- */
     .auth-wrap {
       max-width: 520px;
       margin: 35px auto;
@@ -490,13 +432,11 @@
     }
 
     .auth-wrap h1 {
-      color: var(--blue);
+      color: var(--gold);
       font-size: 22px;
     }
 
-    .auth-wrap form {
-      margin-top: 20px;
-    }
+    .auth-wrap form { margin-top: 20px; }
 
     .loading {
       text-align: center;
@@ -513,76 +453,40 @@
       line-height: 2;
     }
 
-    .mobile-menu {
-      display: none;
-    }
+    .mobile-menu { display: none; }
 
+    /* ---------- Responsive ---------- */
     @media (max-width: 900px) {
       .layout {
         grid-template-columns: 1fr;
         padding: 13px;
       }
 
-      .sidebar {
-        position: static;
-      }
+      .sidebar { position: static; }
 
-      .profile-card,
-      .menu-card {
-        display: none;
-      }
+      .profile-card, .menu-card { display: none; }
 
       .sidebar.open .menu-card {
         display: block;
         margin-bottom: 12px;
       }
 
-      .mobile-menu {
-        display: grid;
-      }
+      .mobile-menu { display: grid; }
 
-      .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-      .topbar {
-        padding: 9px 12px;
-      }
+      .topbar { padding: 9px 12px; }
     }
 
     @media (max-width: 500px) {
-      .welcome {
-        padding: 17px;
-      }
-
-      .welcome h1 {
-        font-size: 18px;
-      }
-
-      .welcome .primary {
-        width: 100%;
-      }
-
-      .panel {
-        padding: 16px;
-      }
-
-      .brand-name {
-        font-size: 17px;
-      }
-
-      .stats {
-        gap: 9px;
-      }
-
-      .stat {
-        padding: 13px;
-      }
-
-      .auth-wrap {
-        margin: 18px 12px;
-        padding: 18px;
-      }
+      .welcome { padding: 17px; }
+      .welcome h1 { font-size: 18px; }
+      .welcome .primary { width: 100%; }
+      .panel { padding: 16px; }
+      .brand-name { font-size: 17px; }
+      .stats { gap: 9px; }
+      .stat { padding: 13px; }
+      .auth-wrap { margin: 18px 12px; padding: 18px; }
     }
   </style>
 </head>
@@ -599,8 +503,7 @@
   </a>
 
   <div class="top-actions">
-    <button id="mobileMenu" class="round-button mobile-menu"
-      type="button" aria-label="نمایش منو">☰</button>
+    <button id="mobileMenu" class="round-button mobile-menu" type="button" aria-label="نمایش منو">☰</button>
     <a href="index.html" class="round-button" aria-label="صفحه اصلی">🏠</a>
     <div id="topAvatar" class="avatar">ک</div>
   </div>
@@ -617,27 +520,20 @@
 
   <form id="authForm">
     <label class="field-label" for="authEmail">ایمیل</label>
-    <input class="input" id="authEmail" type="email"
-      autocomplete="email" required>
+    <input class="input" id="authEmail" type="email" autocomplete="email" required>
 
     <label class="field-label" for="authPassword">رمز عبور</label>
-    <input class="input" id="authPassword" type="password"
-      minlength="6" autocomplete="current-password" required>
+    <input class="input" id="authPassword" type="password" minlength="6" autocomplete="current-password" required>
 
     <div id="nameField" hidden>
       <label class="field-label" for="authName">نام کامل</label>
-      <input class="input" id="authName" type="text"
-        maxlength="80" autocomplete="name">
+      <input class="input" id="authName" type="text" maxlength="80" autocomplete="name">
     </div>
 
     <div class="button-row">
       <button class="primary" id="authSubmit" type="submit">ورود</button>
-      <button class="secondary" id="toggleSignup" type="button">
-        ساخت حساب جدید
-      </button>
-      <button class="secondary" id="forgotPassword" type="button">
-        فراموشی رمز
-      </button>
+      <button class="secondary" id="toggleSignup" type="button">ساخت حساب جدید</button>
+      <button class="secondary" id="forgotPassword" type="button">فراموشی رمز</button>
     </div>
 
     <div id="authMessage" class="message" role="status"></div>
@@ -665,35 +561,27 @@
       <button class="menu-item active" data-page="overview">
         <span class="menu-icon">🏠</span> نمای کلی
       </button>
-
       <button class="menu-item" data-page="ads">
         <span class="menu-icon">📢</span> تبلیغات من
       </button>
-
       <button class="menu-item" data-page="store">
         <span class="menu-icon">🛍️</span> محصولات من
       </button>
-
       <button class="menu-item" data-page="jobs">
         <span class="menu-icon">💼</span> آگهی‌های کاری من
       </button>
-
       <button class="menu-item" data-page="orders">
         <span class="menu-icon">📦</span> سفارش‌های من
       </button>
-
       <button class="menu-item" data-page="notifications">
         <span class="menu-icon">🔔</span> اعلان‌ها
       </button>
-
       <button class="menu-item" data-page="settings">
         <span class="menu-icon">⚙️</span> تنظیمات حساب
       </button>
-
       <a class="menu-item" href="index.html">
         <span class="menu-icon">🌐</span> بازار کابل‌وب
       </a>
-
       <button class="menu-item" id="logoutButton" type="button">
         <span class="menu-icon">🚪</span> خروج از حساب
       </button>
@@ -721,31 +609,26 @@
           <h3>درخواست‌های تبلیغاتی</h3>
           <p id="adCount">در حال بارگذاری...</p>
         </div>
-
         <div class="card stat">
           <div class="stat-icon">🛍️</div>
           <h3>محصولات و خدمات</h3>
           <p id="listingCount">در حال بارگذاری...</p>
         </div>
-
         <div class="card stat">
           <div class="stat-icon">💼</div>
           <h3>آگهی‌های کاری</h3>
           <p id="jobCount">در حال بارگذاری...</p>
         </div>
-
         <div class="card stat">
           <div class="stat-icon">📦</div>
           <h3>سفارش‌ها</h3>
           <p id="orderCount">در حال بارگذاری...</p>
         </div>
-
         <div class="card stat">
           <div class="stat-icon">🔐</div>
           <h3>امنیت حساب</h3>
           <p>حساب از طریق ایمیل مدیریت می‌شود.</p>
         </div>
-
         <div class="card stat">
           <div class="stat-icon">🌍</div>
           <h3>بازار کابل‌وب</h3>
@@ -813,7 +696,7 @@
       </div>
     </section>
 
-    <!-- تنظیمات حساب -->
+    <!-- تنظیمات -->
     <section class="page-section" id="page-settings">
       <div class="card panel">
         <h2>⚙️ تنظیمات حساب</h2>
@@ -821,19 +704,14 @@
 
         <form id="profileForm">
           <label class="field-label" for="fullName">نام کامل</label>
-          <input class="input" id="fullName" maxlength="80"
-            autocomplete="name" required>
+          <input class="input" id="fullName" maxlength="80" autocomplete="name" required>
 
           <label class="field-label" for="accountEmail">ایمیل حساب</label>
           <input class="input" id="accountEmail" type="email" readonly>
 
           <div class="button-row">
-            <button class="primary" id="saveName" type="submit">
-              ذخیره نام
-            </button>
-            <button class="secondary" id="resetPassword" type="button">
-              ارسال لینک بازیابی رمز
-            </button>
+            <button class="primary" id="saveName" type="submit">ذخیره نام</button>
+            <button class="secondary" id="resetPassword" type="button">ارسال لینک بازیابی رمز</button>
           </div>
 
           <div id="settingsMessage" class="message" role="status"></div>
@@ -846,9 +724,7 @@
           رمز عبور خود را با دیگران شریک نکن. پس از استفاده از دستگاه عمومی،
           از حساب خود خارج شو.
         </p>
-        <button class="danger" id="logoutButton2" type="button">
-          خروج از حساب
-        </button>
+        <button class="danger" id="logoutButton2" type="button">خروج از حساب</button>
       </div>
     </section>
 
@@ -863,12 +739,8 @@
   import { createClient } from
     "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-  const SUPABASE_URL =
-    "https://netspaxkjtoumfoobgnu.supabase.co";
-
-  // کلید عمومی Publishable پروژه؛ هرگز service_role را در سایت نگذار.
-  const SUPABASE_KEY =
-    "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
+  const SUPABASE_URL = "https://netspaxkjtoumfoobgnu.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_qGQHIeuxoYN01V10g5n7nw_R0rQpUTE";
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = id => document.getElementById(id);
@@ -889,13 +761,10 @@
     $("authBox").hidden = false;
     $("nameField").hidden = !signupMode;
     $("authName").required = signupMode;
-
     $("authSubmit").textContent = signupMode ? "ساخت حساب" : "ورود";
-
     $("toggleSignup").textContent = signupMode
       ? "قبلاً حساب ساخته‌ام"
       : "ساخت حساب جدید";
-
     setMessage("authMessage", message);
   }
 
@@ -931,7 +800,6 @@
       completed: "تکمیل شده",
       cancelled: "لغو شده"
     };
-
     return labels[status] || status || "نامشخص";
   }
 
@@ -946,7 +814,6 @@
     }
 
     root.className = "table-wrap";
-
     const table = document.createElement("table");
     const thead = document.createElement("thead");
     const headRow = document.createElement("tr");
@@ -959,31 +826,20 @@
 
     thead.appendChild(headRow);
     table.appendChild(thead);
-
     const tbody = document.createElement("tbody");
 
     rows.forEach(row => {
       const tr = document.createElement("tr");
-
       columns.forEach(column => {
         const td = document.createElement("td");
         let value = row[column.key];
-
-        if (column.key === "status") {
-          value = formatStatus(value);
-        }
-
+        if (column.key === "status") value = formatStatus(value);
         if (column.key === "created_at" && value) {
           value = new Date(value).toLocaleDateString("fa-AF");
         }
-
-        td.textContent = value == null || value === ""
-          ? "—"
-          : String(value);
-
+        td.textContent = value == null || value === "" ? "—" : String(value);
         tr.appendChild(td);
       });
-
       tbody.appendChild(tr);
     });
 
@@ -1003,18 +859,10 @@
       if (error) throw error;
 
       $(config.count).textContent = `${data.length} مورد`;
-
-      renderTable(
-        config.target,
-        data,
-        config.columns,
-        config.empty
-      );
+      renderTable(config.target, data, config.columns, config.empty);
     } catch (error) {
       console.error("KabulWeb table error:", config.table, error);
-
       $(config.count).textContent = "دریافت ناموفق";
-
       const target = $(config.target);
       target.className = "info";
       target.textContent =
@@ -1074,18 +922,14 @@
       }
     ];
 
-    await Promise.all(
-      tables.map(config => loadOneTable(user, config))
-    );
+    await Promise.all(tables.map(config => loadOneTable(user, config)));
   }
 
   async function loadDashboard(user) {
     currentUser = user;
     setProfile(user);
     showDashboard();
-
     if (dashboardLoadedFor === user.id) return;
-
     dashboardLoadedFor = user.id;
     await loadOwnedData(user);
   }
@@ -1096,7 +940,6 @@
 
     try {
       const { data, error } = await supabase.auth.getSession();
-
       if (error) throw error;
 
       if (data.session && data.session.user) {
@@ -1107,7 +950,6 @@
       }
     } catch (error) {
       console.error("Session error:", error);
-
       $("loading").hidden = false;
       $("loading").textContent =
         "اتصال ناموفق بود. اینترنت و تنظیمات Supabase را بررسی کن.";
@@ -1132,11 +974,7 @@
     try {
       if (signupMode) {
         if (name.length < 2) {
-          setMessage(
-            "authMessage",
-            "نام کامل خود را وارد کن.",
-            "error"
-          );
+          setMessage("authMessage", "نام کامل خود را وارد کن.", "error");
           return;
         }
 
@@ -1156,16 +994,13 @@
           await loadDashboard(data.session.user);
         } else {
           signupMode = false;
-          showAuth(
-            "حساب ساخته شد. ایمیل خود را برای تأیید بررسی کن؛ سپس وارد شو."
-          );
+          showAuth("حساب ساخته شد. ایمیل خود را برای تأیید بررسی کن؛ سپس وارد شو.");
         }
       } else {
-        const { data, error } =
-          await supabase.auth.signInWithPassword({
-            email,
-            password
-          });
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
 
         if (error) throw error;
 
@@ -1181,31 +1016,16 @@
 
   $("forgotPassword").addEventListener("click", async () => {
     const email = $("authEmail").value.trim();
-
     if (!email) {
-      setMessage(
-        "authMessage",
-        "ابتدا ایمیل خود را وارد کن.",
-        "error"
-      );
+      setMessage("authMessage", "ابتدا ایمیل خود را وارد کن.", "error");
       return;
     }
-
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        email,
-        {
-          redirectTo: window.location.href.split("#")[0]
-        }
-      );
-
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.href.split("#")[0]
+      });
       if (error) throw error;
-
-      setMessage(
-        "authMessage",
-        "اگر این ایمیل ثبت شده باشد، لینک بازیابی ارسال می‌شود.",
-        "success"
-      );
+      setMessage("authMessage", "اگر این ایمیل ثبت شده باشد، لینک بازیابی ارسال می‌شود.", "success");
     } catch (error) {
       setMessage("authMessage", "خطا: " + error.message, "error");
     }
@@ -1216,17 +1036,11 @@
       document.querySelectorAll(".page-section").forEach(section => {
         section.classList.remove("visible");
       });
-
       const page = $("page-" + button.dataset.page);
-
-      if (page) {
-        page.classList.add("visible");
-      }
-
+      if (page) page.classList.add("visible");
       document.querySelectorAll(".menu-item[data-page]").forEach(item => {
         item.classList.toggle("active", item === button);
       });
-
       $("sidebar").classList.remove("open");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
@@ -1238,43 +1052,24 @@
 
   $("profileForm").addEventListener("submit", async event => {
     event.preventDefault();
-
     const name = $("fullName").value.trim();
-
     if (name.length < 2) {
-      setMessage(
-        "settingsMessage",
-        "نام کامل را وارد کن.",
-        "error"
-      );
+      setMessage("settingsMessage", "نام کامل را وارد کن.", "error");
       return;
     }
-
     $("saveName").disabled = true;
-
     try {
       const { data, error } = await supabase.auth.updateUser({
         data: { full_name: name }
       });
-
       if (error) throw error;
-
       if (data.user) {
         currentUser = data.user;
         setProfile(data.user);
       }
-
-      setMessage(
-        "settingsMessage",
-        "نام حساب با موفقیت ذخیره شد.",
-        "success"
-      );
+      setMessage("settingsMessage", "نام حساب با موفقیت ذخیره شد.", "success");
     } catch (error) {
-      setMessage(
-        "settingsMessage",
-        "خطا: " + error.message,
-        "error"
-      );
+      setMessage("settingsMessage", "خطا: " + error.message, "error");
     } finally {
       $("saveName").disabled = false;
     }
@@ -1282,47 +1077,27 @@
 
   $("resetPassword").addEventListener("click", async () => {
     if (!currentUser || !currentUser.email) {
-      setMessage(
-        "settingsMessage",
-        "ایمیل حساب پیدا نشد.",
-        "error"
-      );
+      setMessage("settingsMessage", "ایمیل حساب پیدا نشد.", "error");
       return;
     }
-
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(
         currentUser.email,
-        {
-          redirectTo: window.location.href.split("#")[0]
-        }
+        { redirectTo: window.location.href.split("#")[0] }
       );
-
       if (error) throw error;
-
-      setMessage(
-        "settingsMessage",
-        "اگر تنظیمات ایمیل کامل باشد، لینک بازیابی ارسال می‌شود.",
-        "success"
-      );
+      setMessage("settingsMessage", "اگر تنظیمات ایمیل کامل باشد، لینک بازیابی ارسال می‌شود.", "success");
     } catch (error) {
-      setMessage(
-        "settingsMessage",
-        "خطا: " + error.message,
-        "error"
-      );
+      setMessage("settingsMessage", "خطا: " + error.message, "error");
     }
   });
 
   async function logout() {
     $("logoutButton").disabled = true;
     $("logoutButton2").disabled = true;
-
     try {
       const { error } = await supabase.auth.signOut();
-
       if (error) throw error;
-
       currentUser = null;
       dashboardLoadedFor = null;
       signupMode = false;
@@ -1344,6 +1119,11 @@
       dashboardLoadedFor = null;
       signupMode = false;
       showAuth();
+    } else if (event === "SIGNED_IN" && session?.user) {
+      if (!$("authBox").hidden) {
+        dashboardLoadedFor = null;
+        loadDashboard(session.user);
+      }
     }
   });
 
@@ -1351,4 +1131,4 @@
 </script>
 
 </body>
-  </html>
+                                                          </html>

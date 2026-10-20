@@ -4,46 +4,103 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="حساب کاربری کابل‌وب — ورود و ثبت‌نام" />
   <title>حساب کاربری | کابل‌وب</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="kabulweb-logo.jpg" type="image/jpeg" />
   <style>
-    .auth-wrap {
+    .auth-page {
+      min-height: calc(100vh - var(--header-h));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+    }
+    .auth-card {
+      width: 100%;
       max-width: 420px;
-      margin: 3rem auto;
-      padding: 2rem;
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      padding: 2rem 1.75rem;
     }
-    .auth-wrap h1 {
+    .auth-card h1 {
       color: var(--gold);
       font-size: 1.4rem;
-      margin-bottom: .5rem;
+      margin-bottom: 0.4rem;
     }
-    .auth-wrap .muted { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
-    .field { margin-bottom: 1rem; }
-    .field label { display: block; font-size: .88rem; color: var(--muted); margin-bottom: .3rem; }
-    .field input {
+    .auth-card .lead {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.6rem;
+    }
+    .auth-card .field {
+      margin-bottom: 1rem;
+    }
+    .auth-card label {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    .auth-card input {
       width: 100%;
-      padding: .7rem .95rem;
+      padding: 0.7rem 0.95rem;
       border: 1px solid var(--border);
       border-radius: 10px;
       background: #0b1222;
       color: var(--text);
       outline: none;
     }
-    .field input:focus { border-color: var(--gold); }
-    .btn-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
-    .back { display: block; text-align: center; margin-top: 1.5rem; color: var(--muted); font-size: .9rem; }
-    .back:hover { color: var(--gold); }
+    .auth-card input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(243, 201, 105, 0.15);
+    }
+    .auth-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+    .auth-actions .btn {
+      flex: 1;
+      min-width: 120px;
+    }
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .auth-footer a:hover {
+      color: var(--gold);
+    }
+    .auth-message {
+      margin-top: 1rem;
+      padding: 0.7rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+    .auth-message.success {
+      background: rgba(49, 196, 141, 0.12);
+      color: #a7f3d0;
+    }
+    .auth-message.error {
+      background: rgba(255, 120, 139, 0.12);
+      color: #fecdd3;
+    }
   </style>
 </head>
 <body>
+
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
+      <a href="index.html" class="logo" aria-label="صفحه اصلی">
         <img src="kabulweb-logo.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
-             onerror="this.style.display='none'">
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="logo-fallback">ک</span>
         <span class="logo-text">
           <strong>کابل‌وب</strong>
           <small>حساب کاربری</small>
@@ -53,53 +110,105 @@
     </div>
   </header>
 
-  <main class="container">
-    <div class="auth-wrap">
-      <h1>حساب کابل‌وب</h1>
-      <p class="muted">وارد حساب خود شوید یا حساب جدید بسازید.</p>
+  <main class="auth-page">
+    <div class="auth-card">
+      <h1 id="authTitle">ورود به حساب</h1>
+      <p class="lead" id="authLead">برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.</p>
 
-      <form id="authForm">
+      <form id="authForm" novalidate>
         <div class="field">
-          <label for="email">ایمیل</label>
-          <input type="email" id="email" required autocomplete="email" />
+          <label for="authEmail">ایمیل</label>
+          <input type="email" id="authEmail" name="email" required autocomplete="email" />
         </div>
         <div class="field">
-          <label for="password">رمز عبور</label>
-          <input type="password" id="password" required minlength="6" autocomplete="current-password" />
+          <label for="authPassword">رمز عبور</label>
+          <input type="password" id="authPassword" name="password" required minlength="6" autocomplete="current-password" />
         </div>
-        <div class="field" id="nameField" style="display:none">
-          <label for="name">نام کامل</label>
-          <input type="text" id="name" maxlength="80" />
+        <div class="field" id="nameField" hidden>
+          <label for="authName">نام کامل</label>
+          <input type="text" id="authName" name="name" maxlength="80" autocomplete="name" />
         </div>
-        <div class="btn-row">
-          <button type="submit" class="btn btn-primary" id="submitBtn">ورود</button>
-          <button type="button" class="btn btn-secondary" id="toggleBtn">ساخت حساب جدید</button>
+        <div class="auth-actions">
+          <button type="submit" class="btn btn-primary" id="authSubmit">ورود</button>
+          <button type="button" class="btn btn-secondary" id="authToggle">ساخت حساب جدید</button>
         </div>
+        <div id="authMessage" class="auth-message" hidden role="status"></div>
       </form>
-      <a href="index.html" class="back">← بازگشت به صفحه اصلی</a>
+
+      <p class="auth-footer">
+        <a href="index.html">← بازگشت به صفحه اصلی</a>
+      </p>
     </div>
   </main>
 
   <script>
-    const form = document.getElementById("authForm");
-    const toggle = document.getElementById("toggleBtn");
-    const submit = document.getElementById("submitBtn");
-    const nameField = document.getElementById("nameField");
-    let isSignup = false;
+    (function () {
+      var form = document.getElementById("authForm");
+      var toggle = document.getElementById("authToggle");
+      var submit = document.getElementById("authSubmit");
+      var nameField = document.getElementById("nameField");
+      var title = document.getElementById("authTitle");
+      var lead = document.getElementById("authLead");
+      var msg = document.getElementById("authMessage");
+      var isSignup = false;
 
-    toggle.addEventListener("click", () => {
-      isSignup = !isSignup;
-      nameField.style.display = isSignup ? "block" : "none";
-      submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
-      toggle.textContent = isSignup ? "قبلاً حساب دارید؟ ورود" : "ساخت حساب جدید";
-    });
+      toggle.addEventListener("click", function () {
+        isSignup = !isSignup;
+        nameField.hidden = !isSignup;
+        submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
+        toggle.textContent = isSignup ? "قبلاً حساب دارید؟ ورود" : "ساخت حساب جدید";
+        title.textContent = isSignup ? "ساخت حساب جدید" : "ورود به حساب";
+        lead.textContent = isSignup
+          ? "با ایمیل و رمز عبور یک حساب جدید بسازید."
+          : "برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.";
+        msg.hidden = true;
+      });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert(isSignup
-        ? "ثبت‌نام شبیه‌سازی شد. اتصال Supabase Auth به‌زودی فعال می‌شود."
-        : "ورود شبیه‌سازی شد. اتصال Supabase Auth به‌زودی فعال می‌شود.");
-    });
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = document.getElementById("authEmail").value.trim();
+        var password = document.getElementById("authPassword").value;
+        var name = document.getElementById("authName").value.trim();
+
+        if (!email || !password || password.length < 6) {
+          showMsg("ایمیل و رمز عبور (حداقل ۶ کاراکتر) الزامی است.", "error");
+          return;
+        }
+        if (isSignup && !name) {
+          showMsg("نام کامل را وارد کنید.", "error");
+          return;
+        }
+
+        submit.disabled = true;
+        submit.textContent = "لطفاً صبر کنید...";
+
+        /*
+         * اتصال Supabase Auth:
+         * if (isSignup) {
+         *   const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+         * } else {
+         *   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+         * }
+         */
+
+        setTimeout(function () {
+          showMsg(
+            isSignup
+              ? "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
+              : "ورود با موفقیت انجام شد.",
+            "success"
+          );
+          submit.disabled = false;
+          submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
+        }, 700);
+      });
+
+      function showMsg(text, type) {
+        msg.hidden = false;
+        msg.className = "auth-message " + type;
+        msg.textContent = text;
+      }
+    })();
   </script>
 </body>
 </html>

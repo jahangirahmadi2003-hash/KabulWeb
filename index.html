@@ -1,64 +1,276 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1020">
-  <meta name="description" content="کابل‌وب؛ بازار افغانستان و جهان برای کاریابی، محصولات، خدمات، تبلیغات کانال‌ها و منابع آموزشی.">
-  <title>KabulWeb | بازار افغانستان و جهان</title>
-  <link rel="stylesheet" href="intro.css">
-  <style>
-    /* Full styles and content restored from original with localStorage fix and new logo */
-    :root { --bg: #0b1020; --panel: #121b30; --gold: #f3c969; --text: #f5f7ff; --muted: #aab7cf; --border: #293954; --radius: 16px; }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 85px; }
-    body { margin: 0; color: var(--text); background: var(--bg); font-family: Tahoma, Arial, sans-serif; line-height: 1.8; }
-    body.intro-active { overflow: hidden; }
-    a { color: inherit; text-decoration: none; }
-    [hidden] { display: none !important; }
-    .brand-logo-img { width: 45px; height: 45px; border-radius: 14px; object-fit: cover; }
-    .topbar { position: sticky; top: 0; z-index: 100; background: #0b1020ed; border-bottom: 1px solid var(--border); backdrop-filter: blur(14px); }
-    .topbar-inner { max-width: 1400px; min-height: 72px; padding: 10px 18px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand-name { font-size: 20px; font-weight: 900; color: var(--gold); }
-    .brand-subtitle { color: var(--muted); font-size: 11px; }
-    .header-profile { padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
-    .page { max-width: 1400px; margin: auto; padding: 20px 18px 50px; }
-    .hero { padding: 40px; border-radius: 24px; background: linear-gradient(135deg, #17243b, #10182a); margin-bottom: 20px; text-align: center; }
-    .hero h1 { color: var(--gold); font-size: 2rem; }
-    .btn { display: inline-block; padding: 10px 15px; border-radius: 11px; background: linear-gradient(135deg, var(--gold), #ffe6a0); color: #151a26; font-weight: bold; margin: 5px; }
-    .footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="کابل‌وب — بازار افغانستان و جهان. کاریابی، محصولات، خدمات و معرفی کانال‌های واتساپ و تلگرام" />
+  <title>کابل‌وب | بازار افغانستان و جهان</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <a href="#" class="brand">
-        <img src="kabulweb-logo.jpg" alt="KabulWeb" class="brand-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-        <div class="brand-logo" style="display:none;width:45px;height:45px;place-items:center;border-radius:14px;background:linear-gradient(135deg,#f3c969,#a77c2a);color:#10182a;font-weight:900;font-size:25px;">ک</div>
-        <div>
-          <div class="brand-name">کابل‌وب</div>
-          <div class="brand-subtitle">بازار افغانستان و جهان</div>
-        </div>
+<body class="intro-active">
+
+  <!-- ========== صفحه آغازین ========== -->
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <div class="bismillah" id="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <p class="splash-brand">کابل‌وب</p>
+      <p class="splash-tag">بازار افغانستان و جهان</p>
+      <button type="button" id="skipSplash" class="skip-btn">رد کردن</button>
+    </div>
+  </div>
+
+  <!-- ========== هدر ========== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="کابل‌وب">
+        <img src="kabulweb-logo.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <span class="logo-fallback" style="display:none">ک</span>
+        <span class="logo-text">
+          <strong>کابل‌وب</strong>
+          <small>بازار افغانستان و جهان</small>
+        </span>
       </a>
-      <a class="header-profile" href="account.html">👤 حساب من</a>
+
+      <nav class="nav" id="nav">
+        <a href="#jobs">کاریابی</a>
+        <a href="#marketplace">بازار</a>
+        <a href="#channels">کانال‌ها</a>
+        <a href="#ads">تبلیغات</a>
+        <a href="account.html" class="nav-account">حساب کاربری</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="منو">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </div>
-  <div class="page">
-    <div class="hero">
+  </header>
+
+  <!-- ========== هیرو ========== -->
+  <section class="hero">
+    <div class="container">
       <h1>کابل‌وب — بازار افغانستان و جهان</h1>
-      <p style="color:var(--muted)">کانالت را به جهان معرفی کن</p>
-      <a href="account.html" class="btn">حساب کاربری</a>
-      <a href="#" class="btn">کاریابی</a>
-      <a href="#" class="btn">بازار</a>
+      <p class="slogan">کانالت را به جهان معرفی کن</p>
+      <div class="hero-actions">
+        <a href="#jobs" class="btn btn-primary">جستجوی وظایف</a>
+        <a href="#marketplace" class="btn btn-secondary">مشاهده محصولات</a>
+        <a href="#channels" class="btn btn-outline">کانال‌ها</a>
+        <a href="account.html" class="btn btn-outline">حساب کاربری</a>
+      </div>
     </div>
-    <p style="text-align:center;color:var(--muted)">سایت در حال بازگردانی کامل است. فایل کامل به زودی جایگزین می‌شود. برای مشاهده نسخه کامل از History گیت‌هاب Restore کنید یا فایل index_restore را آپلود کنید.</p>
-    <p style="text-align:center"><strong>لوگوی جدید آماده است</strong> — فایل <code>kabulweb-logo.jpg</code> را هم به ریپو آپلود کنید.</p>
-  </div>
-  <footer class="footer">© کابل‌وب — بنیانگذار: Jahangir Ahmadi</footer>
-  <script>
-    // Intro fix is ready in the full version. This is a temporary bridge.
-    console.log("KabulWeb temporary bridge - full restore pending");
-  </script>
+  </section>
+
+  <!-- ========== کاریابی ========== -->
+  <section class="section" id="jobs">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>💼 کاریابی و وظایف</h2>
+          <p>فرصت‌های کاری تأییدشده</p>
+        </div>
+        <a href="#ads" class="btn btn-sm btn-primary">ثبت وظیفه</a>
+      </div>
+
+      <div class="search-bar">
+        <input type="search" id="jobSearch" placeholder="جستجو بر اساس عنوان یا شهر..." />
+        <select id="jobCity">
+          <option value="">همه شهرها</option>
+          <option>کابل</option>
+          <option>هرات</option>
+          <option>مزار شریف</option>
+          <option>قندهار</option>
+          <option>جلال‌آباد</option>
+        </select>
+      </div>
+
+      <div class="cards" id="jobsList">
+        <article class="card">
+          <span class="badge">جدید</span>
+          <h3>توسعه‌دهنده وب (فرانت‌اند)</h3>
+          <p class="meta">شرکت فناوری · کابل · تمام‌وقت</p>
+          <p class="desc">تسلط به HTML، CSS، JavaScript و تجربه React. معاش رقابتی.</p>
+          <div class="card-foot">
+            <span class="price">قابل مذاکره</span>
+            <button class="btn btn-sm btn-outline">جزئیات</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3>معلم زبان انگلیسی</h3>
+          <p class="meta">آموزشگاه بین‌المللی · هرات · پاره‌وقت</p>
+          <p class="desc">تدریس سطح متوسط و پیشرفته. حداقل ۲ سال تجربه.</p>
+          <div class="card-foot">
+            <span class="price">۱۵٬۰۰۰ افغانی</span>
+            <button class="btn btn-sm btn-outline">جزئیات</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3>مدیر شبکه‌های اجتماعی</h3>
+          <p class="meta">استارتاپ · دورکاری</p>
+          <p class="desc">مدیریت اینستاگرام، فیسبوک و تلگرام. تولید محتوا ضروری است.</p>
+          <div class="card-foot">
+            <span class="price">قابل مذاکره</span>
+            <button class="btn btn-sm btn-outline">جزئیات</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== بازار ========== -->
+  <section class="section section-alt" id="marketplace">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>🛍️ بازار محصولات و خدمات</h2>
+          <p>خرید، فروش و معرفی خدمات</p>
+        </div>
+        <a href="#ads" class="btn btn-sm btn-primary">ثبت محصول</a>
+      </div>
+
+      <div class="search-bar">
+        <input type="search" id="productSearch" placeholder="جستجوی محصول یا خدمت..." />
+        <select id="productCat">
+          <option value="">همه دسته‌ها</option>
+          <option>الکترونیک</option>
+          <option>پوشاک</option>
+          <option>خدمات</option>
+          <option>غذایی</option>
+        </select>
+      </div>
+
+      <div class="cards" id="listingsList">
+        <article class="card product">
+          <div class="thumb">📱</div>
+          <h3>گوشی سامسونگ گلکسی A54</h3>
+          <p class="meta">کابل · نو</p>
+          <p class="price">۳۲٬۰۰۰ افغانی</p>
+          <button class="btn btn-sm btn-primary">تماس با فروشنده</button>
+        </article>
+        <article class="card product">
+          <div class="thumb">🧵</div>
+          <h3>خدمات خیاطی سفارشی</h3>
+          <p class="meta">هرات · خدمات</p>
+          <p class="price">از ۵۰۰ افغانی</p>
+          <button class="btn btn-sm btn-primary">تماس با فروشنده</button>
+        </article>
+        <article class="card product">
+          <div class="thumb">📚</div>
+          <h3>کتاب‌های درسی دانشگاهی</h3>
+          <p class="meta">کابل · دست‌دوم</p>
+          <p class="price">قابل مذاکره</p>
+          <button class="btn btn-sm btn-primary">تماس با فروشنده</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== کانال‌ها ========== -->
+  <section class="section" id="channels">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>🌍 کانال‌های واتساپ و تلگرام</h2>
+          <p>کانال‌ها و گروه‌های مجاز</p>
+        </div>
+        <a href="#ads" class="btn btn-sm btn-primary">درخواست معرفی</a>
+      </div>
+
+      <div class="cards-row" id="channelsList">
+        <article class="card channel">
+          <div class="channel-icon">📢</div>
+          <h3>اخبار کابل‌وب</h3>
+          <p>آخرین آگهی‌ها و فرصت‌ها</p>
+          <span class="tag">تلگرام</span>
+          <a href="https://t.me/kabulwebs" target="_blank" rel="noopener" class="btn btn-sm btn-outline">ورود به کانال</a>
+        </article>
+        <article class="card channel">
+          <div class="channel-icon">💼</div>
+          <h3>کاریابی افغانستان</h3>
+          <p>فرصت‌های شغلی روزانه</p>
+          <span class="tag">واتساپ</span>
+          <a href="#" class="btn btn-sm btn-outline">ورود به کانال</a>
+        </article>
+        <article class="card channel">
+          <div class="channel-icon">🛒</div>
+          <h3>بازار آنلاین کابل</h3>
+          <p>خرید و فروش محصولات</p>
+          <span class="tag">تلگرام</span>
+          <a href="#" class="btn btn-sm btn-outline">ورود به کانال</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ثبت تبلیغات ========== -->
+  <section class="section section-alt" id="ads">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>📢 ثبت تبلیغات</h2>
+          <p>آگهی شما پس از بررسی منتشر می‌شود</p>
+        </div>
+      </div>
+
+      <form id="adForm" class="form-card">
+        <div class="form-row">
+          <div class="field">
+            <label for="adType">نوع تبلیغ</label>
+            <select id="adType" required>
+              <option value="">انتخاب کنید</option>
+              <option value="job">وظیفه / کاریابی</option>
+              <option value="product">محصول</option>
+              <option value="service">خدمت</option>
+              <option value="channel">کانال واتساپ/تلگرام</option>
+              <option value="other">سایر</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="adTitle">عنوان</label>
+            <input type="text" id="adTitle" required placeholder="عنوان آگهی" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="adDesc">توضیحات</label>
+          <textarea id="adDesc" rows="4" required placeholder="توضیحات کامل..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="adLink">لینک (اختیاری)</label>
+            <input type="url" id="adLink" placeholder="https://..." />
+          </div>
+          <div class="field">
+            <label for="adContact">اطلاعات تماس</label>
+            <input type="text" id="adContact" required placeholder="واتساپ یا ایمیل" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">ارسال درخواست</button>
+        <p class="form-note">وضعیت: در انتظار بررسی → تأییدشده یا ردشده</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== فوتر ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">
+        <strong>کابل‌وب</strong>
+        <span>بازار افغانستان و جهان</span>
+      </div>
+      <div class="footer-links">
+        <a href="#jobs">کاریابی</a>
+        <a href="#marketplace">بازار</a>
+        <a href="#channels">کانال‌ها</a>
+        <a href="#ads">تبلیغات</a>
+        <a href="account.html">حساب کاربری</a>
+        <a href="about.html">درباره ما</a>
+      </div>
+      <p class="copy">© ۱۴۰۵ کابل‌وب — بنیانگذار: Jahangir Ahmadi</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>

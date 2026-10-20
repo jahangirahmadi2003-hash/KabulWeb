@@ -1,6 +1,6 @@
 /**
  * کابل‌وب — اسکریپت صفحه اصلی
- * بارگذاری واقعی از Supabase + صفحه آغازین + UI
+ * بارگذاری واقعی از Supabase + صفحه آغازین + UI + فیلتر جستجو
  */
 import {
   fetchApproved,
@@ -8,12 +8,16 @@ import {
   getSession,
 } from "./js/supabase.js";
 
+let jobsCache = [];
+let listingsCache = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   initSplash();
   initMenu();
   initSmoothScroll();
   initTypeButtons();
   initAdForm();
+  initSearchFilters();
   loadPublicData();
   updateAuthLink();
 });
@@ -24,18 +28,34 @@ function initSplash() {
   if (!splash) return;
   const KEY = "kabulweb_intro_seen_v1";
   let seen = false;
-  try { seen = localStorage.getItem(KEY) === "1"; } catch (_) {}
+  try {
+    seen = localStorage.getItem(KEY) === "1";
+  } catch (_) {}
   function hide() {
     splash.classList.add("hide");
     document.body.classList.remove("intro-active");
-    try { localStorage.setItem(KEY, "1"); } catch (_) {}
-    setTimeout(() => { if (splash.parentNode) splash.remove(); }, 600);
+    try {
+      localStorage.setItem(KEY, "1");
+    } catch (_) {}
+    setTimeout(() => {
+      if (splash.parentNode) splash.remove();
+    }, 600);
   }
-  if (seen) { hide(); return; }
+  if (seen) {
+    hide();
+    return;
+  }
   const timer = setTimeout(hide, 5200);
-  if (skipBtn) skipBtn.addEventListener("click", () => { clearTimeout(timer); hide(); });
+  if (skipBtn)
+    skipBtn.addEventListener("click", () => {
+      clearTimeout(timer);
+      hide();
+    });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" || e.key === "Enter") { clearTimeout(timer); hide(); }
+    if (e.key === "Escape" || e.key === "Enter") {
+      clearTimeout(timer);
+      hide();
+    }
   });
 }
 
@@ -79,6 +99,18 @@ function initTypeButtons() {
   });
 }
 
+function initSearchFilters() {
+  const jobSearch = document.getElementById("jobSearch");
+  const jobCity = document.getElementById("jobCity");
+  const productSearch = document.getElementById("productSearch");
+  const productCat = document.getElementById("productCat");
+
+  if (jobSearch) jobSearch.addEventListener("input", renderJobsFiltered);
+  if (jobCity) jobCity.addEventListener("change", renderJobsFiltered);
+  if (productSearch) productSearch.addEventListener("input", renderListingsFiltered);
+  if (productCat) productCat.addEventListener("change", renderListingsFiltered);
+}
+
 async function loadPublicData() {
   await Promise.all([loadJobs(), loadListings(), loadChannels()]);
 }
@@ -104,45 +136,165 @@ function emptyState(container, message, actionHref, actionLabel) {
     "</div>";
 }
 
+function renderJobCard(job) {
+  const art = document.createElement("article");
+  art.className = "card";
+  art.innerHTML =
+    "<h3>" +
+    escapeHtml(job.title) +
+    "</h3>" +
+    '<p class="meta">' +
+    escapeHtml([job.company, job.location, job.type].filter(Boolean).join(" · ")) +
+    "</p>" +
+    (job.description
+      ? '<p class="desc">' +
+        escapeHtml(job.description.slice(0, 160)) +
+        (job.description.length > 160 ? "…" : "") +
+        "</p>"
+      : "") +
+    '<div class="card-foot"><span class="price">' +
+    escapeHtml(job.salary || "قابل مذاکره") +
+    "</span>" +
+    (job.contact
+      ? '<a class="btn btn-sm btn-outline" href="tel:' +
+        escapeHtml(String(job.contact).replace(/\s/g, "")) +
+        '">تماس</a>'
+      : "") +
+    "</div>";
+  return art;
+}
+
+function renderJobsFiltered() {
+  const box = document.getElementById("jobsList");
+  if (!box) return;
+  const q = (document.getElementById("jobSearch")?.value || "").trim().toLowerCase();
+  const city = (document.getElementById("jobCity")?.value || "").trim();
+
+  let list = jobsCache;
+  if (q) {
+    list = list.filter((j) => {
+      const hay = [j.title, j.company, j.location, j.type, j.description]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  if (city) {
+    list = list.filter((j) => (j.location || "").includes(city));
+  }
+
+  if (!jobsCache.length) {
+    emptyState(box, "هنوز فرصت کاری تأییدشده‌ای ثبت نشده است.", "#ads", "ثبت وظیفه جدید");
+    return;
+  }
+  if (!list.length) {
+    emptyState(box, "نتیجه‌ای با این فیلتر یافت نشد.", "#ads", "ثبت وظیفه جدید");
+    return;
+  }
+  box.innerHTML = "";
+  list.forEach((job) => box.appendChild(renderJobCard(job)));
+}
+
 async function loadJobs() {
   const box = document.getElementById("jobsList");
   if (!box) return;
-  box.innerHTML = '<p class="muted" style="grid-column:1/-1">در حال بارگذاری فرصت‌های کاری…</p>';
+  box.innerHTML =
+    '<p class="muted" style="grid-column:1/-1">در حال بارگذاری فرصت‌های کاری…</p>';
   const { data, error } = await fetchApproved(
     "job_posts",
     "id,title,company,location,type,salary,deadline,description,contact,status,created_at"
   );
   if (error) {
-    emptyState(box, "خطا در دریافت فرصت‌های کاری. اتصال را بررسی کنید.", "#ads", "ثبت وظیفه");
+    emptyState(
+      box,
+      "خطا در دریافت فرصت‌های کاری. اتصال را بررسی کنید.",
+      "#ads",
+      "ثبت وظیفه"
+    );
     return;
   }
-  if (!data.length) {
-    emptyState(box, "هنوز فرصت کاری تأییدشده‌ای ثبت نشده است.", "#ads", "ثبت وظیفه جدید");
+  jobsCache = data || [];
+  renderJobsFiltered();
+}
+
+function renderListingCard(item) {
+  const art = document.createElement("article");
+  art.className = "card product";
+  const price =
+    item.price != null
+      ? escapeHtml(String(item.price)) +
+        (item.currency ? " " + escapeHtml(item.currency) : "")
+      : "قابل مذاکره";
+  art.innerHTML =
+    (item.image_url
+      ? '<img class="thumb-img" src="' +
+        escapeHtml(item.image_url) +
+        '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
+      : '<div class="thumb" aria-hidden="true">📦</div>') +
+    "<h3>" +
+    escapeHtml(item.title) +
+    "</h3>" +
+    '<p class="meta">' +
+    escapeHtml(
+      [item.seller_name, item.category, item.listing_type].filter(Boolean).join(" · ")
+    ) +
+    "</p>" +
+    '<p class="price">' +
+    price +
+    "</p>" +
+    (item.contact
+      ? '<a class="btn btn-sm btn-primary" href="https://wa.me/' +
+        escapeHtml(String(item.contact).replace(/[^\d+]/g, "")) +
+        '" target="_blank" rel="noopener">تماس با فروشنده</a>'
+      : "");
+  return art;
+}
+
+function renderListingsFiltered() {
+  const box = document.getElementById("listingsList");
+  if (!box) return;
+  const q = (document.getElementById("productSearch")?.value || "")
+    .trim()
+    .toLowerCase();
+  const cat = (document.getElementById("productCat")?.value || "").trim();
+
+  let list = listingsCache;
+  if (q) {
+    list = list.filter((item) => {
+      const hay = [item.title, item.seller_name, item.category, item.description]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  if (cat) {
+    list = list.filter((item) => (item.category || "").includes(cat));
+  }
+
+  if (!listingsCache.length) {
+    emptyState(
+      box,
+      "هنوز محصول یا خدمت تأییدشده‌ای وجود ندارد.",
+      "#ads",
+      "ثبت محصول یا خدمت"
+    );
+    return;
+  }
+  if (!list.length) {
+    emptyState(box, "نتیجه‌ای با این فیلتر یافت نشد.", "#ads", "ثبت محصول یا خدمت");
     return;
   }
   box.innerHTML = "";
-  data.forEach((job) => {
-    const art = document.createElement("article");
-    art.className = "card";
-    art.innerHTML =
-      "<h3>" + escapeHtml(job.title) + "</h3>" +
-      '<p class="meta">' + escapeHtml([job.company, job.location, job.type].filter(Boolean).join(" · ")) + "</p>" +
-      (job.description
-        ? '<p class="desc">' + escapeHtml(job.description.slice(0, 160)) + (job.description.length > 160 ? "…" : "") + "</p>"
-        : "") +
-      '<div class="card-foot"><span class="price">' + escapeHtml(job.salary || "قابل مذاکره") + "</span>" +
-      (job.contact
-        ? '<a class="btn btn-sm btn-outline" href="tel:' + escapeHtml(String(job.contact).replace(/\s/g, "")) + '">تماس</a>'
-        : "") +
-      "</div>";
-    box.appendChild(art);
-  });
+  list.forEach((item) => box.appendChild(renderListingCard(item)));
 }
 
 async function loadListings() {
   const box = document.getElementById("listingsList");
   if (!box) return;
-  box.innerHTML = '<p class="muted" style="grid-column:1/-1">در حال بارگذاری محصولات…</p>';
+  box.innerHTML =
+    '<p class="muted" style="grid-column:1/-1">در حال بارگذاری محصولات…</p>';
   const { data, error } = await fetchApproved(
     "listings",
     "id,title,category,description,price,currency,seller_name,contact,image_url,listing_type,status,created_at"
@@ -151,30 +303,8 @@ async function loadListings() {
     emptyState(box, "خطا در دریافت محصولات و خدمات.", "#ads", "ثبت محصول");
     return;
   }
-  if (!data.length) {
-    emptyState(box, "هنوز محصول یا خدمت تأییدشده‌ای وجود ندارد.", "#ads", "ثبت محصول یا خدمت");
-    return;
-  }
-  box.innerHTML = "";
-  data.forEach((item) => {
-    const art = document.createElement("article");
-    art.className = "card product";
-    const price =
-      item.price != null
-        ? escapeHtml(String(item.price)) + (item.currency ? " " + escapeHtml(item.currency) : "")
-        : "قابل مذاکره";
-    art.innerHTML =
-      (item.image_url
-        ? '<img class="thumb-img" src="' + escapeHtml(item.image_url) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
-        : '<div class="thumb" aria-hidden="true">📦</div>') +
-      "<h3>" + escapeHtml(item.title) + "</h3>" +
-      '<p class="meta">' + escapeHtml([item.seller_name, item.category, item.listing_type].filter(Boolean).join(" · ")) + "</p>" +
-      '<p class="price">' + price + "</p>" +
-      (item.contact
-        ? '<a class="btn btn-sm btn-primary" href="https://wa.me/' + escapeHtml(String(item.contact).replace(/[^\d+]/g, "")) + '" target="_blank" rel="noopener">تماس با فروشنده</a>'
-        : "");
-    box.appendChild(art);
-  });
+  listingsCache = data || [];
+  renderListingsFiltered();
 }
 
 async function loadChannels() {
@@ -187,7 +317,13 @@ async function loadChannels() {
   if (error || !data) return;
   const channels = data.filter((r) => {
     const p = (r.platform || "").toLowerCase();
-    return p.includes("واتساپ") || p.includes("تلگرام") || p.includes("whatsapp") || p.includes("telegram") || p.includes("کانال");
+    return (
+      p.includes("واتساپ") ||
+      p.includes("تلگرام") ||
+      p.includes("whatsapp") ||
+      p.includes("telegram") ||
+      p.includes("کانال")
+    );
   });
   channels.slice(0, 12).forEach((ch) => {
     const art = document.createElement("article");
@@ -195,11 +331,19 @@ async function loadChannels() {
     const link = ch.link && /^https?:\/\//i.test(ch.link) ? ch.link : "#";
     art.innerHTML =
       '<div class="channel-icon" aria-hidden="true">📢</div>' +
-      "<h3>" + escapeHtml(ch.name || "کانال") + "</h3>" +
-      '<p class="desc">' + escapeHtml((ch.description || "").slice(0, 100)) + "</p>" +
-      '<span class="tag">' + escapeHtml(ch.platform || "کانال") + "</span>" +
+      "<h3>" +
+      escapeHtml(ch.name || "کانال") +
+      "</h3>" +
+      '<p class="desc">' +
+      escapeHtml((ch.description || "").slice(0, 100)) +
+      "</p>" +
+      '<span class="tag">' +
+      escapeHtml(ch.platform || "کانال") +
+      "</span>" +
       (link !== "#"
-        ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>'
+        ? '<a href="' +
+          escapeHtml(link) +
+          '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>'
         : "");
     box.appendChild(art);
   });
@@ -250,15 +394,24 @@ function initAdForm() {
     if (error) {
       console.error("Ad insert error:", error);
       let text = "ثبت درخواست ناموفق بود. ";
-      if (error.code === "42501" || (error.message || "").includes("row-level security")) {
-        text += "سیاست امنیتی پایگاه داده اجازه ثبت عمومی را نمی‌دهد. مدیر باید سیاست INSERT برای وضعیت pending را در Supabase فعال کند.";
+      if (
+        error.code === "42501" ||
+        (error.message || "").includes("row-level security")
+      ) {
+        text +=
+          "سیاست امنیتی پایگاه داده اجازه ثبت عمومی را نمی‌دهد. مدیر باید سیاست INSERT برای وضعیت pending را در Supabase فعال کند.";
       } else {
         text += error.message || "خطای ناشناخته.";
       }
       showFormMessage(msg, text, "error");
       showToast("ثبت ناموفق بود.", "error");
     } else {
-      showFormMessage(msg, "درخواست شما ثبت شد و در وضعیت «در انتظار بررسی» است." + (data?.id ? " شناسه: " + data.id : ""), "success");
+      showFormMessage(
+        msg,
+        "درخواست شما ثبت شد و در وضعیت «در انتظار بررسی» است." +
+          (data?.id ? " شناسه: " + data.id : ""),
+        "success"
+      );
       showToast("درخواست با موفقیت ارسال شد.");
       form.reset();
     }
@@ -290,5 +443,7 @@ function showToast(text, type) {
   el.textContent = text;
   el.className = "toast " + type;
   el.hidden = false;
-  setTimeout(() => { el.hidden = true; }, 4000);
+  setTimeout(() => {
+    el.hidden = true;
+  }, 4000);
 }

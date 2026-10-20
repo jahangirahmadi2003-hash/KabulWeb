@@ -7,11 +7,10 @@
   <meta name="description" content="کابل‌وب — بازار افغانستان و جهان. کاریابی، محصولات، خدمات و معرفی کانال‌های واتساپ و تلگرام" />
   <title>کابل‌وب | بازار افغانستان و جهان</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="kabulweb-logo.jpg" type="image/jpeg" />
+  <link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg" />
 </head>
 <body class="intro-active">
 
-  <!-- صفحه آغازین -->
   <div id="splash" class="splash" role="dialog" aria-label="صفحه آغازین کابل‌وب">
     <div class="splash-inner">
       <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
@@ -21,11 +20,10 @@
     </div>
   </div>
 
-  <!-- هدر -->
   <header class="header">
     <div class="container header-inner">
       <a href="index.html" class="logo" aria-label="صفحه اصلی کابل‌وب">
-        <img src="kabulweb-logo.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
+        <img src="grok_1792508896312.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="logo-fallback">ک</span>
         <span class="logo-text">
@@ -49,7 +47,6 @@
   </header>
 
   <main>
-    <!-- هیرو -->
     <section class="hero" id="home">
       <div class="container">
         <h1>کابل‌وب — بازار افغانستان و جهان</h1>
@@ -63,7 +60,6 @@
       </div>
     </section>
 
-    <!-- کاریابی -->
     <section class="section" id="jobs">
       <div class="container">
         <div class="section-head">
@@ -73,7 +69,6 @@
           </div>
           <a href="#ads" class="btn btn-sm btn-primary" data-type="job">ثبت وظیفه جدید</a>
         </div>
-
         <div class="search-bar">
           <input type="search" id="jobSearch" placeholder="جستجو بر اساس عنوان، شهر یا نوع وظیفه..." aria-label="جستجوی وظیفه" />
           <select id="jobCity" aria-label="شهر">
@@ -86,41 +81,10 @@
             <option value="سایر">سایر</option>
           </select>
         </div>
-
-        <div class="cards" id="jobsList">
-          <article class="card">
-            <span class="badge">جدید</span>
-            <h3>توسعه‌دهنده وب (فرانت‌اند)</h3>
-            <p class="meta">شرکت فناوری کابل · کابل · تمام‌وقت</p>
-            <p class="desc">نیازمند تسلط به HTML، CSS، JavaScript و تجربه کار با React. معاش رقابتی.</p>
-            <div class="card-foot">
-              <span class="price">قابل مذاکره</span>
-              <button type="button" class="btn btn-sm btn-outline">جزئیات و تماس</button>
-            </div>
-          </article>
-          <article class="card">
-            <h3>معلم زبان انگلیسی</h3>
-            <p class="meta">آموزشگاه بین‌المللی · هرات · پاره‌وقت</p>
-            <p class="desc">تدریس به دانش‌آموزان سطح متوسط و پیشرفته. حداقل ۲ سال تجربه.</p>
-            <div class="card-foot">
-              <span class="price">۱۵٬۰۰۰ افغانی</span>
-              <button type="button" class="btn btn-sm btn-outline">جزئیات و تماس</button>
-            </div>
-          </article>
-          <article class="card">
-            <h3>مدیر شبکه‌های اجتماعی</h3>
-            <p class="meta">استارتاپ تجارت الکترونیک · دورکاری</p>
-            <p class="desc">مدیریت صفحات اینستاگرام، فیسبوک و تلگرام. آشنایی با تولید محتوا ضروری است.</p>
-            <div class="card-foot">
-              <span class="price">قابل مذاکره</span>
-              <button type="button" class="btn btn-sm btn-outline">جزئیات و تماس</button>
-            </div>
-          </article>
-        </div>
+        <div class="cards" id="jobsList"></div>
       </div>
     </section>
 
-    <!-- بازار -->
     <section class="section section-alt" id="marketplace">
       <div class="container">
         <div class="section-head">
@@ -130,7 +94,6 @@
           </div>
           <a href="#ads" class="btn btn-sm btn-primary" data-type="product">ثبت محصول یا خدمت</a>
         </div>
-
         <div class="search-bar">
           <input type="search" id="productSearch" placeholder="جستجوی محصول یا خدمت..." aria-label="جستجوی محصول" />
           <select id="productCat" aria-label="دسته‌بندی">
@@ -142,34 +105,10 @@
             <option value="سایر">سایر</option>
           </select>
         </div>
-
-        <div class="cards" id="listingsList">
-          <article class="card product">
-            <div class="thumb" aria-hidden="true">📱</div>
-            <h3>گوشی سامسونگ گلکسی A54</h3>
-            <p class="meta">کابل · نو</p>
-            <p class="price">۳۲٬۰۰۰ افغانی</p>
-            <button type="button" class="btn btn-sm btn-primary">تماس با فروشنده</button>
-          </article>
-          <article class="card product">
-            <div class="thumb" aria-hidden="true">🧵</div>
-            <h3>خدمات خیاطی سفارشی</h3>
-            <p class="meta">هرات · خدمات</p>
-            <p class="price">از ۵۰۰ افغانی</p>
-            <button type="button" class="btn btn-sm btn-primary">تماس با فروشنده</button>
-          </article>
-          <article class="card product">
-            <div class="thumb" aria-hidden="true">📚</div>
-            <h3>کتاب‌های درسی دانشگاهی</h3>
-            <p class="meta">کابل · دست‌دوم</p>
-            <p class="price">قابل مذاکره</p>
-            <button type="button" class="btn btn-sm btn-primary">تماس با فروشنده</button>
-          </article>
-        </div>
+        <div class="cards" id="listingsList"></div>
       </div>
     </section>
 
-    <!-- کانال‌ها -->
     <section class="section" id="channels">
       <div class="container">
         <div class="section-head">
@@ -179,34 +118,18 @@
           </div>
           <a href="#ads" class="btn btn-sm btn-primary" data-type="channel">درخواست معرفی کانال</a>
         </div>
-
         <div class="cards-row" id="channelsList">
           <article class="card channel">
             <div class="channel-icon" aria-hidden="true">📢</div>
-            <h3>اخبار کابل‌وب</h3>
-            <p class="desc">آخرین آگهی‌ها و فرصت‌های کاری</p>
+            <h3>تلگرام رسمی کابل‌وب</h3>
+            <p class="desc">کانال رسمی کابل‌وب</p>
             <span class="tag">تلگرام</span>
             <a href="https://t.me/kabulwebs" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>
-          </article>
-          <article class="card channel">
-            <div class="channel-icon" aria-hidden="true">💼</div>
-            <h3>کاریابی افغانستان</h3>
-            <p class="desc">فرصت‌های شغلی روزانه</p>
-            <span class="tag">واتساپ</span>
-            <a href="#" class="btn btn-sm btn-outline">ورود به کانال</a>
-          </article>
-          <article class="card channel">
-            <div class="channel-icon" aria-hidden="true">🛒</div>
-            <h3>بازار آنلاین کابل</h3>
-            <p class="desc">خرید و فروش محصولات</p>
-            <span class="tag">تلگرام</span>
-            <a href="#" class="btn btn-sm btn-outline">ورود به کانال</a>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ثبت تبلیغات -->
     <section class="section section-alt" id="ads">
       <div class="container">
         <div class="section-head">
@@ -215,7 +138,6 @@
             <p>آگهی خود را ثبت کنید؛ پس از بررسی منتشر می‌شود</p>
           </div>
         </div>
-
         <form id="adForm" class="form-card" novalidate>
           <div class="form-row">
             <div class="field">
@@ -256,12 +178,11 @@
     </section>
   </main>
 
-  <!-- فوتر -->
   <footer class="footer">
     <div class="container">
       <div class="footer-brand">
         <strong>کابل‌وب</strong>
-        <span>بازار افغانستان و جهان</span>
+        <span>بازار افغانستان و جهان · BUILD • CONNECT • GROW</span>
       </div>
       <nav class="footer-links" aria-label="لینک‌های فوتر">
         <a href="#jobs">کاریابی</a>
@@ -269,6 +190,7 @@
         <a href="#channels">کانال‌ها</a>
         <a href="#ads">تبلیغات</a>
         <a href="account.html">حساب کاربری</a>
+        <a href="admin.html">مدیریت</a>
       </nav>
       <p class="copy">© ۱۴۰۵ کابل‌وب — بنیانگذار: Jahangir Ahmadi</p>
     </div>
@@ -276,6 +198,6 @@
 
   <div id="toast" class="toast" hidden role="status"></div>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

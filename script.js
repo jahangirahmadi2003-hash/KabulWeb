@@ -1,194 +1,294 @@
 /**
- * کابل‌وب — اسکریپت نهایی
- * صفحه آغازین فقط یک‌بار (localStorage)
- * فرم‌ها آماده اتصال به Supabase
+ * کابل‌وب — اسکریپت صفحه اصلی
+ * بارگذاری واقعی از Supabase + صفحه آغازین + UI
  */
-(function () {
-  "use strict";
+import {
+  fetchApproved,
+  submitAdRequest,
+  getSession,
+} from "./js/supabase.js";
 
-  document.addEventListener("DOMContentLoaded", function () {
-    initSplash();
-    initMenu();
-    initSmoothScroll();
-    initAdForm();
-    initTypeButtons();
+document.addEventListener("DOMContentLoaded", () => {
+  initSplash();
+  initMenu();
+  initSmoothScroll();
+  initTypeButtons();
+  initAdForm();
+  loadPublicData();
+  updateAuthLink();
+});
+
+function initSplash() {
+  const splash = document.getElementById("splash");
+  const skipBtn = document.getElementById("skipSplash");
+  if (!splash) return;
+  const KEY = "kabulweb_intro_seen_v1";
+  let seen = false;
+  try { seen = localStorage.getItem(KEY) === "1"; } catch (_) {}
+  function hide() {
+    splash.classList.add("hide");
+    document.body.classList.remove("intro-active");
+    try { localStorage.setItem(KEY, "1"); } catch (_) {}
+    setTimeout(() => { if (splash.parentNode) splash.remove(); }, 600);
+  }
+  if (seen) { hide(); return; }
+  const timer = setTimeout(hide, 5200);
+  if (skipBtn) skipBtn.addEventListener("click", () => { clearTimeout(timer); hide(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" || e.key === "Enter") { clearTimeout(timer); hide(); }
   });
+}
 
-  /* ---------- صفحه آغازین ---------- */
-  function initSplash() {
-    var splash = document.getElementById("splash");
-    var skipBtn = document.getElementById("skipSplash");
-    if (!splash) return;
+function initMenu() {
+  const btn = document.getElementById("menuBtn");
+  const nav = document.getElementById("nav");
+  if (!btn || !nav) return;
+  btn.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  nav.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      nav.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+    })
+  );
+}
 
-    var KEY = "kabulweb_intro_seen_v1";
-    var seen = false;
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const id = this.getAttribute("href");
+      if (!id || id === "#") return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 75;
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  });
+}
 
-    try {
-      seen = localStorage.getItem(KEY) === "1";
-    } catch (e) {
-      /* localStorage در دسترس نیست */
-    }
+function initTypeButtons() {
+  document.querySelectorAll("[data-type]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const type = btn.getAttribute("data-type");
+      const select = document.getElementById("adType");
+      if (select && type) select.value = type;
+    });
+  });
+}
 
-    function hide() {
-      splash.classList.add("hide");
-      document.body.classList.remove("intro-active");
-      try {
-        localStorage.setItem(KEY, "1");
-      } catch (e) {}
-      setTimeout(function () {
-        if (splash.parentNode) splash.parentNode.removeChild(splash);
-      }, 600);
-    }
+async function loadPublicData() {
+  await Promise.all([loadJobs(), loadListings(), loadChannels()]);
+}
 
-    if (seen) {
-      hide();
+function escapeHtml(str) {
+  const d = document.createElement("div");
+  d.textContent = str == null ? "" : String(str);
+  return d.innerHTML;
+}
+
+function emptyState(container, message, actionHref, actionLabel) {
+  container.innerHTML =
+    '<div class="empty-state"><p>' +
+    escapeHtml(message) +
+    "</p>" +
+    (actionHref
+      ? '<a class="btn btn-sm btn-primary" href="' +
+        escapeHtml(actionHref) +
+        '">' +
+        escapeHtml(actionLabel) +
+        "</a>"
+      : "") +
+    "</div>";
+}
+
+async function loadJobs() {
+  const box = document.getElementById("jobsList");
+  if (!box) return;
+  box.innerHTML = '<p class="muted" style="grid-column:1/-1">در حال بارگذاری فرصت‌های کاری…</p>';
+  const { data, error } = await fetchApproved(
+    "job_posts",
+    "id,title,company,location,type,salary,deadline,description,contact,status,created_at"
+  );
+  if (error) {
+    emptyState(box, "خطا در دریافت فرصت‌های کاری. اتصال را بررسی کنید.", "#ads", "ثبت وظیفه");
+    return;
+  }
+  if (!data.length) {
+    emptyState(box, "هنوز فرصت کاری تأییدشده‌ای ثبت نشده است.", "#ads", "ثبت وظیفه جدید");
+    return;
+  }
+  box.innerHTML = "";
+  data.forEach((job) => {
+    const art = document.createElement("article");
+    art.className = "card";
+    art.innerHTML =
+      "<h3>" + escapeHtml(job.title) + "</h3>" +
+      '<p class="meta">' + escapeHtml([job.company, job.location, job.type].filter(Boolean).join(" · ")) + "</p>" +
+      (job.description
+        ? '<p class="desc">' + escapeHtml(job.description.slice(0, 160)) + (job.description.length > 160 ? "…" : "") + "</p>"
+        : "") +
+      '<div class="card-foot"><span class="price">' + escapeHtml(job.salary || "قابل مذاکره") + "</span>" +
+      (job.contact
+        ? '<a class="btn btn-sm btn-outline" href="tel:' + escapeHtml(String(job.contact).replace(/\s/g, "")) + '">تماس</a>'
+        : "") +
+      "</div>";
+    box.appendChild(art);
+  });
+}
+
+async function loadListings() {
+  const box = document.getElementById("listingsList");
+  if (!box) return;
+  box.innerHTML = '<p class="muted" style="grid-column:1/-1">در حال بارگذاری محصولات…</p>';
+  const { data, error } = await fetchApproved(
+    "listings",
+    "id,title,category,description,price,currency,seller_name,contact,image_url,listing_type,status,created_at"
+  );
+  if (error) {
+    emptyState(box, "خطا در دریافت محصولات و خدمات.", "#ads", "ثبت محصول");
+    return;
+  }
+  if (!data.length) {
+    emptyState(box, "هنوز محصول یا خدمت تأییدشده‌ای وجود ندارد.", "#ads", "ثبت محصول یا خدمت");
+    return;
+  }
+  box.innerHTML = "";
+  data.forEach((item) => {
+    const art = document.createElement("article");
+    art.className = "card product";
+    const price =
+      item.price != null
+        ? escapeHtml(String(item.price)) + (item.currency ? " " + escapeHtml(item.currency) : "")
+        : "قابل مذاکره";
+    art.innerHTML =
+      (item.image_url
+        ? '<img class="thumb-img" src="' + escapeHtml(item.image_url) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
+        : '<div class="thumb" aria-hidden="true">📦</div>') +
+      "<h3>" + escapeHtml(item.title) + "</h3>" +
+      '<p class="meta">' + escapeHtml([item.seller_name, item.category, item.listing_type].filter(Boolean).join(" · ")) + "</p>" +
+      '<p class="price">' + price + "</p>" +
+      (item.contact
+        ? '<a class="btn btn-sm btn-primary" href="https://wa.me/' + escapeHtml(String(item.contact).replace(/[^\d+]/g, "")) + '" target="_blank" rel="noopener">تماس با فروشنده</a>'
+        : "");
+    box.appendChild(art);
+  });
+}
+
+async function loadChannels() {
+  const box = document.getElementById("channelsList");
+  if (!box) return;
+  const { data, error } = await fetchApproved(
+    "ad_requests",
+    "id,name,platform,link,description,status,created_at"
+  );
+  if (error || !data) return;
+  const channels = data.filter((r) => {
+    const p = (r.platform || "").toLowerCase();
+    return p.includes("واتساپ") || p.includes("تلگرام") || p.includes("whatsapp") || p.includes("telegram") || p.includes("کانال");
+  });
+  channels.slice(0, 12).forEach((ch) => {
+    const art = document.createElement("article");
+    art.className = "card channel";
+    const link = ch.link && /^https?:\/\//i.test(ch.link) ? ch.link : "#";
+    art.innerHTML =
+      '<div class="channel-icon" aria-hidden="true">📢</div>' +
+      "<h3>" + escapeHtml(ch.name || "کانال") + "</h3>" +
+      '<p class="desc">' + escapeHtml((ch.description || "").slice(0, 100)) + "</p>" +
+      '<span class="tag">' + escapeHtml(ch.platform || "کانال") + "</span>" +
+      (link !== "#"
+        ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>'
+        : "");
+    box.appendChild(art);
+  });
+}
+
+function initAdForm() {
+  const form = document.getElementById("adForm");
+  if (!form) return;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const type = document.getElementById("adType").value;
+    const title = document.getElementById("adTitle").value.trim();
+    const desc = document.getElementById("adDesc").value.trim();
+    const link = document.getElementById("adLink").value.trim();
+    const contact = document.getElementById("adContact").value.trim();
+    const msg = document.getElementById("adMessage");
+    const submitBtn = document.getElementById("adSubmit");
+    if (!type || !title || !desc || !contact) {
+      showFormMessage(msg, "لطفاً تمام فیلدهای ضروری (*) را پر کنید.", "error");
       return;
     }
-
-    var timer = setTimeout(hide, 5200);
-
-    if (skipBtn) {
-      skipBtn.addEventListener("click", function () {
-        clearTimeout(timer);
-        hide();
-      });
-    }
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" || e.key === "Enter") {
-        clearTimeout(timer);
-        hide();
-      }
-    });
-  }
-
-  /* ---------- منوی موبایل ---------- */
-  function initMenu() {
-    var btn = document.getElementById("menuBtn");
-    var nav = document.getElementById("nav");
-    if (!btn || !nav) return;
-
-    btn.addEventListener("click", function () {
-      var open = nav.classList.toggle("open");
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.setAttribute("aria-label", open ? "بستن منو" : "باز کردن منو");
-    });
-
-    nav.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        nav.classList.remove("open");
-        btn.setAttribute("aria-expanded", "false");
-      });
-    });
-  }
-
-  /* ---------- اسکرول نرم ---------- */
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-      anchor.addEventListener("click", function (e) {
-        var id = this.getAttribute("href");
-        if (!id || id === "#") return;
-        var target = document.querySelector(id);
-        if (!target) return;
-        e.preventDefault();
-        var top = target.getBoundingClientRect().top + window.pageYOffset - 75;
-        window.scrollTo({ top: top, behavior: "smooth" });
-      });
-    });
-  }
-
-  /* ---------- پیش‌انتخاب نوع تبلیغ ---------- */
-  function initTypeButtons() {
-    document.querySelectorAll("[data-type]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var type = this.getAttribute("data-type");
-        var select = document.getElementById("adType");
-        if (select && type) {
-          select.value = type;
-        }
-      });
-    });
-  }
-
-  /* ---------- فرم ثبت تبلیغات ---------- */
-  function initAdForm() {
-    var form = document.getElementById("adForm");
-    if (!form) return;
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      var type = document.getElementById("adType").value;
-      var title = document.getElementById("adTitle").value.trim();
-      var desc = document.getElementById("adDesc").value.trim();
-      var link = document.getElementById("adLink").value.trim();
-      var contact = document.getElementById("adContact").value.trim();
-      var msg = document.getElementById("adMessage");
-      var submitBtn = document.getElementById("adSubmit");
-
-      if (!type || !title || !desc || !contact) {
-        showFormMessage(msg, "لطفاً تمام فیلدهای ضروری (*) را پر کنید.", "error");
-        showToast("فیلدهای ضروری را کامل کنید.", "error");
+    if (link) {
+      try {
+        const u = new URL(link);
+        if (u.protocol !== "http:" && u.protocol !== "https:") throw new Error();
+      } catch (_) {
+        showFormMessage(msg, "لینک باید با http یا https شروع شود.", "error");
         return;
       }
-
-      if (link) {
-        try {
-          var url = new URL(link);
-          if (url.protocol !== "http:" && url.protocol !== "https:") {
-            throw new Error("invalid");
-          }
-        } catch (err) {
-          showFormMessage(msg, "لینک واردشده معتبر نیست. از http یا https استفاده کنید.", "error");
-          return;
-        }
+    }
+    const platformMap = {
+      job: "کاریابی",
+      product: "فروشگاه آنلاین",
+      service: "سایر",
+      channel: "کانال واتساپ",
+      other: "سایر",
+    };
+    submitBtn.disabled = true;
+    submitBtn.textContent = "در حال ارسال…";
+    const { data, error } = await submitAdRequest({
+      name: title,
+      contact,
+      platform: platformMap[type] || type,
+      link: link || null,
+      description: desc,
+      package: "free",
+    });
+    if (error) {
+      console.error("Ad insert error:", error);
+      let text = "ثبت درخواست ناموفق بود. ";
+      if (error.code === "42501" || (error.message || "").includes("row-level security")) {
+        text += "سیاست امنیتی پایگاه داده اجازه ثبت عمومی را نمی‌دهد. مدیر باید سیاست INSERT برای وضعیت pending را در Supabase فعال کند.";
+      } else {
+        text += error.message || "خطای ناشناخته.";
       }
+      showFormMessage(msg, text, "error");
+      showToast("ثبت ناموفق بود.", "error");
+    } else {
+      showFormMessage(msg, "درخواست شما ثبت شد و در وضعیت «در انتظار بررسی» است." + (data?.id ? " شناسه: " + data.id : ""), "success");
+      showToast("درخواست با موفقیت ارسال شد.");
+      form.reset();
+    }
+    submitBtn.disabled = false;
+    submitBtn.textContent = "ارسال درخواست";
+  });
+}
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "در حال ارسال...";
-
-      /*
-       * نقطه اتصال به Supabase:
-       * پس از ساخت پروژه و جدول ad_requests، کد زیر را فعال کنید:
-       *
-       * const { data, error } = await supabase
-       *   .from('ad_requests')
-       *   .insert([{ type, title, description: desc, link, contact, status: 'pending' }]);
-       *
-       * if (error) { ... } else { ... }
-       */
-
-      setTimeout(function () {
-        showFormMessage(
-          msg,
-          "درخواست شما ثبت شد و در وضعیت «در انتظار بررسی» قرار گرفت.",
-          "success"
-        );
-        showToast("درخواست با موفقیت ارسال شد.");
-        form.reset();
-        submitBtn.disabled = false;
-        submitBtn.textContent = "ارسال درخواست";
-      }, 600);
+async function updateAuthLink() {
+  const { session } = await getSession();
+  if (session?.user) {
+    document.querySelectorAll(".nav-account").forEach((el) => {
+      el.textContent = "حساب من";
     });
   }
+}
 
-  /* ---------- پیام فرم و Toast ---------- */
-  function showFormMessage(el, text, type) {
-    if (!el) return;
-    el.hidden = false;
-    el.className = "form-message " + type;
-    el.textContent = text;
-  }
+function showFormMessage(el, text, type) {
+  if (!el) return;
+  el.hidden = false;
+  el.className = "form-message " + type;
+  el.textContent = text;
+}
 
-  function showToast(text, type) {
-    type = type || "success";
-    var el = document.getElementById("toast");
-    if (!el) return;
-    el.textContent = text;
-    el.className = "toast " + type;
-    el.hidden = false;
-    setTimeout(function () {
-      el.hidden = true;
-    }, 3500);
-  }
-})();
+function showToast(text, type) {
+  type = type || "success";
+  const el = document.getElementById("toast");
+  if (!el) return;
+  el.textContent = text;
+  el.className = "toast " + type;
+  el.hidden = false;
+  setTimeout(() => { el.hidden = true; }, 4000);
+}

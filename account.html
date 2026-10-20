@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b1020" />
-  <meta name="description" content="حساب کاربری کابل‌وب — ورود و ثبت‌نام" />
+  <meta name="description" content="حساب کاربری کابل‌وب — ورود و ثبت‌نام واقعی با Supabase Auth" />
   <title>حساب کاربری | کابل‌وب</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="kabulweb-logo.jpg" type="image/jpeg" />
+  <link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg" />
   <style>
     .auth-page {
       min-height: calc(100vh - var(--header-h));
@@ -91,6 +91,27 @@
       background: rgba(255, 120, 139, 0.12);
       color: #fecdd3;
     }
+    .session-box {
+      text-align: center;
+    }
+    .session-box .email {
+      color: var(--gold);
+      font-weight: 700;
+      margin: 0.8rem 0;
+      word-break: break-all;
+    }
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.88rem;
+      text-decoration: underline;
+      margin-top: 0.8rem;
+      display: block;
+      width: 100%;
+    }
+    .link-btn:hover { color: var(--gold); }
   </style>
 </head>
 <body>
@@ -98,7 +119,7 @@
   <header class="header">
     <div class="container header-inner">
       <a href="index.html" class="logo" aria-label="صفحه اصلی">
-        <img src="kabulweb-logo.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
+        <img src="grok_1792508896312.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="logo-fallback">ک</span>
         <span class="logo-text">
@@ -112,103 +133,210 @@
 
   <main class="auth-page">
     <div class="auth-card">
-      <h1 id="authTitle">ورود به حساب</h1>
-      <p class="lead" id="authLead">برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.</p>
-
-      <form id="authForm" novalidate>
-        <div class="field">
-          <label for="authEmail">ایمیل</label>
-          <input type="email" id="authEmail" name="email" required autocomplete="email" />
-        </div>
-        <div class="field">
-          <label for="authPassword">رمز عبور</label>
-          <input type="password" id="authPassword" name="password" required minlength="6" autocomplete="current-password" />
-        </div>
-        <div class="field" id="nameField" hidden>
-          <label for="authName">نام کامل</label>
-          <input type="text" id="authName" name="name" maxlength="80" autocomplete="name" />
-        </div>
+      <!-- حالت ورود شده -->
+      <div id="sessionView" class="session-box" hidden>
+        <h1>حساب شما</h1>
+        <p class="lead">شما وارد شده‌اید.</p>
+        <p class="email" id="sessionEmail"></p>
         <div class="auth-actions">
-          <button type="submit" class="btn btn-primary" id="authSubmit">ورود</button>
-          <button type="button" class="btn btn-secondary" id="authToggle">ساخت حساب جدید</button>
+          <a href="index.html" class="btn btn-primary">بازگشت به بازار</a>
+          <button type="button" class="btn btn-secondary" id="logoutBtn">خروج</button>
         </div>
-        <div id="authMessage" class="auth-message" hidden role="status"></div>
-      </form>
+        <div id="sessionMessage" class="auth-message" hidden role="status"></div>
+      </div>
 
-      <p class="auth-footer">
-        <a href="index.html">← بازگشت به صفحه اصلی</a>
-      </p>
+      <!-- فرم ورود / ثبت‌نام -->
+      <div id="authView">
+        <h1 id="authTitle">ورود به حساب</h1>
+        <p class="lead" id="authLead">برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.</p>
+
+        <form id="authForm" novalidate>
+          <div class="field">
+            <label for="authEmail">ایمیل</label>
+            <input type="email" id="authEmail" name="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="authPassword">رمز عبور</label>
+            <input type="password" id="authPassword" name="password" required minlength="6" autocomplete="current-password" />
+          </div>
+          <div class="field" id="nameField" hidden>
+            <label for="authName">نام کامل</label>
+            <input type="text" id="authName" name="name" maxlength="80" autocomplete="name" />
+          </div>
+          <div class="auth-actions">
+            <button type="submit" class="btn btn-primary" id="authSubmit">ورود</button>
+            <button type="button" class="btn btn-secondary" id="authToggle">ساخت حساب جدید</button>
+          </div>
+          <button type="button" class="link-btn" id="forgotBtn">رمز عبور را فراموش کرده‌ام</button>
+          <div id="authMessage" class="auth-message" hidden role="status"></div>
+        </form>
+
+        <p class="auth-footer">
+          <a href="index.html">← بازگشت به صفحه اصلی</a>
+        </p>
+      </div>
     </div>
   </main>
 
-  <script>
-    (function () {
-      var form = document.getElementById("authForm");
-      var toggle = document.getElementById("authToggle");
-      var submit = document.getElementById("authSubmit");
-      var nameField = document.getElementById("nameField");
-      var title = document.getElementById("authTitle");
-      var lead = document.getElementById("authLead");
-      var msg = document.getElementById("authMessage");
-      var isSignup = false;
+  <script type="module">
+    import {
+      getSession,
+      signIn,
+      signUp,
+      signOut,
+      resetPassword,
+    } from "./js/supabase.js";
 
-      toggle.addEventListener("click", function () {
-        isSignup = !isSignup;
-        nameField.hidden = !isSignup;
-        submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
-        toggle.textContent = isSignup ? "قبلاً حساب دارید؟ ورود" : "ساخت حساب جدید";
-        title.textContent = isSignup ? "ساخت حساب جدید" : "ورود به حساب";
-        lead.textContent = isSignup
-          ? "با ایمیل و رمز عبور یک حساب جدید بسازید."
-          : "برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.";
-        msg.hidden = true;
-      });
+    const authView = document.getElementById("authView");
+    const sessionView = document.getElementById("sessionView");
+    const form = document.getElementById("authForm");
+    const toggle = document.getElementById("authToggle");
+    const submit = document.getElementById("authSubmit");
+    const nameField = document.getElementById("nameField");
+    const title = document.getElementById("authTitle");
+    const lead = document.getElementById("authLead");
+    const msg = document.getElementById("authMessage");
+    const sessionMsg = document.getElementById("sessionMessage");
+    const sessionEmail = document.getElementById("sessionEmail");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const forgotBtn = document.getElementById("forgotBtn");
+    let isSignup = false;
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = document.getElementById("authEmail").value.trim();
-        var password = document.getElementById("authPassword").value;
-        var name = document.getElementById("authName").value.trim();
+    function showMsg(el, text, type) {
+      if (!el) return;
+      el.hidden = false;
+      el.className = "auth-message " + type;
+      el.textContent = text;
+    }
 
-        if (!email || !password || password.length < 6) {
-          showMsg("ایمیل و رمز عبور (حداقل ۶ کاراکتر) الزامی است.", "error");
-          return;
-        }
-        if (isSignup && !name) {
-          showMsg("نام کامل را وارد کنید.", "error");
-          return;
-        }
+    function showSession(user) {
+      authView.hidden = true;
+      sessionView.hidden = false;
+      sessionEmail.textContent = user?.email || "کاربر";
+    }
 
-        submit.disabled = true;
-        submit.textContent = "لطفاً صبر کنید...";
+    function showAuth() {
+      sessionView.hidden = true;
+      authView.hidden = false;
+    }
 
-        /*
-         * اتصال Supabase Auth:
-         * if (isSignup) {
-         *   const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
-         * } else {
-         *   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-         * }
-         */
-
-        setTimeout(function () {
-          showMsg(
-            isSignup
-              ? "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
-              : "ورود با موفقیت انجام شد.",
-            "success"
-          );
-          submit.disabled = false;
-          submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
-        }, 700);
-      });
-
-      function showMsg(text, type) {
-        msg.hidden = false;
-        msg.className = "auth-message " + type;
-        msg.textContent = text;
+    async function checkSession() {
+      const { session, error } = await getSession();
+      if (error) {
+        console.error("Session error:", error);
+        showAuth();
+        return;
       }
-    })();
+      if (session?.user) {
+        showSession(session.user);
+      } else {
+        showAuth();
+      }
+    }
+
+    toggle.addEventListener("click", () => {
+      isSignup = !isSignup;
+      nameField.hidden = !isSignup;
+      submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
+      toggle.textContent = isSignup ? "قبلاً حساب دارید؟ ورود" : "ساخت حساب جدید";
+      title.textContent = isSignup ? "ساخت حساب جدید" : "ورود به حساب";
+      lead.textContent = isSignup
+        ? "با ایمیل و رمز عبور یک حساب جدید بسازید."
+        : "برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.";
+      msg.hidden = true;
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("authEmail").value.trim();
+      const password = document.getElementById("authPassword").value;
+      const name = document.getElementById("authName").value.trim();
+
+      if (!email || !password || password.length < 6) {
+        showMsg(msg, "ایمیل و رمز عبور (حداقل ۶ کاراکتر) الزامی است.", "error");
+        return;
+      }
+      if (isSignup && !name) {
+        showMsg(msg, "نام کامل را وارد کنید.", "error");
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = "لطفاً صبر کنید…";
+      msg.hidden = true;
+
+      try {
+        if (isSignup) {
+          const { data, error } = await signUp(email, password, name);
+          if (error) {
+            showMsg(msg, error.message || "ثبت‌نام ناموفق بود.", "error");
+          } else if (data?.user && !data.session) {
+            showMsg(
+              msg,
+              "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید حساب بررسی کنید.",
+              "success"
+            );
+            form.reset();
+          } else if (data?.session) {
+            showMsg(msg, "حساب ساخته شد و وارد شدید.", "success");
+            showSession(data.user);
+          } else {
+            showMsg(msg, "ثبت‌نام انجام شد.", "success");
+          }
+        } else {
+          const { data, error } = await signIn(email, password);
+          if (error) {
+            let text = error.message || "ورود ناموفق بود.";
+            if (text.includes("Invalid login") || text.includes("invalid")) {
+              text = "ایمیل یا رمز عبور نادرست است.";
+            }
+            if (text.includes("Email not confirmed")) {
+              text = "ایمیل هنوز تأیید نشده است. صندوق ورودی را بررسی کنید.";
+            }
+            showMsg(msg, text, "error");
+          } else if (data?.session) {
+            showMsg(msg, "ورود موفق بود.", "success");
+            showSession(data.user);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        showMsg(msg, "خطای شبکه یا سرویس. دوباره تلاش کنید.", "error");
+      }
+
+      submit.disabled = false;
+      submit.textContent = isSignup ? "ثبت‌نام" : "ورود";
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      logoutBtn.disabled = true;
+      const { error } = await signOut();
+      logoutBtn.disabled = false;
+      if (error) {
+        showMsg(sessionMsg, error.message || "خروج ناموفق بود.", "error");
+        return;
+      }
+      showAuth();
+      showMsg(msg, "با موفقیت خارج شدید.", "success");
+    });
+
+    forgotBtn.addEventListener("click", async () => {
+      const email = document.getElementById("authEmail").value.trim();
+      if (!email) {
+        showMsg(msg, "ابتدا ایمیل خود را وارد کنید، سپس روی بازیابی رمز کلیک کنید.", "error");
+        return;
+      }
+      forgotBtn.disabled = true;
+      const { error } = await resetPassword(email);
+      forgotBtn.disabled = false;
+      if (error) {
+        showMsg(msg, error.message || "ارسال لینک بازیابی ناموفق بود.", "error");
+      } else {
+        showMsg(msg, "اگر این ایمیل ثبت شده باشد، لینک بازیابی ارسال می‌شود.", "success");
+      }
+    });
+
+    checkSession();
   </script>
 </body>
 </html>

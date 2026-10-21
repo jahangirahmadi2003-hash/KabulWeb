@@ -6,39 +6,35 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0b1020">
 <title>پنل مدیریت | کابل‌وب</title>
-<link rel="icon" href="file_0000000065308243bcbdb432d1ef6885.png" type="image/png">
+<link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg">
 <style>
-:root { color-scheme: dark; --bg: #0b1020; --card: #121b30; --border: #293954; --text: #f5f7ff; --muted: #aab7cf; --gold: #f3c969; --gold2: #ffe6a0; --primary: #f3c969; --danger: #a82f48; --success: #147d61; }
+:root { color-scheme: dark; --bg: #0b1020; --card: #121b30; --border: #293954; --text: #f5f7ff; --muted: #aab7cf; --gold: #f3c969; --gold2: #ffe6a0; --danger: #a82f48; --success: #147d61; }
 * { box-sizing: border-box; }
-body { margin: 0; padding: 20px; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, "Segoe UI", sans-serif; line-height: 1.8; }
+body { margin: 0; padding: 20px; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; line-height: 1.8; }
 .container { max-width: 1100px; margin: auto; }
 h1, h2 { margin-top: 0; color: var(--gold); }
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
-input, select, textarea, button { font: inherit; }
-input, select, textarea { width: 100%; padding: 12px; margin: 7px 0 15px; background: #0b1222; color: var(--text); border: 1px solid var(--border); border-radius: 9px; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
+input, select, button { font: inherit; }
+input { width: 100%; padding: 12px; margin: 7px 0 15px; background: #0b1222; color: var(--text); border: 1px solid var(--border); border-radius: 9px; }
 button { border: 0; border-radius: 9px; padding: 10px 16px; margin: 4px; cursor: pointer; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #151a26; font-weight: 700; }
-button:disabled { opacity: 0.5; cursor: wait; }
+button:disabled { opacity: 0.5; }
 .danger { background: var(--danger); color: #fff; }
 .success { background: var(--success); color: #fff; }
 .muted { color: var(--muted); }
 .hidden { display: none !important; }
 .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-.tabs button { flex: 1; min-width: 120px; background: #17243c; color: var(--text); border: 1px solid var(--border); font-weight: 600; }
+.tabs button { flex: 1; min-width: 100px; background: #17243c; color: var(--text); border: 1px solid var(--border); font-weight: 600; }
 .tabs button.active { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #151a26; border-color: transparent; }
 .item { background: #0b1222; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin: 12px 0; overflow-wrap: anywhere; }
-.item p { margin: 5px 0; }
-.item-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 12px; }
-.item-actions select { flex: 1; min-width: 150px; margin: 0; }
+.item-actions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.item-actions select { flex: 1; min-width: 140px; margin: 0; padding: 8px; background: #0b1222; color: var(--text); border: 1px solid var(--border); border-radius: 8px; }
 .status { color: var(--gold); font-weight: bold; }
-#message { white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px; border-radius: 8px; margin-bottom: 15px; }
+#message { padding: 12px; border-radius: 8px; margin-bottom: 15px; white-space: pre-wrap; }
 #message:empty { display: none; }
 .error { background: #48202b; color: #ffbdc7; }
 .info { background: #1c304c; color: #d5e5ff; }
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 a { color: var(--gold); }
-a:hover { color: var(--gold2); }
-@media (max-width: 600px) { body { padding: 10px; } .card { padding: 14px; } .tabs { flex-direction: column; } .tabs button { width: 100%; } }
 </style>
 </head>
 <body>
@@ -47,30 +43,37 @@ a:hover { color: var(--gold2); }
     <h1>پنل مدیریت کابل‌وب</h1>
     <a href="./index.html">مشاهدهٔ سایت</a>
   </div>
-  <p class="muted">مدیریت درخواست‌ها. فقط دو ایمیل مجاز مدیر. امنیت با RPC و RLS سمت سرور.</p>
-  <div id="message" role="status" aria-live="polite"></div>
+  <p class="muted">فقط دو ایمیل مجاز. امنیت با RPC <code>is_kabulweb_admin</code> و RLS.</p>
+  <div id="message" role="status"></div>
   <section id="loginCard" class="card">
     <h2>ورود مدیر</h2>
     <form id="loginForm">
-      <label for="email">ایمیل حساب مدیر</label>
-      <input id="email" type="email" autocomplete="username" required placeholder="ایمیل حساب Supabase">
+      <label for="email">ایمیل</label>
+      <input id="email" type="email" autocomplete="username" required>
       <label for="password">رمز عبور</label>
-      <input id="password" type="password" autocomplete="current-password" required placeholder="رمز عبور حساب">
+      <input id="password" type="password" autocomplete="current-password" required>
       <button id="loginButton" type="submit">ورود به پنل</button>
     </form>
-    <p class="muted">دسترسی با <code>is_kabulweb_admin</code> بررسی می‌شود.</p>
   </section>
   <section id="dashboard" class="hidden">
     <div class="card">
       <div class="topbar">
-        <div><h2>داشبورد مدیریت</h2><span id="adminEmail" class="muted"></span></div>
-        <button id="logoutButton" class="danger" type="button">خروج امن</button>
+        <div><h2>داشبورد</h2><span id="adminEmail" class="muted"></span></div>
+        <button id="logoutButton" class="danger" type="button">خروج</button>
       </div>
       <div class="tabs">
         <button type="button" data-table="ad_requests" class="active">تبلیغات</button>
         <button type="button" data-table="listings">محصولات</button>
-        <button type="button" data-table="customer_orders">سفارش‌ها</button>
         <button type="button" data-table="job_posts">کاریابی</button>
+        <button type="button" data-table="customer_orders">سفارش‌ها</button>
+        <button type="button" data-table="news_articles">اخبار</button>
+        <button type="button" data-table="education_opportunities">آموزش</button>
+        <button type="button" data-table="banner_ads">بنرها</button>
+        <button type="button" data-table="publish_log">گزارش انتشار</button>
+      </div>
+      <div class="card" style="background:#0b1222;padding:12px;margin-bottom:12px">
+        <strong style="color:var(--gold)">انتشار خودکار:</strong>
+        <span class="muted">غیرفعال تا Edge Function + Secrets</span>
       </div>
       <button id="refreshButton" class="success" type="button">تازه‌سازی</button>
       <p id="recordCount" class="muted"></p>
@@ -81,112 +84,98 @@ a:hover { color: var(--gold2); }
 <script type="module">
 import { supabase } from "./js/supabase.js";
 const $ = (id) => document.getElementById(id);
-const loginCard = $("loginCard");
-const dashboard = $("dashboard");
-const records = $("records");
-const message = $("message");
-let currentTable = "ad_requests";
-let busy = false;
+const loginCard = $("loginCard"), dashboard = $("dashboard"), records = $("records"), message = $("message");
+let currentTable = "ad_requests", busy = false;
 const ALLOWED_ADMIN_EMAILS = ["hafizullahahmadi715@gmail.com", "jahangirahmadi2003@gmail.com"];
 const tableConfig = {
-  ad_requests: { title: "تبلیغات", columns: [["name","نام"],["contact","تماس"],["platform","پلتفرم"],["link","لینک"],["description","توضیحات"],["package","بسته"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected","completed"] },
-  listings: { title: "محصول", columns: [["seller_name","فروشنده"],["contact","تماس"],["title","عنوان"],["category","دسته"],["listing_type","نوع"],["description","توضیحات"],["price","قیمت"],["currency","واحد"],["image_url","تصویر"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
-  customer_orders: { title: "سفارش", columns: [["listing_id","آگهی"],["customer_name","مشتری"],["contact","تماس"],["quantity","تعداد"],["message","پیام"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","confirmed","completed","cancelled"] },
-  job_posts: { title: "وظیفه", columns: [["title","عنوان"],["company","شرکت"],["location","محل"],["type","نوع"],["salary","معاش"],["deadline","مهلت"],["description","توضیحات"],["contact","تماس"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  ad_requests: { title: "تبلیغ", columns: [["name","نام"],["contact","تماس"],["platform","پلتفرم"],["link","لینک"],["description","توضیح"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected","completed"] },
+  listings: { title: "محصول", columns: [["title","عنوان"],["seller_name","فروشنده"],["contact","تماس"],["price","قیمت"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  job_posts: { title: "وظیفه", columns: [["title","عنوان"],["company","شرکت"],["location","محل"],["salary","معاش"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  customer_orders: { title: "سفارش", columns: [["customer_name","مشتری"],["contact","تماس"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","confirmed","completed","cancelled"] },
+  news_articles: { title: "خبر", columns: [["title","عنوان"],["summary","خلاصه"],["source_name","منبع"],["source_url","لینک"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  education_opportunities: { title: "آموزش", columns: [["title","عنوان"],["organization","مؤسسه"],["deadline","مهلت"],["link","لینک"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  banner_ads: { title: "بنر", columns: [["title","عنوان"],["placement","محل"],["target_url","لینک"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  publish_log: { title: "انتشار", columns: [["content_type","نوع"],["status","وضعیت"],["message","پیام"],["published_at","زمان"]], statuses: ["success","error","skipped"] },
 };
-function showMessage(text, isError = false) { message.textContent = text; message.className = isError ? "error" : "info"; }
-function clearMessage() { message.textContent = ""; message.className = ""; }
-function formatValue(value) { if (value === null || value === undefined || value === "") return "—"; if (typeof value === "object") return JSON.stringify(value); return String(value); }
-function addText(parent, tag, text, className = "") { const el = document.createElement(tag); el.textContent = text; if (className) el.className = className; parent.appendChild(el); return el; }
-function addSafeLink(parent, value) {
-  const text = formatValue(value);
-  try {
-    const url = new URL(text);
-    if (url.protocol !== "https:" && url.protocol !== "http:") { addText(parent, "span", text); return; }
-    const link = document.createElement("a"); link.href = url.href; link.target = "_blank"; link.rel = "noopener noreferrer"; link.textContent = "بازکردن لینک"; parent.appendChild(link);
-  } catch { addText(parent, "span", text); }
-}
-function createRecordCard(row, config) {
-  const card = document.createElement("article"); card.className = "item";
-  addText(card, "h3", config.title + " #" + formatValue(row.id));
-  for (const [column, label] of config.columns) {
-    const value = row[column];
-    if ((column === "link" || column === "image_url") && value) {
-      const line = document.createElement("p"); addText(line, "strong", label + ": "); addSafeLink(line, value); card.appendChild(line); continue;
-    }
-    const line = document.createElement("p"); addText(line, "strong", label + ": "); line.appendChild(document.createTextNode(formatValue(value)));
-    if (column === "status") line.className = "status"; card.appendChild(line);
+function showMessage(text, isError=false){ message.textContent=text; message.className=isError?"error":"info"; }
+function clearMessage(){ message.textContent=""; message.className=""; }
+function formatValue(v){ if(v==null||v==="")return "—"; return typeof v==="object"?JSON.stringify(v):String(v); }
+function addText(p,tag,text,cls=""){ const e=document.createElement(tag); e.textContent=text; if(cls)e.className=cls; p.appendChild(e); return e; }
+function createRecordCard(row, config){
+  const card=document.createElement("article"); card.className="item";
+  addText(card,"h3",config.title+" #"+formatValue(row.id));
+  for(const [col,label] of config.columns){
+    const line=document.createElement("p"); addText(line,"strong",label+": ");
+    line.appendChild(document.createTextNode(formatValue(row[col])));
+    if(col==="status") line.className="status"; card.appendChild(line);
   }
-  const actions = document.createElement("div"); actions.className = "item-actions";
-  const statusSelect = document.createElement("select"); statusSelect.setAttribute("aria-label", "وضعیت " + formatValue(row.id));
-  for (const status of config.statuses) { const option = document.createElement("option"); option.value = status; option.textContent = status; option.selected = status === row.status; statusSelect.appendChild(option); }
-  const saveButton = document.createElement("button"); saveButton.type = "button"; saveButton.textContent = "ذخیره";
-  saveButton.addEventListener("click", async () => { await updateStatus(row.id, statusSelect.value, saveButton); });
-  actions.append(statusSelect, saveButton); card.appendChild(actions); return card;
+  const actions=document.createElement("div"); actions.className="item-actions";
+  const sel=document.createElement("select");
+  for(const s of config.statuses){ const o=document.createElement("option"); o.value=s; o.textContent=s; o.selected=s===row.status; sel.appendChild(o); }
+  const btn=document.createElement("button"); btn.type="button"; btn.textContent="ذخیره";
+  btn.addEventListener("click",()=>updateStatus(row.id, sel.value, btn));
+  actions.append(sel, btn); card.appendChild(actions); return card;
 }
-async function verifyAdmin() {
-  const { data: { user }, error: userError } = await supabase.auth.getUser();
-  if (userError || !user) return false;
-  const email = (user.email || "").toLowerCase().trim();
-  if (!ALLOWED_ADMIN_EMAILS.includes(email)) return false;
-  const { data, error } = await supabase.rpc("is_kabulweb_admin");
-  if (error) throw new Error("بررسی دسترسی مدیر ناموفق. docs/security_rls.sql را در Supabase اجرا کنید.");
-  return data === true;
+async function verifyAdmin(){
+  const { data:{ user }, error }=await supabase.auth.getUser();
+  if(error||!user) return false;
+  if(!ALLOWED_ADMIN_EMAILS.includes((user.email||"").toLowerCase().trim())) return false;
+  const { data, error: e2 }=await supabase.rpc("is_kabulweb_admin");
+  if(e2) throw new Error("تابع is_kabulweb_admin را با docs/security_rls.sql اجرا کنید.");
+  return data===true;
 }
-async function showDashboard() {
+async function showDashboard(){
   clearMessage();
-  const { data: { session }, error } = await supabase.auth.getSession();
-  if (error) { showMessage("خطا در بررسی نشست.", true); return; }
-  if (!session) { loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); return; }
-  let isAdmin = false;
-  try { isAdmin = await verifyAdmin(); } catch (err) { showMessage(err.message, true); loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); return; }
-  if (!isAdmin) { await supabase.auth.signOut(); loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); showMessage("این حساب دسترسی مدیر ندارد.", true); return; }
+  const { data:{ session }, error }=await supabase.auth.getSession();
+  if(error){ showMessage("خطای نشست.", true); return; }
+  if(!session){ loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); return; }
+  let isAdmin=false;
+  try{ isAdmin=await verifyAdmin(); }catch(err){ showMessage(err.message,true); loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); return; }
+  if(!isAdmin){ await supabase.auth.signOut(); loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); showMessage("دسترسی مدیر ندارید.",true); return; }
   loginCard.classList.add("hidden"); dashboard.classList.remove("hidden");
-  $("adminEmail").textContent = session.user.email || "مدیر"; await loadRecords();
+  $("adminEmail").textContent=session.user.email||"مدیر"; await loadRecords();
 }
-async function loadRecords() {
-  if (busy) return; busy = true; clearMessage(); records.replaceChildren(); addText(records, "p", "در حال بارگذاری…", "muted");
-  try {
-    const config = tableConfig[currentTable];
-    const { data, error } = await supabase.from(currentTable).select("*").order("created_at", { ascending: false }).limit(200);
-    if (error) throw error;
-    records.replaceChildren(); $("recordCount").textContent = "تعداد: " + data.length;
-    if (!data.length) { addText(records, "p", "اطلاعاتی نیست.", "muted"); return; }
-    for (const row of data) records.appendChild(createRecordCard(row, config));
-  } catch (error) { records.replaceChildren(); showMessage("دریافت ناموفق. RLS و دسترسی مدیر را بررسی کنید.", true); console.error(error); }
-  finally { busy = false; }
+async function loadRecords(){
+  if(busy)return; busy=true; clearMessage(); records.replaceChildren(); addText(records,"p","بارگذاری…","muted");
+  try{
+    const config=tableConfig[currentTable];
+    const { data, error }=await supabase.from(currentTable).select("*").order("created_at",{ascending:false}).limit(200);
+    if(error) throw error;
+    records.replaceChildren(); $("recordCount").textContent="تعداد: "+data.length;
+    if(!data.length){ addText(records,"p","خالی است.","muted"); return; }
+    for(const row of data) records.appendChild(createRecordCard(row, config));
+  }catch(e){ records.replaceChildren(); showMessage("خطا در دریافت. RLS و جداول را بررسی کنید.",true); console.error(e); }
+  finally{ busy=false; }
 }
-async function updateStatus(id, status, button) {
-  const config = tableConfig[currentTable];
-  if (!config.statuses.includes(status)) { showMessage("وضعیت نامعتبر.", true); return; }
-  if (!confirm("تغییر وضعیت به «" + status + "»؟")) return;
-  button.disabled = true;
-  try {
-    const { error } = await supabase.from(currentTable).update({ status }).eq("id", id);
-    if (error) throw error;
-    showMessage("وضعیت به‌روز شد."); await loadRecords();
-  } catch (error) { showMessage("ذخیره ناموفق.", true); console.error(error); }
-  finally { button.disabled = false; }
+async function updateStatus(id, status, button){
+  const config=tableConfig[currentTable];
+  if(!config.statuses.includes(status)){ showMessage("وضعیت نامعتبر.",true); return; }
+  if(!confirm("تغییر به «"+status+"»؟")) return;
+  button.disabled=true;
+  try{
+    const { error }=await supabase.from(currentTable).update({ status }).eq("id", id);
+    if(error) throw error;
+    showMessage("ذخیره شد."); await loadRecords();
+  }catch(e){ showMessage("ذخیره ناموفق.",true); console.error(e); }
+  finally{ button.disabled=false; }
 }
-$("loginForm").addEventListener("submit", async (event) => {
-  event.preventDefault(); const button = $("loginButton"); button.disabled = true; clearMessage();
-  try {
-    const email = $("email").value.trim(); const password = $("password").value;
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw new Error("ورود ناموفق. ایمیل و رمز را بررسی کنید.");
-    $("password").value = ""; await showDashboard();
-  } catch (error) { showMessage(error.message, true); }
-  finally { button.disabled = false; }
+$("loginForm").addEventListener("submit", async (ev)=>{
+  ev.preventDefault(); const button=$("loginButton"); button.disabled=true; clearMessage();
+  try{
+    const { error }=await supabase.auth.signInWithPassword({ email:$("email").value.trim(), password:$("password").value });
+    if(error) throw new Error("ورود ناموفق.");
+    $("password").value=""; await showDashboard();
+  }catch(e){ showMessage(e.message,true); }
+  finally{ button.disabled=false; }
 });
-$("logoutButton").addEventListener("click", async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) { showMessage("خروج ناموفق.", true); return; }
+$("logoutButton").addEventListener("click", async ()=>{
+  await supabase.auth.signOut();
   records.replaceChildren(); dashboard.classList.add("hidden"); loginCard.classList.remove("hidden"); showMessage("خارج شدید.");
 });
-document.querySelectorAll("[data-table]").forEach((button) => {
-  button.addEventListener("click", async () => {
-    currentTable = button.dataset.table;
-    document.querySelectorAll("[data-table]").forEach((b) => b.classList.toggle("active", b.dataset.table === currentTable));
+document.querySelectorAll("[data-table]").forEach((btn)=>{
+  btn.addEventListener("click", async ()=>{
+    currentTable=btn.dataset.table;
+    document.querySelectorAll("[data-table]").forEach((b)=>b.classList.toggle("active", b.dataset.table===currentTable));
     await loadRecords();
   });
 });

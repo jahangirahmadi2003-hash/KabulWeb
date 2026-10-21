@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0b1020">
 <title>پنل مدیریت | کابل‌وب</title>
-<link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg">
+<link rel="icon" href="file_0000000065308243bcbdb432d1ef6885.png" type="image/png">
 <style>
 :root { color-scheme: dark; --bg: #0b1020; --card: #121b30; --border: #293954; --text: #f5f7ff; --muted: #aab7cf; --gold: #f3c969; --gold2: #ffe6a0; --primary: #f3c969; --danger: #a82f48; --success: #147d61; }
 * { box-sizing: border-box; }
@@ -130,7 +130,7 @@ async function verifyAdmin() {
   const email = (user.email || "").toLowerCase().trim();
   if (!ALLOWED_ADMIN_EMAILS.includes(email)) return false;
   const { data, error } = await supabase.rpc("is_kabulweb_admin");
-  if (error) throw new Error("بررسی دسترسی مدیر ناموفق. docs/security_rls_part1.sql را در Supabase اجرا کنید.");
+  if (error) throw new Error("بررسی دسترسی مدیر ناموفق. docs/security_rls.sql را در Supabase اجرا کنید.");
   return data === true;
 }
 async function showDashboard() {

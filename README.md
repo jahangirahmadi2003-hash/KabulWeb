@@ -1,58 +1,57 @@
 # کابل‌وب (KabulWeb)
 
-بازار دیجیتال افغانستان و جهان  
-کاریابی · محصولات و خدمات · معرفی کانال‌های واتساپ و تلگرام
+بازار دیجیتال افغانستان و جهان — کاریابی، محصولات و خدمات، معرفی کانال‌های واتساپ و تلگرام.
 
+**شعار:** BUILD • CONNECT • GROW  
 **بنیانگذار:** Jahangir Ahmadi
 
 ---
 
-## وضعیت فعلی
+## امکانات واقعاً پیاده‌سازی‌شده در کد
 
-| قابلیت | وضعیت |
-|--------|--------|
-| صفحه اصلی + اسپلش بسم‌الله | آماده |
-| کاریابی / بازار / کانال‌ها از دیتابیس | آماده (فقط approved) |
-| ثبت آگهی (pending) | آماده |
-| حساب کاربری (ثبت‌نام/ورود/خروج/بازیابی) | آماده |
-| حفظ نشست پس از تازه‌سازی | آماده |
-| پنل مدیریت (مسیر جدا، نه در منوی عمومی) | آماده در کد |
-| محدودیت دو ایمیل مدیر + RPC | کد آماده؛ **SQL باید اجرا شود** |
-| RLS امن | فایل `docs/security_rls.sql` — **باید در Supabase اجرا شود** |
-| انتشار خودکار تلگرام | **غیرفعال** تا Secrets + Edge Function |
-
-## اقدام فوری مالک
-
-1. [Supabase SQL Editor](https://supabase.com/dashboard) → اجرای کامل فایل:
-   `docs/security_rls.sql`
-2. دو حساب مدیر در Auth:
-   - `hafizullahahmadi715@gmail.com`
-   - `jahangirahmadi2003@gmail.com`
-3. تست: ورود به `admin.html` با هر دو ایمیل
-4. تست: کاربر عادی نباید به داشبورد مدیر برسد
-
-## ساختار
-
-```
-index.html      صفحه اصلی (بدون لینک مدیریت در فوتر)
-admin.html      پنل مدیریت مخفی از منوی عمومی
-account.html    حساب کاربری
-script.js       بارگذاری داده + فرم آگهی
-js/supabase.js  فقط کلید publishable
-docs/           SQL امنیت و راهنمای انتشار
-```
-
-## نصب GitHub Pages
-
-Settings → Pages → Deploy from branch `main`  
-آدرس: `https://USERNAME.github.io/KabulWeb`
-
-## امنیت
-
-- کلید `service_role` هرگز در فرانت یا GitHub نیست
-- تغییر status به approved فقط برای مدیر (پس از RLS)
-- پنل مدیریت در منوی عمومی نیست؛ امنیت واقعی با RPC + RLS است
+| قابلیت | وضعیت در مخزن |
+|--------|----------------|
+| صفحه اصلی RTL و واکنش‌گرا | فعال |
+| اسپلش «بسم‌الله» (یک‌بار با localStorage) | فعال |
+| کاریابی با جستجو و فیلتر شهر | فعال (فقط approved از Supabase) |
+| بازار محصولات/خدمات | فعال (فقط approved) |
+| کانال‌های واتساپ/تلگرام | فعال |
+| فرم ثبت آگهی → pending | فعال |
+| حساب کاربری (ثبت‌نام/ورود/خروج/بازیابی) | فعال |
+| حفظ نشست پس از تازه‌سازی | فعال |
+| پنل مدیریت مسیر جدا | فعال در کد؛ نه در منوی عمومی |
+| محدودیت دو ایمیل مدیر + RPC | کد آماده |
+| RLS / is_kabulweb_admin | SQL آماده — **اجرا در Supabase لازم** |
+| انتشار خودکار تلگرام | **غیرفعال** (نیاز به Secrets) |
 
 ---
 
-کابل‌وب — BUILD • CONNECT • GROW
+## ساختار فایل‌ها
+
+جزئیات: [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)
+
+---
+
+## اتصال Supabase
+
+1. فقط کلید publishable در `js/supabase.js`
+2. اجرای `docs/security_rls.sql` در SQL Editor
+3. دو حساب مدیر در Auth با ایمیل‌های مجاز
+
+---
+
+## GitHub Pages
+
+Settings → Pages → branch `main`  
+https://jahangirahmadi2003-hash.github.io/KabulWeb/  
+راهنما: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+
+---
+
+## امنیت
+
+- `service_role` در مخزن نیست
+- مخفی بودن admin کافی نیست؛ RPC + RLS الزامی است
+- مدیران مجاز: `hafizullahahmadi715@gmail.com` و `jahangirahmadi2003@gmail.com`
+
+کابل‌وب — بازار افغانستان و جهان

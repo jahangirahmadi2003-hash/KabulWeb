@@ -4,7 +4,7 @@
  */
 import {
   fetchApproved,
-  submitAdRequest,
+  submitByType,
   getSession,
 } from "./js/supabase.js";
 
@@ -136,6 +136,51 @@ function emptyState(container, message, actionHref, actionLabel) {
     "</div>";
 }
 
+function isSafeHttpUrl(value) {
+  if (!value || typeof value !== "string") return false;
+  try {
+    const u = new URL(value.trim());
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch (_) {
+    return false;
+  }
+}
+
+function isChannelLike(platform, link) {
+  const p = (platform || "").toLowerCase();
+  const l = (link || "").toLowerCase();
+  const keywords = [
+    "واتساپ",
+    "تلگرام",
+    "whatsapp",
+    "telegram",
+    "کانال",
+    "گروه",
+    "youtube",
+    "یوتیوب",
+    "tiktok",
+    "تیک",
+  ];
+  if (keywords.some((k) => p.includes(k))) return true;
+  if (
+    l.includes("t.me/") ||
+    l.includes("telegram.") ||
+    l.includes("wa.me/") ||
+    l.includes("whatsapp.com") ||
+    l.includes("chat.whatsapp")
+  )
+    return true;
+  return false;
+}
+
+function channelDisplayName(ch) {
+  const raw = (ch.name || "").trim();
+  if (!raw || raw.toLowerCase() === "none" || raw === "—" || raw === "-") {
+    return null;
+  }
+  return raw;
+}
+
 function renderJobCard(job) {
   const art = document.createElement("article");
   art.className = "card";
@@ -227,7 +272,7 @@ function renderListingCard(item) {
         (item.currency ? " " + escapeHtml(item.currency) : "")
       : "قابل مذاکره";
   art.innerHTML =
-    (item.image_url
+    (item.image_url && isSafeHttpUrl(item.image_url)
       ? '<img class="thumb-img" src="' +
         escapeHtml(item.image_url) +
         '" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
@@ -246,7 +291,7 @@ function renderListingCard(item) {
     (item.contact
       ? '<a class="btn btn-sm btn-primary" href="https://wa.me/' +
         escapeHtml(String(item.contact).replace(/[^\d+]/g, "")) +
-        '" target="_blank" rel="noopener">تماس با فروشنده</a>'
+        '" target="_blank" rel="noopener noreferrer">تماس با فروشنده</a>'
       : "");
   return art;
 }
@@ -310,29 +355,38 @@ async function loadListings() {
 async function loadChannels() {
   const box = document.getElementById("channelsList");
   if (!box) return;
+
+  // کارت رسمی ثابت را نگه دار؛ بقیه از دیتابیس (فقط approved)
+  const official = box.querySelector("article.channel");
+  box.innerHTML = "";
+  if (official) box.appendChild(official);
+
   const { data, error } = await fetchApproved(
     "ad_requests",
     "id,name,platform,link,description,status,created_at"
   );
-  if (error || !data) return;
+  if (error) {
+    console.error("channels load error:", error);
+    return;
+  }
+  if (!data || !data.length) return;
+
   const channels = data.filter((r) => {
-    const p = (r.platform || "").toLowerCase();
-    return (
-      p.includes("واتساپ") ||
-      p.includes("تلگرام") ||
-      p.includes("whatsapp") ||
-      p.includes("telegram") ||
-      p.includes("کانال")
-    );
+    if ((r.status || "").toLowerCase() !== "approved") return false;
+    if (!isChannelLike(r.platform, r.link)) return false;
+    if (!channelDisplayName(r)) return false;
+    return true;
   });
+
   channels.slice(0, 12).forEach((ch) => {
+    const name = channelDisplayName(ch);
     const art = document.createElement("article");
     art.className = "card channel";
-    const link = ch.link && /^https?:\/\//i.test(ch.link) ? ch.link : "#";
+    const safeLink = isSafeHttpUrl(ch.link) ? ch.link.trim() : null;
     art.innerHTML =
       '<div class="channel-icon" aria-hidden="true">📢</div>' +
       "<h3>" +
-      escapeHtml(ch.name || "کانال") +
+      escapeHtml(name) +
       "</h3>" +
       '<p class="desc">' +
       escapeHtml((ch.description || "").slice(0, 100)) +
@@ -340,13 +394,31 @@ async function loadChannels() {
       '<span class="tag">' +
       escapeHtml(ch.platform || "کانال") +
       "</span>" +
-      (link !== "#"
+      (safeLink
         ? '<a href="' +
-          escapeHtml(link) +
+          escapeHtml(safeLink) +
           '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>'
         : "");
     box.appendChild(art);
   });
+}
+
+function formatRlsError(error) {
+  if (!error) return "خطای ناشناخته.";
+  if (
+    error.code === "42501" ||
+    (error.message || "").includes("row-level security")
+  ) {
+    return (
+      "سیاست امنیتی پایگاه داده اجازه ثبت عمومی را نمی‌دهد. " +
+      "مدیر باید سیاست INSERT فقط برای وضعیت pending را در Supabase فعال کند " +
+      "(فایل docs/rls_pending_insert.sql را ببینید)."
+    );
+  }
+  if ((error.message || "").toLowerCase().includes("failed to fetch")) {
+    return "اتصال اینترنت قطع است یا سرویس در دسترس نیست. دوباره تلاش کنید.";
+  }
+  return error.message || "خطای ناشناخته.";
 }
 
 function initAdForm() {
@@ -361,54 +433,61 @@ function initAdForm() {
     const contact = document.getElementById("adContact").value.trim();
     const msg = document.getElementById("adMessage");
     const submitBtn = document.getElementById("adSubmit");
+
     if (!type || !title || !desc || !contact) {
       showFormMessage(msg, "لطفاً تمام فیلدهای ضروری (*) را پر کنید.", "error");
       return;
     }
-    if (link) {
-      try {
-        const u = new URL(link);
-        if (u.protocol !== "http:" && u.protocol !== "https:") throw new Error();
-      } catch (_) {
-        showFormMessage(msg, "لینک باید با http یا https شروع شود.", "error");
-        return;
-      }
+    if (link && !isSafeHttpUrl(link)) {
+      showFormMessage(msg, "لینک باید با http یا https شروع شود.", "error");
+      return;
     }
-    const platformMap = {
-      job: "کاریابی",
-      product: "فروشگاه آنلاین",
-      service: "سایر",
-      channel: "کانال واتساپ",
-      other: "سایر",
-    };
+
     submitBtn.disabled = true;
     submitBtn.textContent = "در حال ارسال…";
-    const { data, error } = await submitAdRequest({
-      name: title,
-      contact,
-      platform: platformMap[type] || type,
-      link: link || null,
-      description: desc,
-      package: "free",
-    });
+
+    let result;
+    try {
+      result = await submitByType(type, {
+        title,
+        description: desc,
+        contact,
+        link: link || null,
+        // فیلدهای اختیاری فعلی فرم عمومی — در صورت افزودن input بعداً پر می‌شوند
+        company: null,
+        location: null,
+        jobType: null,
+        salary: null,
+        category: type === "service" ? "خدمات" : "سایر",
+        seller_name: null,
+        image_url: null,
+      });
+    } catch (err) {
+      console.error("submit network error:", err);
+      result = {
+        data: null,
+        error: { message: "failed to fetch" },
+      };
+    }
+
+    const { data, error } = result || {};
+
     if (error) {
       console.error("Ad insert error:", error);
-      let text = "ثبت درخواست ناموفق بود. ";
-      if (
-        error.code === "42501" ||
-        (error.message || "").includes("row-level security")
-      ) {
-        text +=
-          "سیاست امنیتی پایگاه داده اجازه ثبت عمومی را نمی‌دهد. مدیر باید سیاست INSERT برای وضعیت pending را در Supabase فعال کند.";
-      } else {
-        text += error.message || "خطای ناشناخته.";
-      }
-      showFormMessage(msg, text, "error");
+      showFormMessage(msg, "ثبت درخواست ناموفق بود. " + formatRlsError(error), "error");
       showToast("ثبت ناموفق بود.", "error");
     } else {
+      const tableHint =
+        type === "job"
+          ? "کاریابی"
+          : type === "product" || type === "service"
+            ? "بازار"
+            : "تبلیغات/کانال";
       showFormMessage(
         msg,
-        "درخواست شما ثبت شد و در وضعیت «در انتظار بررسی» است." +
+        "درخواست شما ثبت شد و در وضعیت «در انتظار بررسی» است (" +
+          tableHint +
+          ")." +
           (data?.id ? " شناسه: " + data.id : ""),
         "success"
       );

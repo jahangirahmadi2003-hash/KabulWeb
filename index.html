@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="کابل‌وب — بازار افغانستان و جهان. کاریابی، محصولات، خدمات و معرفی کانال‌های واتساپ و تلگرام" />
+  <title>کابل‌وب | بازار افغانستان و جهان</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg" />
+</head>
+<body class="intro-active">
+
+  <div id="splash" class="splash" role="dialog" aria-label="صفحه آغازین کابل‌وب">
+    <div class="splash-inner">
+      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <p class="splash-brand">کابل‌وب</p>
+      <p class="splash-tag">بازار افغانستان و جهان</p>
+      <button type="button" id="skipSplash" class="skip-btn">رد کردن</button>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="صفحه اصلی کابل‌وب">
+        <img src="grok_1792508896312.jpg" alt="KabulWeb" class="logo-img" width="48" height="48"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="logo-fallback">ک</span>
+        <span class="logo-text">
+          <strong>کابل‌وب</strong>
+          <small>بازار افغانستان و جهان</small>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="منوی اصلی">
+        <a href="#jobs">کاریابی</a>
+        <a href="#marketplace">بازار</a>
+        <a href="#channels">کانال‌ها</a>
+        <a href="#ads">تبلیغات</a>
+        <a href="account.html" class="nav-account">حساب کاربری</a>
+      </nav>
+
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="باز کردن منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <h1>کابل‌وب — بازار افغانستان و جهان</h1>
+        <p class="slogan">کانالت را به جهان معرفی کن</p>
+        <div class="hero-actions">
+          <a href="#jobs" class="btn btn-primary">جستجوی وظایف</a>
+          <a href="#marketplace" class="btn btn-secondary">مشاهده محصولات</a>
+          <a href="#channels" class="btn btn-outline">کانال‌ها</a>
+          <a href="account.html" class="btn btn-outline">حساب کاربری</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="jobs">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>💼 کاریابی و وظایف</h2>
+            <p>فرصت‌های کاری تأییدشده در افغانستان و خارج</p>
+          </div>
+          <a href="#ads" class="btn btn-sm btn-primary" data-type="job">ثبت وظیفه جدید</a>
+        </div>
+        <div class="search-bar">
+          <input type="search" id="jobSearch" placeholder="جستجو بر اساس عنوان، شهر یا نوع وظیفه..." aria-label="جستجوی وظیفه" />
+          <select id="jobCity" aria-label="شهر">
+            <option value="">همه شهرها</option>
+            <option value="کابل">کابل</option>
+            <option value="هرات">هرات</option>
+            <option value="مزار">مزار شریف</option>
+            <option value="قندهار">قندهار</option>
+            <option value="جلال‌آباد">جلال‌آباد</option>
+            <option value="سایر">سایر</option>
+          </select>
+        </div>
+        <div class="cards" id="jobsList"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="marketplace">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>🛍️ بازار محصولات و خدمات</h2>
+            <p>خرید و فروش، معرفی فروشگاه‌ها و خدمات</p>
+          </div>
+          <a href="#ads" class="btn btn-sm btn-primary" data-type="product">ثبت محصول یا خدمت</a>
+        </div>
+        <div class="search-bar">
+          <input type="search" id="productSearch" placeholder="جستجوی محصول یا خدمت..." aria-label="جستجوی محصول" />
+          <select id="productCat" aria-label="دسته‌بندی">
+            <option value="">همه دسته‌ها</option>
+            <option value="الکترونیک">الکترونیک</option>
+            <option value="پوشاک">پوشاک</option>
+            <option value="خدمات">خدمات</option>
+            <option value="غذایی">غذایی</option>
+            <option value="سایر">سایر</option>
+          </select>
+        </div>
+        <div class="cards" id="listingsList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="channels">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>🌍 کانال‌های واتساپ و تلگرام</h2>
+            <p>کانال‌ها و گروه‌های مجاز را پیدا کنید یا معرفی کنید</p>
+          </div>
+          <a href="#ads" class="btn btn-sm btn-primary" data-type="channel">درخواست معرفی کانال</a>
+        </div>
+        <div class="cards-row" id="channelsList">
+          <article class="card channel">
+            <div class="channel-icon" aria-hidden="true">📢</div>
+            <h3>تلگرام رسمی کابل‌وب</h3>
+            <p class="desc">کانال رسمی کابل‌وب</p>
+            <span class="tag">تلگرام</span>
+            <a href="https://t.me/kabulwebs" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="ads">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>📢 ثبت تبلیغات</h2>
+            <p>آگهی خود را ثبت کنید؛ پس از بررسی منتشر می‌شود</p>
+          </div>
+        </div>
+        <form id="adForm" class="form-card" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="adType">نوع تبلیغ <span class="req">*</span></label>
+              <select id="adType" name="type" required>
+                <option value="">انتخاب کنید</option>
+                <option value="job">وظیفه / کاریابی</option>
+                <option value="product">محصول</option>
+                <option value="service">خدمت</option>
+                <option value="channel">کانال واتساپ / تلگرام</option>
+                <option value="other">سایر</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="adTitle">عنوان <span class="req">*</span></label>
+              <input type="text" id="adTitle" name="title" required maxlength="120" placeholder="عنوان آگهی" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="adDesc">توضیحات <span class="req">*</span></label>
+            <textarea id="adDesc" name="description" rows="4" required maxlength="2000" placeholder="توضیحات کامل آگهی..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="adLink">لینک (اختیاری)</label>
+              <input type="url" id="adLink" name="link" placeholder="https://..." />
+            </div>
+            <div class="field">
+              <label for="adContact">اطلاعات تماس <span class="req">*</span></label>
+              <input type="text" id="adContact" name="contact" required maxlength="100" placeholder="شماره واتساپ یا ایمیل" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="adSubmit">ارسال درخواست</button>
+          <p class="form-note">پس از ارسال، وضعیت درخواست «در انتظار بررسی» خواهد بود تا مدیر آن را تأیید یا رد کند.</p>
+          <div id="adMessage" class="form-message" hidden role="status"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">
+        <strong>کابل‌وب</strong>
+        <span>بازار افغانستان و جهان · BUILD • CONNECT • GROW</span>
+      </div>
+      <nav class="footer-links" aria-label="لینک‌های فوتر">
+        <a href="#jobs">کاریابی</a>
+        <a href="#marketplace">بازار</a>
+        <a href="#channels">کانال‌ها</a>
+        <a href="#ads">تبلیغات</a>
+        <a href="account.html">حساب کاربری</a>
+      </nav>
+      <p class="copy">© ۱۴۰۵ کابل‌وب — بنیانگذار: Jahangir Ahmadi</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" hidden role="status"></div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

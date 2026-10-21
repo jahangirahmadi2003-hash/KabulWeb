@@ -15,7 +15,40 @@
    - `TELEGRAM_BOT_TOKEN` = توکن ربات
    - `TELEGRAM_CHANNEL_ID` = @kabulwebs یا شناسه عددی کانال
 4. اجرای `docs/security_rls.sql` برای جداول `publish_destinations` و `publish_log`
-5. استقرار Edge Function و اتصال به Cron یا فراخوانی دستی از پنل
+5. استقرار Edge Function (نمونه زیر) و اتصال به Cron یا فراخوانی دستی از پنل
+
+## نمونهٔ Edge Function (Deno) — هنوز مستقر نشده
+```ts
+// supabase/functions/auto-publish/index.ts
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+Deno.serve(async (req) => {
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")! // فقط سمت سرور
+  );
+
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) return new Response("Unauthorized", { status: 401 });
+
+  const token = Deno.env.get("TELEGRAM_BOT_TOKEN");
+  const channel = Deno.env.get("TELEGRAM_CHANNEL_ID");
+  if (!token || !channel) {
+    return new Response(JSON.stringify({ error: "secrets missing" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // خواندن محتوای approved که هنوز در publish_log نیست
+  // ارسال به Telegram Bot API
+  // ثبت نتیجه در publish_log
+
+  return new Response(JSON.stringify({ ok: true, note: "stub — deploy after secrets" }), {
+    headers: { "Content-Type": "application/json" },
+  });
+});
+```
 
 ## وضعیت فعلی در مخزن
 - UI پنل مدیریت بخش «انتشار خودکار» را نشان می‌دهد اما **غیرفعال** است.

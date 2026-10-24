@@ -1,1 +1,183 @@
-SEE_ARTIFACT
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b1020">
+<title>پنل مدیریت | کابل‌وب</title>
+<link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg">
+<style>
+:root { color-scheme: dark; --bg: #0b1020; --card: #121b30; --border: #293954; --text: #f5f7ff; --muted: #aab7cf; --gold: #f3c969; --gold2: #ffe6a0; --danger: #a82f48; --success: #147d61; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 20px; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; line-height: 1.8; }
+.container { max-width: 1100px; margin: auto; }
+h1, h2 { margin-top: 0; color: var(--gold); }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
+input, select, button, textarea { font: inherit; }
+input, select, textarea { width: 100%; padding: 12px; margin: 7px 0 15px; background: #0b1222; color: var(--text); border: 1px solid var(--border); border-radius: 9px; }
+button { border: 0; border-radius: 9px; padding: 10px 16px; margin: 4px; cursor: pointer; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #151a26; font-weight: 700; }
+button:disabled { opacity: 0.5; }
+.danger { background: var(--danger); color: #fff; }
+.success { background: var(--success); color: #fff; }
+.muted { color: var(--muted); }
+.hidden { display: none !important; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.tabs button { flex: 1; min-width: 100px; background: #17243c; color: var(--text); border: 1px solid var(--border); font-weight: 600; }
+.tabs button.active { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #151a26; border-color: transparent; }
+.item { background: #0b1222; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin: 12px 0; overflow-wrap: anywhere; }
+.item-actions { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.item-actions select { flex: 1; min-width: 120px; margin: 0; padding: 8px; background: #0b1222; color: var(--text); border: 1px solid var(--border); border-radius: 8px; }
+.status { color: var(--gold); font-weight: bold; }
+#message { padding: 12px; border-radius: 8px; margin-bottom: 15px; white-space: pre-wrap; }
+#message:empty { display: none; }
+.error { background: #48202b; color: #ffbdc7; }
+.info { background: #1c304c; color: #d5e5ff; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+a { color: var(--gold); }
+.banner-form label { display: block; font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+.banner-preview { max-width: 100%; max-height: 180px; border-radius: 10px; border: 1px solid var(--border); margin: 8px 0 12px; display: none; object-fit: contain; }
+.banner-thumb { max-width: 120px; max-height: 70px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 700px) { .field-row { grid-template-columns: 1fr; } }
+.file-hint { font-size: 0.82rem; color: var(--muted); margin: -8px 0 12px; }
+</style>
+</head>
+<body>
+<main class="container">
+  <div class="topbar">
+    <h1>پنل مدیریت کابل‌وب</h1>
+    <a href="./index.html">مشاهدهٔ سایت</a>
+  </div>
+  <p class="muted">فقط دو ایمیل مجاز. امنیت با RPC <code>is_kabulweb_admin</code> و RLS.</p>
+  <div id="message" role="status"></div>
+  <section id="loginCard" class="card">
+    <h2>ورود مدیر</h2>
+    <form id="loginForm">
+      <label for="email">ایمیل</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">رمز عبور</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <button id="loginButton" type="submit">ورود به پنل</button>
+    </form>
+  </section>
+  <section id="dashboard" class="hidden">
+    <div class="card">
+      <div class="topbar">
+        <div><h2>داشبورد</h2><span id="adminEmail" class="muted"></span></div>
+        <button id="logoutButton" class="danger" type="button">خروج</button>
+      </div>
+      <div class="tabs">
+        <button type="button" data-table="ad_requests" class="active">تبلیغات</button>
+        <button type="button" data-table="listings">محصولات</button>
+        <button type="button" data-table="job_posts">کاریابی</button>
+        <button type="button" data-table="customer_orders">سفارش‌ها</button>
+        <button type="button" data-table="news_articles">اخبار</button>
+        <button type="button" data-table="education_opportunities">آموزش</button>
+        <button type="button" data-table="banner_ads">بنرها</button>
+        <button type="button" data-table="publish_log">گزارش انتشار</button>
+      </div>
+      <div id="bannerManager" class="hidden">
+        <div class="card banner-form" style="background:#0b1222">
+          <h2 id="bannerFormTitle">افزودن بنر جدید</h2>
+          <form id="bannerForm">
+            <input type="hidden" id="bannerEditId" value="">
+            <label for="bannerTitle">عنوان بنر *</label>
+            <input id="bannerTitle" type="text" maxlength="120" required>
+            <label for="bannerFile">تصویر (JPG/PNG/WebP حداکثر ۵MB)</label>
+            <input id="bannerFile" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp">
+            <p class="file-hint">در ویرایش بدون انتخاب فایل، تصویر قبلی حفظ می‌شود.</p>
+            <img id="bannerPreview" class="banner-preview" alt="پیش‌نمایش">
+            <label for="bannerTarget">لینک مقصد (اختیاری)</label>
+            <input id="bannerTarget" type="url" maxlength="500" placeholder="https://">
+            <div class="field-row">
+              <div>
+                <label for="bannerPlacement">محل نمایش</label>
+                <select id="bannerPlacement">
+                  <option value="home">صفحه اصلی</option>
+                  <option value="jobs">کاریابی</option>
+                  <option value="marketplace">بازار</option>
+                  <option value="education">آموزش</option>
+                </select>
+              </div>
+              <div>
+                <label for="bannerStatus">وضعیت</label>
+                <select id="bannerStatus">
+                  <option value="pending">pending</option>
+                  <option value="approved">approved</option>
+                  <option value="rejected">rejected</option>
+                  <option value="inactive">inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div>
+                <label for="bannerStarts">شروع</label>
+                <input id="bannerStarts" type="datetime-local">
+              </div>
+              <div>
+                <label for="bannerEnds">پایان</label>
+                <input id="bannerEnds" type="datetime-local">
+              </div>
+            </div>
+            <button type="submit" id="bannerSaveBtn">ذخیره بنر</button>
+            <button type="button" id="bannerResetBtn" class="danger">انصراف</button>
+          </form>
+        </div>
+      </div>
+      <button id="refreshButton" class="success" type="button">تازه‌سازی</button>
+      <p id="recordCount" class="muted"></p>
+      <div id="records"></div>
+    </div>
+  </section>
+</main>
+<script type="module">
+import { supabase } from "./js/supabase.js";
+const $ = (id) => document.getElementById(id);
+const loginCard = $("loginCard"), dashboard = $("dashboard"), records = $("records"), message = $("message");
+const bannerManager = $("bannerManager");
+let currentTable = "ad_requests", busy = false, pendingFile = null, editingBanner = null;
+const BANNER_BUCKET = "kabulweb-banners";
+const MAX_BANNER_BYTES = 5 * 1024 * 1024;
+const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp"];
+const ALLOWED_ADMIN_EMAILS = ["hafizullahahmadi715@gmail.com", "jahangirahmadi2003@gmail.com"];
+const placementLabel = { home: "صفحه اصلی", jobs: "کاریابی", marketplace: "بازار", education: "آموزش" };
+const tableConfig = {
+  ad_requests: { title: "تبلیغ", columns: [["name","نام"],["contact","تماس"],["platform","پلتفرم"],["link","لینک"],["description","توضیح"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected","completed"] },
+  listings: { title: "محصول", columns: [["title","عنوان"],["seller_name","فروشنده"],["contact","تماس"],["price","قیمت"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  job_posts: { title: "وظیفه", columns: [["title","عنوان"],["company","شرکت"],["location","محل"],["salary","معاش"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  customer_orders: { title: "سفارش", columns: [["customer_name","مشتری"],["contact","تماس"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","confirmed","completed","cancelled"] },
+  news_articles: { title: "خبر", columns: [["title","عنوان"],["summary","خلاصه"],["source_name","منبع"],["source_url","لینک"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  education_opportunities: { title: "آموزش", columns: [["title","عنوان"],["organization","مؤسسه"],["deadline","مهلت"],["link","لینک"],["status","وضعیت"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected"] },
+  banner_ads: { title: "بنر", columns: [["title","عنوان"],["placement","محل"],["target_url","لینک"],["status","وضعیت"],["starts_at","شروع"],["ends_at","پایان"],["created_at","تاریخ"]], statuses: ["pending","approved","rejected","inactive"] },
+  publish_log: { title: "انتشار", columns: [["content_type","نوع"],["status","وضعیت"],["message","پیام"],["published_at","زمان"]], statuses: ["success","error","skipped"] },
+};
+function showMessage(text, isError=false){ message.textContent=text; message.className=isError?"error":"info"; }
+function clearMessage(){ message.textContent=""; message.className=""; }
+function formatValue(v){ if(v==null||v==="")return "—"; return typeof v==="object"?JSON.stringify(v):String(v); }
+function addText(p,tag,text,cls=""){ const e=document.createElement(tag); e.textContent=text; if(cls)e.className=cls; p.appendChild(e); return e; }
+function isSafeHttpUrl(value){ if(!value||typeof value!=="string")return false; try{ const u=new URL(value.trim()); return u.protocol==="http:"||u.protocol==="https:"; }catch(_){ return false; } }
+function toLocalInputValue(iso){ if(!iso)return ""; try{ const d=new Date(iso); if(Number.isNaN(d.getTime()))return ""; const pad=n=>String(n).padStart(2,"0"); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+"T"+pad(d.getHours())+":"+pad(d.getMinutes()); }catch(_){ return ""; } }
+function fromLocalInputValue(v){ if(!v)return null; const d=new Date(v); return Number.isNaN(d.getTime())?null:d.toISOString(); }
+function validateBannerFile(file){ if(!file)return "فایل تصویر را انتخاب کنید."; if(!ALLOWED_MIME.includes(file.type))return "فقط JPG، PNG یا WebP مجاز است."; if(file.size>MAX_BANNER_BYTES)return "حجم فایل نباید بیشتر از ۵ مگابایت باشد."; return null; }
+function resetBannerForm(){ editingBanner=null; pendingFile=null; $("bannerEditId").value=""; $("bannerFormTitle").textContent="افزودن بنر جدید"; $("bannerForm").reset(); $("bannerStatus").value="pending"; $("bannerPlacement").value="home"; const prev=$("bannerPreview"); prev.src=""; prev.style.display="none"; $("bannerFile").value=""; }
+$("bannerFile").addEventListener("change",()=>{ const file=$("bannerFile").files&&$("bannerFile").files[0]; pendingFile=null; const prev=$("bannerPreview"); if(!file){ prev.src=""; prev.style.display="none"; return; } const err=validateBannerFile(file); if(err){ showMessage(err,true); $("bannerFile").value=""; prev.src=""; prev.style.display="none"; return; } pendingFile=file; prev.src=URL.createObjectURL(file); prev.style.display="block"; });
+$("bannerResetBtn").addEventListener("click",()=>{ resetBannerForm(); clearMessage(); });
+async function uploadBannerImage(file, userId){ const ext=file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg"; const path=(userId||"admin")+"/"+crypto.randomUUID()+"."+ext; const { error }=await supabase.storage.from(BANNER_BUCKET).upload(path, file, { cacheControl:"3600", upsert:false, contentType:file.type }); if(error) throw error; const { data }=supabase.storage.from(BANNER_BUCKET).getPublicUrl(path); return { path, publicUrl:data.publicUrl }; }
+async function removeStoragePath(path){ if(!path)return; try{ await supabase.storage.from(BANNER_BUCKET).remove([path]); }catch(e){ console.warn(e); } }
+$("bannerForm").addEventListener("submit", async (ev)=>{ ev.preventDefault(); const title=$("bannerTitle").value.trim(); const target=$("bannerTarget").value.trim(); const placement=$("bannerPlacement").value; const status=$("bannerStatus").value; const starts_at=fromLocalInputValue($("bannerStarts").value); const ends_at=fromLocalInputValue($("bannerEnds").value); const editId=$("bannerEditId").value; if(!title){ showMessage("عنوان بنر الزامی است.",true); return; } if(target&&!isSafeHttpUrl(target)){ showMessage("لینک مقصد باید http/https باشد.",true); return; } if(!editId&&!pendingFile){ showMessage("برای بنر جدید تصویر الزامی است.",true); return; } if(pendingFile){ const ferr=validateBannerFile(pendingFile); if(ferr){ showMessage(ferr,true); return; } } const btn=$("bannerSaveBtn"); btn.disabled=true; clearMessage(); let uploadedPath=null; try{ const { data:{ user } }=await supabase.auth.getUser(); if(!user) throw new Error("نشست منقضی شده است."); let image_url=editingBanner?.image_url||null; let storage_path=editingBanner?.storage_path||null; if(pendingFile){ const up=await uploadBannerImage(pendingFile, user.id); uploadedPath=up.path; image_url=up.publicUrl; storage_path=up.path; } const row={ title:title.slice(0,120), image_url, storage_path, target_url:target||null, placement, status, starts_at, ends_at, updated_at:new Date().toISOString() }; if(editId){ const { error }=await supabase.from("banner_ads").update(row).eq("id", editId); if(error) throw error; if(pendingFile&&editingBanner?.storage_path&&editingBanner.storage_path!==storage_path) await removeStoragePath(editingBanner.storage_path); showMessage("بنر به‌روزرسانی شد."); } else { row.created_by=user.id; const { error }=await supabase.from("banner_ads").insert([row]); if(error){ if(uploadedPath) await removeStoragePath(uploadedPath); throw error; } showMessage("بنر ذخیره شد."); } resetBannerForm(); await loadRecords(); } catch(e){ console.error(e); let msg=e.message||"ذخیره ناموفق بود."; if(String(msg).toLowerCase().includes("bucket")) msg="باکت Storage با نام kabulweb-banners را در داشبورد Supabase بسازید."; if(String(msg).includes("row-level security")) msg="دسترسی رد شد. RLS و is_kabulweb_admin را بررسی کنید."; showMessage(msg,true); } finally { btn.disabled=false; } });
+function fillBannerForm(row){ editingBanner=row; $("bannerEditId").value=row.id; $("bannerFormTitle").textContent="ویرایش بنر"; $("bannerTitle").value=row.title||""; $("bannerTarget").value=row.target_url||""; $("bannerPlacement").value=row.placement||"home"; $("bannerStatus").value=row.status||"pending"; $("bannerStarts").value=toLocalInputValue(row.starts_at); $("bannerEnds").value=toLocalInputValue(row.ends_at); pendingFile=null; $("bannerFile").value=""; const prev=$("bannerPreview"); if(row.image_url){ prev.src=row.image_url; prev.style.display="block"; } else { prev.src=""; prev.style.display="none"; } }
+function createBannerCard(row){ const card=document.createElement("article"); card.className="item"; addText(card,"h3","بنر · "+(row.title||"")); if(row.image_url){ const img=document.createElement("img"); img.className="banner-thumb"; img.alt=row.title||"بنر"; img.src=row.image_url; img.onerror=()=>{ img.style.display="none"; }; card.appendChild(img); } const meta=document.createElement("p"); addText(meta,"strong","محل: "); meta.appendChild(document.createTextNode(placementLabel[row.placement]||row.placement||"—")); meta.appendChild(document.createTextNode(" · ")); addText(meta,"strong","وضعیت: "); const st=document.createElement("span"); st.className="status"; st.textContent=row.status||"—"; meta.appendChild(st); card.appendChild(meta); const actions=document.createElement("div"); actions.className="item-actions"; const sel=document.createElement("select"); for(const s of ["pending","approved","rejected","inactive"]){ const o=document.createElement("option"); o.value=s; o.textContent=s; o.selected=s===row.status; sel.appendChild(o); } const saveStatus=document.createElement("button"); saveStatus.type="button"; saveStatus.textContent="ذخیره وضعیت"; saveStatus.addEventListener("click",()=>updateStatus(row.id, sel.value, saveStatus)); const editBtn=document.createElement("button"); editBtn.type="button"; editBtn.textContent="ویرایش"; editBtn.addEventListener("click",()=>fillBannerForm(row)); const delBtn=document.createElement("button"); delBtn.type="button"; delBtn.className="danger"; delBtn.textContent="حذف"; delBtn.addEventListener("click", async ()=>{ if(!confirm("حذف بنر؟")) return; delBtn.disabled=true; try{ const { error }=await supabase.from("banner_ads").delete().eq("id", row.id); if(error) throw error; if(row.storage_path) await removeStoragePath(row.storage_path); showMessage("حذف شد."); await loadRecords(); }catch(e){ showMessage(e.message||"حذف ناموفق.",true); } finally { delBtn.disabled=false; } }); actions.append(sel, saveStatus, editBtn, delBtn); card.appendChild(actions); return card; }
+function createRecordCard(row, config){ if(currentTable==="banner_ads") return createBannerCard(row); const card=document.createElement("article"); card.className="item"; addText(card,"h3",config.title+" #"+formatValue(row.id)); for(const [col,label] of config.columns){ const line=document.createElement("p"); addText(line,"strong",label+": "); line.appendChild(document.createTextNode(formatValue(row[col]))); if(col==="status") line.className="status"; card.appendChild(line); } const actions=document.createElement("div"); actions.className="item-actions"; const sel=document.createElement("select"); for(const s of config.statuses){ const o=document.createElement("option"); o.value=s; o.textContent=s; o.selected=s===row.status; sel.appendChild(o); } const btn=document.createElement("button"); btn.type="button"; btn.textContent="ذخیره"; btn.addEventListener("click",()=>updateStatus(row.id, sel.value, btn)); actions.append(sel, btn); card.appendChild(actions); return card; }
+async function verifyAdmin(){ const { data:{ user }, error }=await supabase.auth.getUser(); if(error||!user) return false; if(!ALLOWED_ADMIN_EMAILS.includes((user.email||"").toLowerCase().trim())) return false; const { data, error: e2 }=await supabase.rpc("is_kabulweb_admin"); if(e2) throw new Error("تابع is_kabulweb_admin را اجرا کنید."); return data===true; }
+async function showDashboard(){ clearMessage(); const { data:{ session }, error }=await supabase.auth.getSession(); if(error){ showMessage("خطای نشست.",true); return; } if(!session){ loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); return; } let isAdmin=false; try{ isAdmin=await verifyAdmin(); }catch(err){ showMessage(err.message,true); loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); return; } if(!isAdmin){ await supabase.auth.signOut(); loginCard.classList.remove("hidden"); dashboard.classList.add("hidden"); showMessage("دسترسی مدیر ندارید.",true); return; } loginCard.classList.add("hidden"); dashboard.classList.remove("hidden"); $("adminEmail").textContent=session.user.email||"مدیر"; await loadRecords(); }
+async function loadRecords(){ if(busy)return; busy=true; clearMessage(); records.replaceChildren(); addText(records,"p","بارگذاری…","muted"); bannerManager.classList.toggle("hidden", currentTable!=="banner_ads"); try{ const config=tableConfig[currentTable]; const { data, error }=await supabase.from(currentTable).select("*").order("created_at",{ascending:false}).limit(200); if(error) throw error; records.replaceChildren(); $("recordCount").textContent="تعداد: "+data.length; if(!data.length){ addText(records,"p","خالی است.","muted"); return; } for(const row of data) records.appendChild(createRecordCard(row, config)); }catch(e){ records.replaceChildren(); showMessage("خطا در دریافت.",true); console.error(e); } finally{ busy=false; } }
+async function updateStatus(id, status, button){ const config=tableConfig[currentTable]; if(!config.statuses.includes(status)){ showMessage("وضعیت نامعتبر.",true); return; } if(!confirm("تغییر به «"+status+"»؟")) return; button.disabled=true; try{ const payload={ status }; if(currentTable==="banner_ads") payload.updated_at=new Date().toISOString(); const { error }=await supabase.from(currentTable).update(payload).eq("id", id); if(error) throw error; showMessage("ذخیره شد."); await loadRecords(); }catch(e){ showMessage("ذخیره ناموفق.",true); } finally{ button.disabled=false; } }
+$("loginForm").addEventListener("submit", async (ev)=>{ ev.preventDefault(); const button=$("loginButton"); button.disabled=true; clearMessage(); try{ const { error }=await supabase.auth.signInWithPassword({ email:$("email").value.trim(), password:$("password").value }); if(error) throw new Error("ورود ناموفق."); $("password").value=""; await showDashboard(); }catch(e){ showMessage(e.message,true); } finally{ button.disabled=false; } });
+$("logoutButton").addEventListener("click", async ()=>{ await supabase.auth.signOut(); records.replaceChildren(); dashboard.classList.add("hidden"); loginCard.classList.remove("hidden"); showMessage("خارج شدید."); });
+document.querySelectorAll("[data-table]").forEach((btn)=>{ btn.addEventListener("click", async ()=>{ currentTable=btn.dataset.table; document.querySelectorAll("[data-table]").forEach((b)=>b.classList.toggle("active", b.dataset.table===currentTable)); if(currentTable!=="banner_ads") resetBannerForm(); await loadRecords(); }); });
+$("refreshButton").addEventListener("click", loadRecords);
+showDashboard();
+</script>
+</body>
+</html>

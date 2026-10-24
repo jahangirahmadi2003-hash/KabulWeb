@@ -35,8 +35,14 @@ export async function fetchApproved(table, columns = "*", limit = 50) {
 /**
  * ثبت درخواست تبلیغ / کانال در ad_requests
  * status همیشه pending — حتی اگر کلاینت مقدار دیگری بفرستد
+ * اگر کاربر وارد شده باشد user_id ست می‌شود
  */
 export async function submitAdRequest(payload) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const uid = session?.user?.id || null;
+
   const row = {
     name: String(payload.name || payload.title || "").slice(0, 200),
     contact: String(payload.contact || "").slice(0, 100),
@@ -45,6 +51,7 @@ export async function submitAdRequest(payload) {
     description: String(payload.description || "").slice(0, 2000),
     package: payload.package || "free",
     status: "pending",
+    user_id: uid,
   };
 
   const { data, error } = await supabase
@@ -58,9 +65,13 @@ export async function submitAdRequest(payload) {
 
 /**
  * ثبت آگهی شغلی در job_posts با status=pending
- * فیلدها مطابق ساختار استفاده‌شده در پنل مدیریت
  */
 export async function submitJobPost(payload) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const uid = session?.user?.id || null;
+
   const row = {
     title: String(payload.title || "").slice(0, 120),
     company: String(payload.company || "").slice(0, 120) || null,
@@ -71,6 +82,7 @@ export async function submitJobPost(payload) {
     description: String(payload.description || "").slice(0, 2000),
     contact: String(payload.contact || "").slice(0, 100),
     status: "pending",
+    user_id: uid,
   };
 
   const { data, error } = await supabase
@@ -86,6 +98,11 @@ export async function submitJobPost(payload) {
  * ثبت محصول/خدمت در listings با status=pending
  */
 export async function submitListing(payload) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const uid = session?.user?.id || null;
+
   const listingType =
     payload.listing_type === "service" || payload.type === "service"
       ? "service"
@@ -102,6 +119,7 @@ export async function submitListing(payload) {
     image_url: payload.image_url || null,
     listing_type: listingType,
     status: "pending",
+    user_id: uid,
   };
 
   const { data, error } = await supabase
@@ -115,7 +133,6 @@ export async function submitListing(payload) {
 
 /**
  * مسیریابی ثبت بر اساس نوع فرم
- * job → job_posts | product/service → listings | channel/other → ad_requests
  */
 export async function submitByType(type, fields) {
   const t = (type || "").toLowerCase();
@@ -185,9 +202,204 @@ export async function signOut() {
 }
 
 export async function resetPassword(email) {
+  const base =
+    window.location.origin +
+    window.location.pathname.replace(/[^/]*$/, "");
   return supabase.auth.resetPasswordForEmail(email, {
-    redirectTo:
-      window.location.origin +
-      window.location.pathname.replace(/[^/]*$/, "account.html"),
+    redirectTo: base + "account.html",
   });
+}
+
+/** آگهی‌های متعلق به کاربر جاری از سه جدول */
+export async function getMyAds() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session?.user) return { data: [], error: { message: "not authenticated" } };
+
+  const uid = session.user.id;
+  const results = [];
+
+  const [ads, jobs, listings] = await Promise.all([
+    supabase
+      .from("ad_requests")
+      .select("id,name,contact,platform,link,description,status,rejection_reason,created_at,user_id")
+      .eq("user_id", uid)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("job_posts")
+      .select(
+        "id,title,company,location,type,salary,deadline,description,contact,status,rejection_reason,created_at,user_id"
+      )
+      .eq("user_id", uid)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("listings")
+      .select(
+        "id,title,category,description,price,currency,seller_name,contact,image_url,listing_type,status,rejection_reason,created_at,user_id"
+      )
+      .eq("user_id", uid)
+      .order("created_at", { ascending: false }),
+  ]);
+
+  if (ads.error) console.error("my ad_requests:", ads.error);
+  if (jobs.error) console.error("my job_posts:", jobs.error);
+  if (listings.error) console.error("my listings:", listings.error);
+
+  (ads.data || []).forEach((r) =>
+    results.push({ ...r, _kind: "ad", _label: r.name || "آگهی" })
+  );
+  (jobs.data || []).forEach((r) =>
+    results.push({ ...r, _kind: "job", _label: r.title || "شغل" })
+  );
+  (listings.data || []).forEach((r) =>
+    results.push({ ...r, _kind: "listing", _label: r.title || "محصول" })
+  );
+
+  results.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  return { data: results, error: null };
+}
+
+/** ایجاد تیکت پشتیبانی */
+export async function createSupportTicket({ subject, category, body }) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session?.user) return { data: null, error: { message: "not authenticated" } };
+
+  const user = session.user;
+  const email = (user.email || "").toLowerCase();
+
+  const { data: ticket, error: tErr } = await supabase
+    .from("support_tickets")
+    .insert([
+      {
+        user_id: user.id,
+        user_email: email,
+        subject: String(subject || "").slice(0, 200),
+        category: String(category || "عمومی").slice(0, 60),
+        status: "open",
+        priority: "normal",
+      },
+    ])
+    .select()
+    .single();
+
+  if (tErr) return { data: null, error: tErr };
+
+  if (body && String(body).trim()) {
+    const { error: mErr } = await supabase.from("support_messages").insert([
+      {
+        ticket_id: ticket.id,
+        sender_type: "user",
+        sender_id: user.id,
+        sender_email: email,
+        body: String(body).slice(0, 4000),
+      },
+    ]);
+    if (mErr) {
+      console.error("first message error:", mErr);
+    }
+  }
+
+  return { data: ticket, error: null };
+}
+
+/** تیکت‌های کاربر جاری */
+export async function getMyTickets() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session?.user) return { data: [], error: { message: "not authenticated" } };
+
+  const { data, error } = await supabase
+    .from("support_tickets")
+    .select("id,subject,category,status,priority,created_at,updated_at,closed_at")
+    .eq("user_id", session.user.id)
+    .order("updated_at", { ascending: false });
+
+  return { data: data || [], error };
+}
+
+/** پیام‌های یک تیکت */
+export async function getTicketMessages(ticketId) {
+  const { data, error } = await supabase
+    .from("support_messages")
+    .select("id,ticket_id,sender_type,sender_email,body,created_at")
+    .eq("ticket_id", ticketId)
+    .order("created_at", { ascending: true });
+
+  return { data: data || [], error };
+}
+
+/** پاسخ کاربر به تیکت */
+export async function replyToTicket(ticketId, body) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session?.user) return { data: null, error: { message: "not authenticated" } };
+
+  const { data, error } = await supabase
+    .from("support_messages")
+    .insert([
+      {
+        ticket_id: ticketId,
+        sender_type: "user",
+        sender_id: session.user.id,
+        sender_email: (session.user.email || "").toLowerCase(),
+        body: String(body || "").slice(0, 4000),
+      },
+    ])
+    .select()
+    .single();
+
+  if (!error) {
+    await supabase
+      .from("support_tickets")
+      .update({ status: "open", updated_at: new Date().toISOString() })
+      .eq("id", ticketId)
+      .eq("user_id", session.user.id);
+  }
+
+  return { data, error };
+}
+
+/** بستن تیکت توسط کاربر */
+export async function closeMyTicket(ticketId) {
+  const { data, error } = await supabase.rpc("user_close_ticket", {
+    p_ticket_id: ticketId,
+  });
+  return { data, error };
+}
+
+/** لیست تیکت‌ها برای مدیر */
+export async function adminGetTickets(statusFilter) {
+  let q = supabase
+    .from("support_tickets")
+    .select("id,user_id,user_email,subject,category,status,priority,created_at,updated_at,closed_at")
+    .order("updated_at", { ascending: false })
+    .limit(200);
+
+  if (statusFilter && statusFilter !== "all") {
+    q = q.eq("status", statusFilter);
+  }
+
+  const { data, error } = await q;
+  return { data: data || [], error };
+}
+
+/** پاسخ مدیر (RPC امن) */
+export async function adminReplyTicket(ticketId, body, newStatus) {
+  const { data, error } = await supabase.rpc("admin_reply_ticket", {
+    p_ticket_id: ticketId,
+    p_body: body,
+    p_new_status: newStatus || "answered",
+  });
+  return { data, error };
+}
+
+/** بررسی مدیر بودن از طریق RPC */
+export async function checkIsAdmin() {
+  const { data, error } = await supabase.rpc("is_kabulweb_admin");
+  return { isAdmin: data === true, error };
 }

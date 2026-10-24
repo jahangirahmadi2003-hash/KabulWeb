@@ -1,5 +1,5 @@
 /**
- * کابل‌وب — بارگذاری آموزش و اخبار
+ * کابل‌وب — بارگذاری آموزش، اخبار و بنرها
  */
 import { fetchApproved } from "./supabase.js";
 
@@ -115,7 +115,60 @@ async function loadNews() {
   }
 }
 
+async function loadBanners() {
+  try {
+    const { data, error } = await fetchApproved(
+      "banner_ads",
+      "id,title,image_url,target_url,placement,starts_at,ends_at,status"
+    );
+    if (error || !data) return;
+    const now = Date.now();
+    const byPlacement = {};
+    data.forEach((b) => {
+      if (!b.image_url) return;
+      if (b.starts_at && new Date(b.starts_at).getTime() > now) return;
+      if (b.ends_at && new Date(b.ends_at).getTime() < now) return;
+      const pl = b.placement || "home";
+      if (!byPlacement[pl]) byPlacement[pl] = [];
+      byPlacement[pl].push(b);
+    });
+    document.querySelectorAll(".banner-slot").forEach((slot) => {
+      const place = slot.getAttribute("data-placement") || "home";
+      const list = byPlacement[place] || [];
+      if (!list.length) {
+        slot.innerHTML = "";
+        return;
+      }
+      const b = list[0];
+      const title = escapeHtml(b.title || "تبلیغ");
+      const img = escapeHtml(b.image_url);
+      if (b.target_url && isSafeHttpUrl(b.target_url)) {
+        slot.innerHTML =
+          '<a class="site-banner" href="' +
+          escapeHtml(b.target_url.trim()) +
+          '" target="_blank" rel="noopener noreferrer" title="' +
+          title +
+          '"><img src="' +
+          img +
+          '" alt="' +
+          title +
+          '" loading="lazy" onerror="this.closest(\'.site-banner\').style.display=\'none\'"></a>';
+      } else {
+        slot.innerHTML =
+          '<div class="site-banner"><img src="' +
+          img +
+          '" alt="' +
+          title +
+          '" loading="lazy" onerror="this.closest(\'.site-banner\').style.display=\'none\'"></div>';
+      }
+    });
+  } catch (e) {
+    console.error("banner load failed", e);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadEducation();
+  loadBanners();
   loadNews();
 });

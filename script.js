@@ -421,6 +421,24 @@ function formatRlsError(error) {
   return error.message || "خطای ناشناخته.";
 }
 
+// محدودیت ساده ارسال فرم (سمت کلاینت — جایگزین ناکامل rate limit سمت سرور)
+function canSubmitForm() {
+  const KEY = "kabulweb_last_submit";
+  const COOLDOWN_MS = 60 * 1000; // 60 ثانیه
+  try {
+    const last = parseInt(localStorage.getItem(KEY) || "0", 10);
+    if (Date.now() - last < COOLDOWN_MS) {
+      return false;
+    }
+  } catch (_) {}
+  return true;
+}
+function markSubmitted() {
+  try {
+    localStorage.setItem("kabulweb_last_submit", String(Date.now()));
+  } catch (_) {}
+}
+
 function initAdForm() {
   const form = document.getElementById("adForm");
   if (!form) return;
@@ -433,6 +451,11 @@ function initAdForm() {
     const contact = document.getElementById("adContact").value.trim();
     const msg = document.getElementById("adMessage");
     const submitBtn = document.getElementById("adSubmit");
+
+    if (!canSubmitForm()) {
+      showFormMessage(msg, "لطفاً ۶۰ ثانیه صبر کنید و دوباره تلاش کنید. (محدودیت ارسال)", "error");
+      return;
+    }
 
     if (!type || !title || !desc || !contact) {
       showFormMessage(msg, "لطفاً تمام فیلدهای ضروری (*) را پر کنید.", "error");
@@ -453,7 +476,6 @@ function initAdForm() {
         description: desc,
         contact,
         link: link || null,
-        // فیلدهای اختیاری فعلی فرم عمومی — در صورت افزودن input بعداً پر می‌شوند
         company: null,
         location: null,
         jobType: null,
@@ -477,6 +499,7 @@ function initAdForm() {
       showFormMessage(msg, "ثبت درخواست ناموفق بود. " + formatRlsError(error), "error");
       showToast("ثبت ناموفق بود.", "error");
     } else {
+      markSubmitted();
       const tableHint =
         type === "job"
           ? "کاریابی"

@@ -146,6 +146,15 @@ function isSafeHttpUrl(value) {
   }
 }
 
+function isValidContact(contact) {
+  if (!contact) return false;
+  const c = contact.trim();
+  // شماره تلفن ساده یا ایمیل
+  const phoneLike = /^[\+]?[0-9\s\-()]{7,20}$/.test(c);
+  const emailLike = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c);
+  return phoneLike || emailLike;
+}
+
 function isChannelLike(platform, link) {
   const p = (platform || "").toLowerCase();
   const l = (link || "").toLowerCase();
@@ -424,6 +433,9 @@ function formatRlsError(error) {
 function initAdForm() {
   const form = document.getElementById("adForm");
   if (!form) return;
+  const RATE_KEY = "kabulweb_last_submit";
+  const RATE_MS = 60 * 1000; // 1 minute
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const type = document.getElementById("adType").value;
@@ -438,10 +450,23 @@ function initAdForm() {
       showFormMessage(msg, "لطفاً تمام فیلدهای ضروری (*) را پر کنید.", "error");
       return;
     }
+    if (!isValidContact(contact)) {
+      showFormMessage(msg, "اطلاعات تماس باید شماره تلفن یا ایمیل معتبر باشد.", "error");
+      return;
+    }
     if (link && !isSafeHttpUrl(link)) {
       showFormMessage(msg, "لینک باید با http یا https شروع شود.", "error");
       return;
     }
+
+    // Simple client-side rate limit
+    try {
+      const last = parseInt(localStorage.getItem(RATE_KEY) || "0", 10);
+      if (Date.now() - last < RATE_MS) {
+        showFormMessage(msg, "لطفاً یک دقیقه صبر کنید و دوباره تلاش کنید.", "error");
+        return;
+      }
+    } catch (_) {}
 
     submitBtn.disabled = true;
     submitBtn.textContent = "در حال ارسال…";
@@ -453,7 +478,6 @@ function initAdForm() {
         description: desc,
         contact,
         link: link || null,
-        // فیلدهای اختیاری فعلی فرم عمومی — در صورت افزودن input بعداً پر می‌شوند
         company: null,
         location: null,
         jobType: null,
@@ -477,6 +501,9 @@ function initAdForm() {
       showFormMessage(msg, "ثبت درخواست ناموفق بود. " + formatRlsError(error), "error");
       showToast("ثبت ناموفق بود.", "error");
     } else {
+      try {
+        localStorage.setItem(RATE_KEY, String(Date.now()));
+      } catch (_) {}
       const tableHint =
         type === "job"
           ? "کاریابی"

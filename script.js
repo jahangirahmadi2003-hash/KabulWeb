@@ -11,6 +11,10 @@ import {
 let jobsCache = [];
 let listingsCache = [];
 
+/** لینک رسمی چینل واتساپ وظیفه گروپ */
+const WAZEEFA_WHATSAPP_CHANNEL =
+  "https://whatsapp.com/channel/0029VbDYDtu4tRro2xn2PF07";
+
 document.addEventListener("DOMContentLoaded", () => {
   initSplash();
   initMenu();
@@ -121,6 +125,29 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
+/** تبدیل URLهای امن داخل متن به لینک قابل کلیک (پس از escape) */
+function linkifyText(text) {
+  if (text == null || text === "") return "";
+  const escaped = escapeHtml(String(text));
+  // http/https و دامنه‌های رایج بدون پروتکل
+  const urlRe =
+    /(https?:\/\/[^\s<>"']+)|((?:www\.)?[a-zA-Z0-9][-a-zA-Z0-9]*\.(?:com|org|net|af|io|co|me|info|edu|gov)(?:\/[^\s<>"']*)?)/gi;
+  return escaped.replace(urlRe, (match, withProto, bare) => {
+    const raw = withProto || bare;
+    if (!raw) return match;
+    let href = raw;
+    if (!/^https?:\/\//i.test(href)) href = "https://" + href;
+    if (!isSafeHttpUrl(href)) return match;
+    return (
+      '<a class="desc-link" href="' +
+      escapeHtml(href) +
+      '" target="_blank" rel="noopener noreferrer">' +
+      match +
+      "</a>"
+    );
+  });
+}
+
 function emptyState(container, message, actionHref, actionLabel) {
   container.innerHTML =
     '<div class="empty-state"><p>' +
@@ -144,6 +171,16 @@ function isSafeHttpUrl(value) {
   } catch (_) {
     return false;
   }
+}
+
+function isWhatsAppUrl(value) {
+  if (!value || typeof value !== "string") return false;
+  const l = value.toLowerCase();
+  return (
+    l.includes("whatsapp.com") ||
+    l.includes("wa.me/") ||
+    l.includes("chat.whatsapp")
+  );
 }
 
 function isChannelLike(platform, link) {
@@ -181,9 +218,128 @@ function channelDisplayName(ch) {
   return raw;
 }
 
+/**
+ * دکمه تماس / ثبت‌نام / چینل واتساپ بر اساس مقدار contact
+ * — لینک واتساپ → «ورود به چینل واتساپ»
+ * — سایر URL امن → «ثبت‌نام / جزئیات»
+ * — شماره تلفن → «تماس»
+ */
+function renderContactButton(contact) {
+  if (!contact) return "";
+  const c = String(contact).trim();
+  if (!c) return "";
+
+  if (isSafeHttpUrl(c)) {
+    if (isWhatsAppUrl(c)) {
+      return (
+        '<a class="btn btn-sm btn-outline" href="' +
+        escapeHtml(c) +
+        '" target="_blank" rel="noopener noreferrer">ورود به چینل واتساپ</a>'
+      );
+    }
+    return (
+      '<a class="btn btn-sm btn-outline" href="' +
+      escapeHtml(c) +
+      '" target="_blank" rel="noopener noreferrer">ثبت‌نام / جزئیات</a>'
+    );
+  }
+
+  // شماره تلفن یا متن ساده
+  const tel = c.replace(/\s/g, "");
+  if (/^[+\d][\d\-()]{6,}$/.test(tel)) {
+    return (
+      '<a class="btn btn-sm btn-outline" href="tel:' +
+      escapeHtml(tel) +
+      '">تماس</a>'
+    );
+  }
+
+  // متن غیرلینک — نمایش به‌عنوان دکمه غیرفعال نیست؛ فقط نادیده
+  return "";
+}
+
+/**
+ * استخراج اولین URL امن از توضیح (برای دکمه ثبت‌نام وقتی contact تلفن است)
+ */
+function extractFirstSafeUrl(text) {
+  if (!text) return null;
+  const re = /https?:\/\/[^\s<>"']+/gi;
+  let m;
+  while ((m = re.exec(String(text))) !== null) {
+    if (isSafeHttpUrl(m[0]) && !isWhatsAppUrl(m[0])) return m[0].trim();
+  }
+  return null;
+}
+
+function extractWhatsAppUrl(text) {
+  if (!text) return null;
+  const re = /https?:\/\/[^\s<>"']+/gi;
+  let m;
+  while ((m = re.exec(String(text))) !== null) {
+    if (isSafeHttpUrl(m[0]) && isWhatsAppUrl(m[0])) return m[0].trim();
+  }
+  return null;
+}
+
 function renderJobCard(job) {
   const art = document.createElement("article");
   art.className = "card";
+
+  const descHtml = job.description
+    ? '<p class="desc">' + linkifyText(job.description) + "</p>"
+    : "";
+
+  // دکمه‌های تماس / ثبت‌نام / واتساپ
+  const buttons = [];
+  const contactBtn = renderContactButton(job.contact);
+  if (contactBtn) buttons.push(contactBtn);
+
+  // اگر contact تلفن بود ولی در توضیح لینک ثبت‌نام وجود دارد
+  const regUrl = extractFirstSafeUrl(job.description);
+  if (regUrl && (!job.contact || !isSafeHttpUrl(String(job.contact)))) {
+    buttons.push(
+      '<a class="btn btn-sm btn-outline" href="' +
+        escapeHtml(regUrl) +
+        '" target="_blank" rel="noopener noreferrer">ثبت‌نام / جزئیات</a>'
+    );
+  }
+
+  // چینل واتساپ از توضیح یا مقدار ثابت وظیفه گروپ (اگر در توضیح اشاره شده)
+  let waUrl = extractWhatsAppUrl(job.description);
+  if (
+    !waUrl &&
+    job.contact &&
+    isSafeHttpUrl(String(job.contact)) &&
+    isWhatsAppUrl(String(job.contact))
+  ) {
+    waUrl = String(job.contact).trim();
+  }
+  // اگر contact واتساپ نبود و دکمه واتساپ هنوز اضافه نشده
+  const hasWaBtn = buttons.some((b) => b.includes("ورود به چینل واتساپ"));
+  if (waUrl && !hasWaBtn) {
+    buttons.push(
+      '<a class="btn btn-sm btn-outline" href="' +
+        escapeHtml(waUrl) +
+        '" target="_blank" rel="noopener noreferrer">ورود به چینل واتساپ</a>'
+    );
+  }
+
+  // اگر هیچ دکمه واتساپی نبود و شرکت/عنوان مربوط به وظیفه گروپ است، لینک رسمی را نشان بده
+  const companyOrTitle = [job.company, job.title].filter(Boolean).join(" ").toLowerCase();
+  if (
+    !hasWaBtn &&
+    !waUrl &&
+    (companyOrTitle.includes("وظیفه") ||
+      companyOrTitle.includes("wazeefa") ||
+      companyOrTitle.includes("گروپ"))
+  ) {
+    buttons.push(
+      '<a class="btn btn-sm btn-outline" href="' +
+        escapeHtml(WAZEEFA_WHATSAPP_CHANNEL) +
+        '" target="_blank" rel="noopener noreferrer">ورود به چینل واتساپ</a>'
+    );
+  }
+
   art.innerHTML =
     "<h3>" +
     escapeHtml(job.title) +
@@ -191,20 +347,14 @@ function renderJobCard(job) {
     '<p class="meta">' +
     escapeHtml([job.company, job.location, job.type].filter(Boolean).join(" · ")) +
     "</p>" +
-    (job.description
-      ? '<p class="desc">' +
-        escapeHtml(job.description.slice(0, 160)) +
-        (job.description.length > 160 ? "…" : "") +
-        "</p>"
-      : "") +
-    '<div class="card-foot"><span class="price">' +
+    descHtml +
+    '<div class="card-foot">' +
+    '<span class="price">' +
     escapeHtml(job.salary || "قابل مذاکره") +
     "</span>" +
-    (job.contact
-      ? '<a class="btn btn-sm btn-outline" href="tel:' +
-        escapeHtml(String(job.contact).replace(/\s/g, "")) +
-        '">تماس</a>'
-      : "") +
+    '<div class="card-actions">' +
+    buttons.join("") +
+    "</div>" +
     "</div>";
   return art;
 }
@@ -383,13 +533,14 @@ async function loadChannels() {
     const art = document.createElement("article");
     art.className = "card channel";
     const safeLink = isSafeHttpUrl(ch.link) ? ch.link.trim() : null;
+    const isWa = safeLink && isWhatsAppUrl(safeLink);
     art.innerHTML =
       '<div class="channel-icon" aria-hidden="true">📢</div>' +
       "<h3>" +
       escapeHtml(name) +
       "</h3>" +
       '<p class="desc">' +
-      escapeHtml((ch.description || "").slice(0, 100)) +
+      linkifyText((ch.description || "").slice(0, 200)) +
       "</p>" +
       '<span class="tag">' +
       escapeHtml(ch.platform || "کانال") +
@@ -397,7 +548,9 @@ async function loadChannels() {
       (safeLink
         ? '<a href="' +
           escapeHtml(safeLink) +
-          '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">ورود به کانال</a>'
+          '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">' +
+          (isWa ? "ورود به چینل واتساپ" : "ورود به کانال") +
+          "</a>"
         : "");
     box.appendChild(art);
   });

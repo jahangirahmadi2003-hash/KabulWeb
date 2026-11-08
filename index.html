@@ -14,7 +14,7 @@
 
   <div id="splash" class="splash" role="dialog" aria-label="صفحه آغازین کابل‌وب">
     <div class="splash-inner">
-      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
       <p class="splash-brand">کابل‌وب</p>
       <p class="splash-tag">بازار افغانستان و جهان</p>
       <button type="button" id="skipSplash" class="skip-btn">رد کردن</button>
@@ -194,6 +194,11 @@
               <label for="adContact">اطلاعات تماس <span class="req">*</span></label>
               <input type="text" id="adContact" name="contact" required maxlength="100" placeholder="شماره واتساپ یا ایمیل" />
             </div>
+          </div>
+          <!-- Honeypot against bots — do not fill -->
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+            <label for="website">Website (leave empty)</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
           </div>
           <button type="submit" class="btn btn-primary btn-block" id="adSubmit">ارسال درخواست</button>
           <p class="form-note">پس از ارسال، وضعیت درخواست «در انتظار بررسی» خواهد بود تا مدیر آن را تأیید یا رد کند.</p>

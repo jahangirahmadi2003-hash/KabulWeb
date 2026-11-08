@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b1020" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://cdn.jsdelivr.net; font-src 'self' data:; base-uri 'self'; form-action 'self';" />
   <meta name="description" content="حساب کاربری کابل‌وب — ورود و ثبت‌نام واقعی با Supabase Auth" />
   <title>حساب کاربری | کابل‌وب</title>
   <link rel="stylesheet" href="style.css" />
@@ -133,7 +134,6 @@
 
   <main class="auth-page">
     <div class="auth-card">
-      <!-- حالت ورود شده -->
       <div id="sessionView" class="session-box" hidden>
         <h1>حساب شما</h1>
         <p class="lead">شما وارد شده‌اید.</p>
@@ -145,7 +145,6 @@
         <div id="sessionMessage" class="auth-message" hidden role="status"></div>
       </div>
 
-      <!-- فرم ورود / ثبت‌نام -->
       <div id="authView">
         <h1 id="authTitle">ورود به حساب</h1>
         <p class="lead" id="authLead">برای مدیریت درخواست‌ها و آگهی‌های خود وارد شوید.</p>

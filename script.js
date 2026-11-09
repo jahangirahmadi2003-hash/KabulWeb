@@ -439,6 +439,14 @@ function markSubmitted() {
   } catch (_) {}
 }
 
+function isLikelyContact(value) {
+  if (!value || typeof value !== "string") return false;
+  const v = value.trim();
+  if (v.length < 5 || v.length > 100) return false;
+  // ایمیل یا شماره (حداقل ۵ رقم یا حاوی @)
+  return v.includes("@") || /[0-9]{5,}/.test(v.replace(/\D/g, ""));
+}
+
 function initAdForm() {
   const form = document.getElementById("adForm");
   if (!form) return;
@@ -449,8 +457,15 @@ function initAdForm() {
     const desc = document.getElementById("adDesc").value.trim();
     const link = document.getElementById("adLink").value.trim();
     const contact = document.getElementById("adContact").value.trim();
+    const honeypot = document.getElementById("website")?.value || "";
     const msg = document.getElementById("adMessage");
     const submitBtn = document.getElementById("adSubmit");
+
+    // honeypot: اگر پر شده باشد، ربات است — ساکت رد کن
+    if (honeypot) {
+      showFormMessage(msg, "ارسال معتبر نیست.", "error");
+      return;
+    }
 
     if (!canSubmitForm()) {
       showFormMessage(msg, "لطفاً ۶۰ ثانیه صبر کنید و دوباره تلاش کنید. (محدودیت ارسال)", "error");
@@ -459,6 +474,10 @@ function initAdForm() {
 
     if (!type || !title || !desc || !contact) {
       showFormMessage(msg, "لطفاً تمام فیلدهای ضروری (*) را پر کنید.", "error");
+      return;
+    }
+    if (!isLikelyContact(contact)) {
+      showFormMessage(msg, "اطلاعات تماس معتبر نیست (ایمیل یا شماره تماس وارد کنید).", "error");
       return;
     }
     if (link && !isSafeHttpUrl(link)) {

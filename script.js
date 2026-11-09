@@ -449,8 +449,17 @@ function initAdForm() {
     const desc = document.getElementById("adDesc").value.trim();
     const link = document.getElementById("adLink").value.trim();
     const contact = document.getElementById("adContact").value.trim();
+    const honeypot = document.getElementById("website")?.value || "";
     const msg = document.getElementById("adMessage");
     const submitBtn = document.getElementById("adSubmit");
+
+    // Honeypot check: bots often fill hidden fields
+    if (honeypot.trim() !== "") {
+      console.warn("Honeypot triggered - possible bot submission blocked");
+      showFormMessage(msg, "درخواست نامعتبر تشخیص شد. اگر انسان هستید دوباره تلاش کنید.", "error");
+      showToast("درخواست مشکوک مسدود شد.", "error");
+      return;
+    }
 
     if (!canSubmitForm()) {
       showFormMessage(msg, "لطفاً ۶۰ ثانیه صبر کنید و دوباره تلاش کنید. (محدودیت ارسال)", "error");

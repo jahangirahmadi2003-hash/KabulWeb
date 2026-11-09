@@ -9,6 +9,10 @@
   <title>کابل‌وب | بازار افغانستان و جهان</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="grok_1792508896312.jpg" type="image/jpeg" />
+  <style>
+    /* Honeypot - hidden from humans, visible to bots */
+    .hp-field { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  </style>
 </head>
 <body class="intro-active">
 
@@ -194,6 +198,11 @@
               <label for="adContact">اطلاعات تماس <span class="req">*</span></label>
               <input type="text" id="adContact" name="contact" required maxlength="100" placeholder="شماره واتساپ یا ایمیل" />
             </div>
+          </div>
+          <!-- Honeypot field to trap bots. Humans should leave this empty. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website (leave empty)</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
           </div>
           <button type="submit" class="btn btn-primary btn-block" id="adSubmit">ارسال درخواست</button>
           <p class="form-note">پس از ارسال، وضعیت درخواست «در انتظار بررسی» خواهد بود تا مدیر آن را تأیید یا رد کند.</p>

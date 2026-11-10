@@ -444,6 +444,14 @@ function initAdForm() {
   if (!form) return;
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const honeypot = document.getElementById("website");
+    if (honeypot && honeypot.value.trim() !== "") {
+      // Bot detected: silently fail or show generic message
+      console.warn("Honeypot triggered - possible bot");
+      showFormMessage(document.getElementById("adMessage"), "درخواست نامعتبر.", "error");
+      return;
+    }
+
     const type = document.getElementById("adType").value;
     const title = document.getElementById("adTitle").value.trim();
     const desc = document.getElementById("adDesc").value.trim();

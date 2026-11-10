@@ -444,6 +444,16 @@ function initAdForm() {
   if (!form) return;
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const honeypot = document.getElementById("website");
+    if (honeypot && honeypot.value) {
+      // Bot detected via honeypot — silently ignore or fake success
+      console.warn("KabulWeb: honeypot triggered, possible bot");
+      const msg = document.getElementById("adMessage");
+      showFormMessage(msg, "درخواست ثبت شد.", "success");
+      form.reset();
+      return;
+    }
+
     const type = document.getElementById("adType").value;
     const title = document.getElementById("adTitle").value.trim();
     const desc = document.getElementById("adDesc").value.trim();

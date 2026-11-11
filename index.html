@@ -195,6 +195,11 @@
               <input type="text" id="adContact" name="contact" required maxlength="100" placeholder="شماره واتساپ یا ایمیل" />
             </div>
           </div>
+          <!-- Honeypot: bots fill this, humans leave empty. Hidden with CSS. -->
+          <div class="field" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;" aria-hidden="true">
+            <label for="website">Website (leave empty)</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <button type="submit" class="btn btn-primary btn-block" id="adSubmit">ارسال درخواست</button>
           <p class="form-note">پس از ارسال، وضعیت درخواست «در انتظار بررسی» خواهد بود تا مدیر آن را تأیید یا رد کند.</p>
           <div id="adMessage" class="form-message" hidden role="status"></div>

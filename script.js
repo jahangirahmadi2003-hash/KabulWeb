@@ -181,9 +181,24 @@ function channelDisplayName(ch) {
   return raw;
 }
 
+function buildContactLink(contact) {
+  if (!contact) return null;
+  const raw = String(contact).trim();
+  if (isSafeHttpUrl(raw)) {
+    return { href: raw, label: "مشاهده لینک", external: true };
+  }
+  const digits = raw.replace(/[^\d+]/g, "");
+  if (digits.length >= 7 && /^\+?\d+$/.test(digits)) {
+    const waNum = digits.startsWith("+") ? digits.slice(1) : digits;
+    return { href: "https://wa.me/" + encodeURIComponent(waNum), label: "تماس واتساپ", external: true };
+  }
+  return { href: "tel:" + encodeURIComponent(raw.replace(/\s/g, "")), label: "تماس", external: false };
+}
+
 function renderJobCard(job) {
   const art = document.createElement("article");
   art.className = "card";
+  const contactLink = buildContactLink(job.contact);
   art.innerHTML =
     "<h3>" +
     escapeHtml(job.title) +
@@ -200,10 +215,14 @@ function renderJobCard(job) {
     '<div class="card-foot"><span class="price">' +
     escapeHtml(job.salary || "قابل مذاکره") +
     "</span>" +
-    (job.contact
-      ? '<a class="btn btn-sm btn-outline" href="tel:' +
-        escapeHtml(String(job.contact).replace(/\s/g, "")) +
-        '">تماس</a>'
+    (contactLink
+      ? '<a class="btn btn-sm btn-outline" href="' +
+        escapeHtml(contactLink.href) +
+        '"' +
+        (contactLink.external ? ' target="_blank" rel="noopener noreferrer"' : "") +
+        ">" +
+        escapeHtml(contactLink.label) +
+        "</a>"
       : "") +
     "</div>";
   return art;
@@ -271,6 +290,7 @@ function renderListingCard(item) {
       ? escapeHtml(String(item.price)) +
         (item.currency ? " " + escapeHtml(item.currency) : "")
       : "قابل مذاکره";
+  const contactLink = buildContactLink(item.contact);
   art.innerHTML =
     (item.image_url && isSafeHttpUrl(item.image_url)
       ? '<img class="thumb-img" src="' +
@@ -288,10 +308,14 @@ function renderListingCard(item) {
     '<p class="price">' +
     price +
     "</p>" +
-    (item.contact
-      ? '<a class="btn btn-sm btn-primary" href="https://wa.me/' +
-        escapeHtml(String(item.contact).replace(/[^\d+]/g, "")) +
-        '" target="_blank" rel="noopener noreferrer">تماس با فروشنده</a>'
+    (contactLink
+      ? '<a class="btn btn-sm btn-primary" href="' +
+        escapeHtml(contactLink.href) +
+        '"' +
+        (contactLink.external ? ' target="_blank" rel="noopener noreferrer"' : "") +
+        ">" +
+        escapeHtml(contactLink.label === "تماس واتساپ" ? "تماس با فروشنده" : contactLink.label) +
+        "</a>"
       : "");
   return art;
 }

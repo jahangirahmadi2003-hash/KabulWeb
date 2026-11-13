@@ -6,6 +6,7 @@ import {
   fetchApproved,
   submitByType,
   getSession,
+  supabase,
 } from "./js/supabase.js";
 
 let jobsCache = [];
@@ -439,6 +440,18 @@ function markSubmitted() {
   } catch (_) {}
 }
 
+async function logSecurityEvent(eventType, details) {
+  try {
+    await supabase.from("security_events").insert({
+      event_type: eventType,
+      details: String(details || "").slice(0, 500),
+      user_agent: (navigator.userAgent || "").slice(0, 200),
+    });
+  } catch (_) {
+    // جدول وجود ندارد یا RLS ممانعت می‌کند — بی‌صدا ادامه می‌دهیم
+  }
+}
+
 function initAdForm() {
   const form = document.getElementById("adForm");
   if (!form) return;
@@ -448,6 +461,7 @@ function initAdForm() {
     if (honeypot && honeypot.value.trim() !== "") {
       // Bot detected — silently reject
       console.warn("Honeypot triggered");
+      logSecurityEvent("honeypot", "form submit blocked");
       showFormMessage(document.getElementById("adMessage"), "درخواست نامعتبر.", "error");
       return;
     }
@@ -461,6 +475,7 @@ function initAdForm() {
     const submitBtn = document.getElementById("adSubmit");
 
     if (!canSubmitForm()) {
+      logSecurityEvent("rate_limit", "form cooldown triggered");
       showFormMessage(msg, "لطفاً ۶۰ ثانیه صبر کنید و دوباره تلاش کنید. (محدودیت ارسال)", "error");
       return;
     }

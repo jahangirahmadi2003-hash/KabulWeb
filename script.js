@@ -146,6 +146,35 @@ function isSafeHttpUrl(value) {
   }
 }
 
+function contactButton(contact) {
+  if (!contact) return "";
+  const c = String(contact).trim();
+  if (isSafeHttpUrl(c)) {
+    return (
+      '<a class="btn btn-sm btn-outline" href="' +
+      escapeHtml(c) +
+      '" target="_blank" rel="noopener noreferrer">تماس / لینک</a>'
+    );
+  }
+  const digits = c.replace(/[^\d+]/g, "");
+  if (digits.length >= 7) {
+    const lower = c.toLowerCase();
+    if (lower.includes("whatsapp") || lower.includes("wa.me") || lower.includes("whats")) {
+      return (
+        '<a class="btn btn-sm btn-outline" href="https://wa.me/' +
+        escapeHtml(digits) +
+        '" target="_blank" rel="noopener noreferrer">واتساپ</a>'
+      );
+    }
+    return (
+      '<a class="btn btn-sm btn-outline" href="tel:' +
+      escapeHtml(digits) +
+      '">تماس</a>'
+    );
+  }
+  return '<span class="btn btn-sm btn-outline" style="pointer-events:none">' + escapeHtml(c) + "</span>";
+}
+
 function isChannelLike(platform, link) {
   const p = (platform || "").toLowerCase();
   const l = (link || "").toLowerCase();
@@ -200,11 +229,7 @@ function renderJobCard(job) {
     '<div class="card-foot"><span class="price">' +
     escapeHtml(job.salary || "قابل مذاکره") +
     "</span>" +
-    (job.contact
-      ? '<a class="btn btn-sm btn-outline" href="tel:' +
-        escapeHtml(String(job.contact).replace(/\s/g, "")) +
-        '">تماس</a>'
-      : "") +
+    contactButton(job.contact) +
     "</div>";
   return art;
 }
